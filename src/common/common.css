@@ -1,0 +1,268 @@
+@import "./fonts/style.css";
+*  {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-width: 1250px;
+  font: 14px/1 Arial, Verdana, Helvetica, Sans-Serif, Microsoft Yahei, WenQuanYi Micro Hei;
+  color: #333;
+  background: #fff;
+}
+.wrap {
+  width: 1226px;
+  margin: 0 auto;
+}
+.vertical-middle {
+  vertical-align: middle;
+}
+.vertical-top {
+  vertical-align: top;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.f-left {
+    float: left
+}
+
+.f-right {
+    float: right
+}
+
+.f-clearfix {
+    zoom:1;
+}
+
+.f-clearfix:after,.f-clearfix:before {
+    display: table;
+    content: ' '
+}
+
+.f-clearfix:after {
+    clear: both
+}
+
+.icon {
+  display: inline-block;
+  margin-right: 5px;
+}
+a {
+  transition: all 0.2s;
+}
+a:hover {
+  color: #0d93b8;
+}
+strong {
+  font-weight: bold;
+}
+button {
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+}
+input {
+  min-width: 200px;
+}
+input, textarea {
+  outline: none;
+  border-radius: 2px;
+  line-height: 28px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #bbb;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #bbb;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #bbb;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #bbb;
+}
+input[type="radio"] {
+  display: none;
+}
+input[type="file"] {
+  display: none;
+  width: 0;
+  height: 0;
+}
+textarea {
+  line-height: 1.5em;
+  width: 100%;
+  max-width: 100%;
+}
+select {
+  width: 200px;
+  display: inline-block;
+  padding: 0 20px 0 5px;
+  line-height: 28px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  background: none;
+  outline: none;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url(images/arrow.png) no-repeat top right;
+}
+label {
+  display: inline-block;
+  line-height: 14px;
+  margin-right: 10px;
+}
+label span.icon {
+  color: #aaa;
+  vertical-align: -1px;
+  margin: 2px;
+}
+label span.icon-square_check_fill {
+  color: #666;
+}
+
+.white-box {
+  background-color: #fff;
+  transition: all 0.2s;
+  border: 1px solid #efefef;
+}
+.white-box:hover {
+  -webkit-box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  -webkit-transform: translate3d(0, -2px, 0);
+  transform: translateY(-2px)
+}
+
+.button {
+  background-color: #363f46;
+  border: none;
+  line-height: 30px;
+  padding: 0 5px;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+label.button  {
+  font-size: 12px;
+  text-align: center;
+  display: inline-block;
+}
+.button:hover {
+  background-color: #0d93b8;
+}
+/*paging*/
+.paging {
+  margin: 35px 0;
+}
+.paging-ul {
+  text-align: center;
+}
+.paging-ul li {
+  display: inline-block;
+  border: 1px solid #efefef;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  cursor: pointer;
+  margin: 0 2px;
+  color: #666;
+  transition: all 0.2s;
+}
+.paging-ul li:hover {
+  color: #0d93b8;
+}
+.paging-ul li.grey {
+  color: #ccc;
+  cursor: default;
+}
+.paging-ul li.active {
+  cursor: default;
+  background-color: #0d93b8;
+  border-color: #0d93b8;
+  color: #fff;
+}
+/*noselect*/
+.noselect {
+-webkit-touch-callout: none; /* iOS Safari */
+-webkit-user-select: none; /* Chrome/Safari/Opera */
+-khtml-user-select: none; /* Konqueror */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
+user-select: none; /* Non-prefixed version, currently
+not supported by any browser */
+}
+
+/*table*/
+table {
+  width: 100%;
+}
+.form-table-wrap {
+
+}
+.form-table-wrap td{
+  padding: 10px 0;
+}
+.form-table-wrap td:first-child {
+  text-align: right;
+  padding-right: 20px;
+  color: #666;
+}
+.form-table-wrap td.not-show {
+  font-size: 20px;
+  color: #ccc;
+}
+.form-table-wrap td.show {
+  font-size: 20px;
+  color: #00d0bc;
+}
+.form-table-wrap .icon-nessisary {
+  color: #c00;
+}
+.form-table-wrap .button {
+  width: 100px;
+}
+/*position*/
+.position {
+  color: #999;
+  font-size: 12px;
+}
+.position a {
+  color: #999;
+}
+.position a:hover {
+  color: #333;
+}
+.position span.icon-right {
+  vertical-align: -1px;
+  -webkit-transform-origin-x: 0;
+  -webkit-transform: scale(0.90);
+}
+
+/*edit*/
+.edit-h2 {
+  font-size: 16px;
+  color: #ccc;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.edit-close-btn {
+  position: absolute;
+  color: #363f46;
+  top: 0;
+  right: 0;
+  font-size: 28px;
+  text-align: center;
+}
+.edit-close-btn:hover {
+  color: #e29800;
+}
+
+/*baseColor  black: 363f46 green:0d93b8 light-green: cff5ff blue: 2965a0  light-blue 2d74b9*/
+/*waring e29800  error d24900*/

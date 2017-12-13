@@ -1,0 +1,107 @@
+<template>
+  <div class="product-all wrap">
+    <div class="product-position position">
+      <span class="icon-location_fill icon"></span>
+      <router-link to="/">Home</router-link>
+      <span class="icon-right"></span>
+      All Products Categories
+    </div>
+    <div class="product-all-items-wrap">
+      <ul class="product-all-items">
+        <li class="white-box" v-for="item in items">
+          <router-link :to="item.link" class="f-clearfix">
+            <div class="f-left product-all-item-left">
+              <div class="product-all-item-logo">
+                <img :src="item.logoSrc" alt="">
+              </div>
+              <img :src="item.imgSrc" alt="">
+            </div>
+            <div class="f-right product-all-item-right">
+              <p>Vantage solutions unify Phoenix Controls suite of scalable products for airflow control and system integration, monitoring, and management. The products range from precision valve controllers to network integration hardware and front-end displays of actionable data. Applications are standalone or implemented at the room, floor, or building level. Vantage solutions can complement existing building management systems by providing facilities the information.Applications are standalone or implemented at the room, floor, or building level. Vantage solutions can complement existing building management systems by providing facilities the information.</p>
+            </div>
+            <router-link class="product-all-item-more" :to="item.link">MORE<span class="icon-more"></span></router-link>
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      items: null
+    }
+  },
+  created() {
+    this.items = []
+    let imgArr = ['/static/images/prodct-phoenix-01.jpg', '/static/images/prodct-drager-01.jpg', '/static/images/prodct-drager-02.jpg']
+    this.$store.state.porducts.forEach((v, i) => {
+      let obj = {
+        logoSrc: v.logoSrc,
+        imgSrc: imgArr[i],
+        link: v.link
+      }
+      this.items.push(obj)
+    })
+  }
+}
+</script>
+
+<style>
+.product-all {
+  width: 976px;
+  margin-left: 20px;
+}
+.product-all-items-wrap {
+
+}
+.product-all-items>li {
+  border-color: #e5e5e5;
+  position: relative;
+  margin-bottom: 20px;
+}
+.product-all-items>li>a {
+  display: block;
+}
+.product-all-item-left {
+  overflow: hidden;
+  width: 240px;
+  line-height: 0;
+}
+.product-all-item-left a {
+  display: block;
+  padding-top: 10px;
+}
+.product-all-item-logo {
+  text-align: center;
+  padding: 8px 0;
+}
+.product-all-item-logo img{
+  height: 35px;
+}
+.product-all-item-right p {
+  color: #333;
+  line-height: 1.5em;
+}
+.product-all-item-right {
+  padding: 55px 20px 15px 20px;
+  width: 730px;
+}
+.product-all-item-more {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  color: #999;
+  opacity: 0.4;
+}
+.product-all-items>li:hover .product-all-item-more {
+  opacity: 1;
+}
+.product-all-item-more span{
+  display: inline-block;
+  margin-left: 5px;
+}
+</style>
