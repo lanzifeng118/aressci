@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import productVideo from 'components/product/video/video'
-import productContact from 'components/product/contact/contact'
+import productVideo from 'components/p-product/video/video'
+import productContact from 'components/p-product/contact/contact'
 export default {
   data() {
     return {

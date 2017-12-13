@@ -19,11 +19,6 @@ if (document.documentElement && document.documentElement.clientHeight && documen
   winWidth = document.documentElement.clientWidth
 }
 
-function getCookie() {
-  let cookie = document.cookie
-  console.log(cookie)
-  return true
-}
 var country= [
   ['AO', 'Angola'],
   ['AF', 'Afghanistan'],
@@ -211,7 +206,6 @@ var country= [
 export default {
   winWidth,
   winHeigth,
-  getCookie,
   country
 }
 </script>

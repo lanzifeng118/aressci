@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import aboutCategory from 'components/about/category/category'
+import aboutCategory from 'components/p-aboutus/category/category'
 export default {
   data() {
     return {

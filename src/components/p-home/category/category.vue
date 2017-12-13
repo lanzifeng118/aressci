@@ -27,7 +27,7 @@
     },
     computed: {
       products() {
-        let data = this.$store.state.porducts
+        let data = this.$store.state.products
         let items = []
         let logoBigSrc = ['/static/images/classify-phoneix.jpg', '/static/images/classify-drager.jpg', '/static/images/classify-a.jpg', '/static/images/classify-4.jpg', '/static/images/classify-5.jpg']
         data.forEach((value, index) => {

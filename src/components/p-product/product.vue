@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import homeVideo from 'components/product/video/video'
-import productContact from 'components/product/contact/contact'
-import productCategory from 'components/product/category/category'
+import homeVideo from 'components/p-product/video/video'
+import productContact from 'components/p-product/contact/contact'
+import productCategory from 'components/p-product/category/category'
 
 export default {
   data() {

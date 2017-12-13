@@ -9,9 +9,9 @@
             MORE<span class="icon-more"></span>
           </router-link>
           <h4 class="home-information-item-h4">
-            <router-link to="/aboutus/display/01">aressci</router-link>
+            <router-link to="/aboutus/display">{{basicInfo.name}}</router-link>
           </h4>
-          <p class="home-information-item-p">As Phoenixcontrols and Aircuity authorized distributor in China, we offer innovative, technologically sound airflow and pressurization. As Phoenixcontrols and Aircuity authorized distributor in China.</p>
+          <p class="home-information-item-p" v-html="basicInfo.brief"></p>
         </li>
         <!-- news -->
         <li class="home-information-item home-news white-box">
@@ -32,22 +32,22 @@
             MORE<span class="icon-more"></span>
           </router-link>
           <ul class="home-information-product-ul">
-            <li v-for="item in productClassify">
-              <router-link :to="item.link">{{item.fullName}}</router-link>
+            <li v-for="item in product.slice">
+              <router-link :to="item.link">{{item.full_name}}</router-link>
             </li>
           </ul>
-          <ul class="home-information-product-dot" v-show="productPage">
+          <ul class="home-information-product-dot" v-show="product.page">
             <li
-              v-for="(item, index) in productPage"
+              v-for="(item, index) in product.page"
               :class="{active: item.active}"
               @click="chagePage(index)"
             >
             </li>
           </ul>
-          <div class="home-information-product-btn f-left" @click="productPre">
+          <div v-show="product.page" class="home-information-product-btn f-left" @click="productPre">
             <span class="icon-back"></span>
           </div>
-          <div class="home-information-product-btn f-right" @click="productNext">
+          <div v-show="product.page" class="home-information-product-btn f-right" @click="productNext">
             <span class="icon-right"></span>
           </div>
         </li>
@@ -70,70 +70,86 @@
 
 <script>
 import slider from 'components/slider/slider'
+import api from 'components/tools/api'
 
 export default {
   data() {
     return {
       items: [],
-      // productIndex: 0,
-      productClassifyAll: null,
-      productClassify: null,
-      productPage: null,
-      productPageIndex: 0,
-      productPageTotal: 0,
-      num: 4
+      product: {
+        list: [],
+        slice: [],
+        index: 0,
+        num: 4,
+        total: 0,
+        page: null
+      }
+    }
+  },
+  computed: {
+    basicInfo() {
+      return this.$store.state.basicInfo
     }
   },
   created() {
-    let arr = [
-      {fullName: '4Phoenixcontrols Precision Airflow Controls', link: ''},
-      {fullName: '5Precision Airflow Controls Products', link: ''},
-      {fullName: '6Phoenixcontrols Airflow Controls Products', link: ''},
-      {fullName: '7Products', link: ''},
-      {fullName: '8Airflow Products', link: ''},
-      {fullName: '9Phoenixcontrols Precision Airflow', link: ''}
-    ]
-    this.productClassifyAll = this.$store.state.porducts.concat(arr)
-    this.showProductClassify()
-    this.dotShow()
+    this.getProdcutClassify()
   },
   methods: {
-    showProductClassify() {
-      this.productClassify = this.productClassifyAll.slice(this.productPageIndex * this.num, (this.productPageIndex + 1) * this.num)
+    getProdcutClassify() {
+      this.axios(api.productClassify.query()).then((res) => {
+        let data = res.data
+        if (data.code === '200') {
+          data.data.list.forEach((v, i) => {
+            v.link = ' '
+          })
+          let list = data.data.list
+          this.product.list = list
+          this.getProductSlice()
+          this.dotShow()
+        }
+      })
+    },
+    getProductSlice() {
+      let product = this.product
+      product.slice = product.list.slice(product.index * product.num, (product.index + 1) * product.num)
     },
     dotShow() {
-      this.productPageTotal = Math.ceil(this.productClassifyAll.length / this.num)
-      if (this.productPageTotal > 0) {
-        this.productPage = []
-        for (let i = 0; i < this.productPageTotal; i++) {
+      let product = this.product
+      product.total = Math.ceil(product.list.length / product.num)
+      if (product.total > 1) {
+        product.page = []
+        for (let i = 0; i < product.total; i++) {
           let obj = {active: false}
-          if (i === this.productPageIndex) {
+          if (i === product.index) {
             obj.active = true
           }
-          this.productPage.push(obj)
+          product.page.push(obj)
         }
       }
     },
     chagePage(index) {
-      if (index !== this.productPageIndex) {
-        this.productPage[this.productPageIndex].active = false
-        this.productPage[index].active = true
-        this.productPageIndex = index
-        this.showProductClassify()
+      let product = this.product
+      if (index !== product.index) {
+        product.page[product.index].active = false
+        product.page[index].active = true
+        product.index = index
+        this.getProductSlice()
       }
     },
     productPre() {
-      let index = this.productPageIndex
+      let product = this.product
+      let index = product.index
       if (index === 0) {
-        index = this.productPageTotal - 1
+        index = product.total - 1
       } else {
         index--
       }
       this.chagePage(index)
     },
     productNext() {
-      let index = this.productPageIndex
-      if (index === this.productPageTotal - 1) {
+      let product = this.product
+      let index = product.index
+      if (index === product.total - 1) {
         index = 0
       } else {
         index++

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import experienceCompany from 'components/experience/company/company'
+import experienceCompany from 'components/p-experience/company/company'
 
 export default {
   data() {

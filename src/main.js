@@ -330,21 +330,9 @@ about.forEach((v, i) => {
 })
 const store = new Vuex.Store({
   state: {
-    mainNav: [
-      {name: 'HOME', link: '/home'},
-      {
-        name: 'PRODUCT',
-        link: '/product'
-      },
-      {
-        name: 'PROJECT EXPERIENCE',
-        link: '/experience'
-      },
-      {name: 'SERVICE & SUPPORT', link: '/service'},
-      {name: 'NEWS', link: '/news'},
-      {name: 'ABOUT US', link: '/aboutus'}
-    ],
-    porducts: products,
+    basicInfo: {},
+    productClassify: [],
+    products: products,
     experience: experience,
     news: news,
     about: about

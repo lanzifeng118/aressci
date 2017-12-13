@@ -3,9 +3,9 @@
     <div class="header-box wrap f-clearfix">
       <!-- header-logo -->
       <div class="header-logo f-left">
-        <router-link to="/home"><img :src="logoSrc"></router-link>
+        <router-link to="/home"><img v-if="basicInfo.logo" :src="basicInfo.logo"></router-link>
       </div>
-      <h1 class="header-company f-left"><router-link to="/home">Air Safety Controls and Energy Saving</router-link></h1>
+      <h1 class="header-company f-left"><router-link to="/home">{{basicInfo.full_name}}</router-link></h1>
       <!--header-version-->
       <div class="f-right">
         <div class="header-version">
@@ -39,11 +39,10 @@
           >
             <router-link :to="item.link">{{item.name}}</router-link>
           </div>
-          <!-- level01 -->
+          <!-- classify -->
           <div
             class="header-nav-li-list"
-            v-if="item.hasList"
-            v-show="listProductShow"
+            v-if="item.list && item.list.length > 0"
             :style="'height:' +  listHeight + 'px'"
           >
             <div class="wrap">
@@ -51,43 +50,23 @@
                 <li v-for="listValue in item.list">
                   <div @click="showListProduct" class="header-nav-li-level-classify">
                     <router-link :to="listValue.link" @click="showListProduct">
-                      <img :src="listValue.logoSrc" alt="">
+                      <img v-if="listValue.logo" :src="listValue.logo" alt="">
                     </router-link>
                   </div>
-                  <!-- level02 -->
+                  <!-- product -->
                   <ul
-                    v-if="listValue.classifyLevel1"
+                    v-if="listValue.product"
                     class="header-nav-li-level level02"
                   >
-                    <li v-for="itemLevel1 in listValue.classifyLevel1">
+                    <li v-for="itemLevel1 in listValue.product">
                       <div @click="showListProduct">
                         <router-link :to="itemLevel1.link">
                           {{itemLevel1.name}}
                         </router-link>
                       </div>
                       <div class="header-nav-li-product-img">
-                        <img :src="itemLevel1.imgSrc" alt="">
+                        <img :src="itemLevel1.img" alt="">
                       </div>
-                      <!-- level03 -->
-                      <!-- <ul
-                        v-if="itemLevel1.classifyLevel2"
-                        class="header-nav-li-level level03"
-                      >
-                        <li v-for="itemLevel2 in itemLevel1.classifyLevel2">
-                          <div @click="showListProduct">
-                            pdf
-                            <a :href="itemLevel2.link" target="_blank" :title="itemLevel2.name">
-                              <span class="icon-pdf"></span>
-                              {{itemLevel2.name}}
-                            </a>
-                            <router-link :to="itemLevel2.link" :title="itemLevel2.name">
-                              <span class="icon-pdf"></span>
-                              {{itemLevel2.name}}
-                            </router-link>
-                          </div>
-
-                        </li>
-                      </ul> -->
                     </li>
                   </ul>
                 </li>
@@ -101,49 +80,79 @@
 </template>
 
 <script>
-  import logoSrc from 'src/common/images/logo.jpg'
-  export default {
-    data() {
-      return {
-        logoSrc,
-        searchText: '',
-        productClassifyItems: {},
-        listProductShow: true,
-        listHeight: 0
-      }
-    },
-    computed: {
-      navItems() {
-        let navs = this.$store.state.mainNav
-        for (let i = 0; i < navs.length; i++) {
-          navs[i].hasList = false
-          if (navs[i].name === 'PRODUCT') {
-            navs[i].hasList = true
-            navs[i].list = this.$store.state.porducts
+import api from 'components/tools/api'
+export default {
+  data() {
+    return {
+      // navItems
+      navItems: [
+        {name: 'HOME', link: '/home'},
+        {
+          name: 'PRODUCT',
+          link: '/product',
+          list: []
+        },
+        {
+          name: 'PROJECT EXPERIENCE',
+          link: '/experience'
+        },
+        {name: 'SERVICE & SUPPORT', link: '/service'},
+        {name: 'NEWS', link: '/news'},
+        {name: 'ABOUT US', link: '/aboutus'}
+      ],
+
+      searchText: '',
+      listHeight: 0
+    }
+  },
+  computed: {
+    basicInfo() {
+      return this.$store.state.basicInfo
+    }
+  },
+  created() {
+    this.getNav()
+  },
+  methods: {
+    getNav() {
+      this.axios(api.nav.query()).then((res) => {
+        let data = res.data
+        if (data.code === '200') {
+          let list = data.data.list
+          if (list && list.length > 0) {
+            list.forEach((v, i) => {
+              v.link = ' '
+              v.product.forEach((vP, iP) => {
+                vP.link = ''
+              })
+            })
+            this.navItems[1].list = list
+            // console.log()
+            console.log(this.navItems)
           }
         }
-        return navs
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    searchSubmit() {
+
+    },
+    hoverInList(index) {
+      if (index === 1) {
+        this.listHeight = 280
       }
     },
-    methods: {
-      searchSubmit() {
-
-      },
-      hoverInList(index) {
-        if (index === 1) {
-          this.listHeight = 280
-        }
-      },
-      hoverOutList(index) {
-        if (index === 1) {
-          this.listHeight = 0
-        }
-      },
-      showListProduct() {
+    hoverOutList(index) {
+      if (index === 1) {
         this.listHeight = 0
       }
+    },
+    showListProduct() {
+      this.listHeight = 0
     }
   }
+}
 </script>
 
 <style>

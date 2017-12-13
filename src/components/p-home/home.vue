@@ -11,8 +11,8 @@
 
 <script>
 import banner from 'components/banner/banner'
-import homeInformation from 'components/home/information/information'
-import homeCategory from 'components/home/category/category'
+import homeInformation from 'components/p-home/information/information'
+import homeCategory from 'components/p-home/category/category'
 
 export default {
   data() {

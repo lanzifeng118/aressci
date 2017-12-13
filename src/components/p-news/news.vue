@@ -1,18 +1,17 @@
 <template>
-  <div class="experience wrap">
-    <div class="experience-banner">
-      <img src="/static/images/experience-banner.jpg" alt="">
+  <div class="news wrap">
+    <div class="news-banner">
+      <img src="/static/images/news-banner.jpg" alt="">
     </div>
-    <div class="experience-content f-clearfix">
-      <experience-category class="f-left"></experience-category>
+    <div class="news-content f-clearfix">
+      <news-category class="f-left"></news-category>
       <router-view keep-alive class="f-left""></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import experienceCategory from 'components/experience/category/category'
-
+import newsCategory from 'components/p-news/category/category'
 export default {
   data() {
     return {
@@ -23,23 +22,24 @@ export default {
     this.category = this.$store.state.experience
   },
   components: {
-    experienceCategory
+    newsCategory
   }
 }
 </script>
 
 <style>
-.experience {
+.news {
   margin-top: 10px;
 }
-.experience-banner {
+.news-banner {
   margin-bottom: 12px;
 }
-.experience-content {
+.news-content {
   position: relative;
+  margin-bottom: 30px;
   padding-top: 30px;
 }
-.experience-position {
+.news-position {
   top: 2px;
   left: 0;
   position: absolute;

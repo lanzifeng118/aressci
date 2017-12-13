@@ -3,7 +3,7 @@
     <ul class="banner-items">
       <li
         class="banner-item"
-        v-for="item in bannerItems"
+        v-for="item in items"
         :class="{active: item.active}"
       >
         <a><img :src="item.src"></a>
@@ -12,7 +12,7 @@
     <!-- dot -->
     <ul class="banner-dot">
       <li
-        v-for="(item,index) in bannerItems"
+        v-for="(item,index) in items"
         :class="{active: item.active}"
         @click="bannerDot(index)"
       >
@@ -37,7 +37,7 @@
   export default {
     data() {
       return {
-        bannerItems: [],
+        items: [],
         bannerParams: {
           timer: {},
           index: 0
@@ -56,7 +56,7 @@
         } else {
           v.active = false
         }
-        this.bannerItems.push(v)
+        this.items.push(v)
       })
       this.set()
     },
@@ -67,7 +67,7 @@
       pre() {
         let index = this.bannerParams.index
         if (index === 0) {
-          index = this.bannerItems.length - 1
+          index = this.items.length - 1
         } else {
           index--
         }
@@ -75,7 +75,7 @@
       },
       next() {
         let index = this.bannerParams.index
-        if (index === this.bannerItems.length - 1) {
+        if (index === this.items.length - 1) {
           index = 0
         } else {
           index++
@@ -86,17 +86,17 @@
         if (index === this.bannerParams.index) {
           return
         }
-        this.bannerItems[this.bannerParams.index].active = false
-        this.bannerItems[index].active = true
+        this.items[this.bannerParams.index].active = false
+        this.items[index].active = true
         this.bannerParams.index = index
       },
       bannerAuto() {
-        this.bannerItems[this.bannerParams.index].active = false
+        this.items[this.bannerParams.index].active = false
         this.bannerParams.index++
-        if (this.bannerParams.index >= this.bannerItems.length) {
+        if (this.bannerParams.index >= this.items.length) {
           this.bannerParams.index = 0
         }
-        this.bannerItems[this.bannerParams.index].active = true
+        this.items[this.bannerParams.index].active = true
       },
       clear() {
         clearInterval(this.bannerParams.timer)

@@ -89,49 +89,8 @@ devMiddleware.waitUntilValid(() => {
 
 var server = app.listen(port)
 
-apiRoutes.post('/admin/basicinfo', function(req, res){ //获取数据
-  res.json({
-    code: '200',
-    data: appData.basicInfo
-  })
-})
-
-apiRoutes.post('/admin/user', function(req, res){ //获取数据
-  res.json({
-    code: '200',
-    data: appData.user
-  })
-})
-
-apiRoutes.post('/admin/infoDisplay', function(req, res){ //获取数据
-  var id = 'id_' + req.query.id
-  res.json({
-    errno: 0,
-    data: infoDisplay[id]
-  })
-})
-
-apiRoutes.post('/admin/infoList', function(req, res){ //获取数据
-  res.json({
-    errno: 0,
-    data: infoList
-  })
-})
-
-apiRoutes.post('/admin/login', function(req, res) {
-  res.json({
-    code: '200'
-  })
-})
-
-// login
-apiRoutes.post('/admin/login', function(req, res) {
-  res.json({
-    code: '200'
-  })
-})
-
-app.use('/api',apiRoutes)
+var appHypo = require('../../backend/app.js');
+app.use('/', appHypo);
 
 module.exports = {
   ready: readyPromise,

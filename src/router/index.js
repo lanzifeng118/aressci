@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ErrorPage from 'components/error/error'
-import Home from 'components/home/home'
-import Product from 'components/product/product'
-import ProductAll from 'components/product/all/all'
-import ProductList from 'components/product/list/list'
-import ProductDisplay from 'components/product/display/display'
-import Experience from 'components/experience/experience'
-import ExperienceAll from 'components/experience/all/all'
-import ExperienceList from 'components/experience/list/list'
-import News from 'components/news/news'
-import NewsList from 'components/news/list/list'
-import NewsDisplay from 'components/news/display/display'
-import Service from 'components/service/service'
-import About from 'components/about/about'
-import AboutDisplay from 'components/about/display/display'
+import Home from 'components/p-home/home'
+import Product from 'components/p-product/product'
+import ProductAll from 'components/p-product/all/all'
+import ProductList from 'components/p-product/list/list'
+import ProductDisplay from 'components/p-product/display/display'
+import Experience from 'components/p-experience/experience'
+import ExperienceAll from 'components/p-experience/all/all'
+import ExperienceList from 'components/p-experience/list/list'
+import News from 'components/p-news/news'
+import NewsList from 'components/p-news/list/list'
+import NewsDisplay from 'components/p-news/display/display'
+import Support from 'components/p-support/support'
+import About from 'components/p-aboutus/aboutus'
+import AboutDisplay from 'components/p-aboutus/display/display'
+import ErrorPage from 'components/p-error/error'
 // import Resource from 'components/resource/resource'
 // import ResourcePhoenix from 'components/resource/phoenix/phoenix'
 // import ResourceAsk from 'components/resource/phoenix/ask/ask'
@@ -110,8 +110,8 @@ let obj = {
       ]
     },
     {
-      path: '/service',
-      component: Service
+      path: '/support',
+      component: Support
     },
     {
       path: '/aboutus',
