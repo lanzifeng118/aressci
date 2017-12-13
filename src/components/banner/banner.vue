@@ -6,7 +6,7 @@
         v-for="item in items"
         :class="{active: item.active}"
       >
-        <a><img :src="item.src"></a>
+        <a :href="item.link" target="_blank"><img :src="item.img"></a>
       </li>
     </ul>
     <!-- dot -->
@@ -30,82 +30,70 @@
 </template>
 
 <script>
-  import banner01 from 'src/common/images/banner-01.jpg'
-  import banner02 from 'src/common/images/banner-02.jpg'
-  import banner03 from 'src/common/images/banner-03.jpg'
-
-  export default {
-    data() {
-      return {
-        items: [],
-        bannerParams: {
-          timer: {},
-          index: 0
-        }
+export default {
+  data() {
+    return {
+      timer: {},
+      index: 0
+    }
+  },
+  computed: {
+    items() {
+      return this.$store.state.basicInfo.banner || []
+    }
+  },
+  created() {
+    this.set()
+  },
+  destroyed() {
+    this.clear()
+  },
+  methods: {
+    pre() {
+      let index = this.index
+      if (index === 0) {
+        index = this.items.length - 1
+      } else {
+        index--
       }
+      this.bannerDot(index)
     },
-    created() {
-      let data = [
-        {src: banner01, href: '/home'},
-        {src: banner02, href: '/home'},
-        {src: banner03, href: '/home'}
-      ]
-      data.forEach((v, i) => {
-        if (i === 0) {
-          v.active = true
-        } else {
-          v.active = false
-        }
-        this.items.push(v)
-      })
-      this.set()
-    },
-    destroyed() {
-      this.clear()
-    },
-    methods: {
-      pre() {
-        let index = this.bannerParams.index
-        if (index === 0) {
-          index = this.items.length - 1
-        } else {
-          index--
-        }
-        this.bannerDot(index)
-      },
-      next() {
-        let index = this.bannerParams.index
-        if (index === this.items.length - 1) {
-          index = 0
-        } else {
-          index++
-        }
-        this.bannerDot(index)
-      },
-      bannerDot(index) {
-        if (index === this.bannerParams.index) {
-          return
-        }
-        this.items[this.bannerParams.index].active = false
-        this.items[index].active = true
-        this.bannerParams.index = index
-      },
-      bannerAuto() {
-        this.items[this.bannerParams.index].active = false
-        this.bannerParams.index++
-        if (this.bannerParams.index >= this.items.length) {
-          this.bannerParams.index = 0
-        }
-        this.items[this.bannerParams.index].active = true
-      },
-      clear() {
-        clearInterval(this.bannerParams.timer)
-      },
-      set() {
-        this.bannerParams.timer = setInterval(this.bannerAuto, 2500)
+    next() {
+      let index = this.index
+      if (index === this.items.length - 1) {
+        index = 0
+      } else {
+        index++
       }
+      this.bannerDot(index)
+    },
+    bannerDot(index) {
+      if (index === this.index) {
+        return
+      }
+      this.items[this.index].active = false
+      this.items[index].active = true
+      this.index = index
+    },
+    bannerAuto() {
+      if (this.items.length === 0) {
+        return
+      }
+      this.items[this.index].active = false
+      this.index++
+      if (this.index >= this.items.length) {
+        this.index = 0
+      }
+      this.items[this.index].active = true
+    },
+    clear() {
+      clearInterval(this.timer)
+    },
+    set() {
+      this.timer = setInterval(this.bannerAuto, 2500)
     }
   }
+}
 </script>
 
 <style>
@@ -118,6 +106,9 @@
 }
 .banner img {
   width: 100%;
+}
+.banner-items {
+  height: 100%;
 }
 .banner-item {
   position: absolute;

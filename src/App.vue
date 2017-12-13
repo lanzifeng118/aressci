@@ -25,6 +25,13 @@ export default {
       this.axios(api.basicInfo.query()).then((res) => {
         let data = res.data
         if (data.code === '200') {
+          data.data.banner.forEach((v, i) => {
+            if (i === 0) {
+              v.active = true
+            } else {
+              v.active = false
+            }
+          })
           this.$store.state.basicInfo = data.data
         }
       }).catch((err) => {
@@ -36,6 +43,10 @@ export default {
         let data = res.data
         let state = this.$store.state
         if (data.code === '200') {
+          data.data.list.forEach((v, i) => {
+            v.link = '1111'
+            v.open = false
+          })
           state.productClassify = data.data.list
         }
       }).catch((err) => {

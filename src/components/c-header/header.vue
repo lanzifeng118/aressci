@@ -50,7 +50,7 @@
                 <li v-for="listValue in item.list">
                   <div @click="showListProduct" class="header-nav-li-level-classify">
                     <router-link :to="listValue.link" @click="showListProduct">
-                      <img v-if="listValue.logo" :src="listValue.logo" alt="">
+                      <img v-if="listValue.logo" :src="listValue.logo" :alt="listValue.name">
                     </router-link>
                   </div>
                   <!-- product -->
@@ -111,6 +111,7 @@ export default {
     }
   },
   created() {
+    console.log(this.basicInfo)
     this.getNav()
   },
   methods: {
@@ -351,15 +352,5 @@ export default {
   }
   .header-nav-li-level.level02>li:hover .header-nav-li-product-img{
     display: block;
-  }
-  /*level03*/
-  .header-nav-li-level.level03 {
-    background: rgba(190,190,190,0.8);
-    position: absolute;
-    top: 0;
-    left: 560px;
-  }
-  .header-nav-li-level.level02>li:hover .header-nav-li-level.level03>li {
-    width: 280px;
   }
 </style>

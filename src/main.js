@@ -331,8 +331,8 @@ about.forEach((v, i) => {
 const store = new Vuex.Store({
   state: {
     basicInfo: {},
+    porducts: products,
     productClassify: [],
-    products: products,
     experience: experience,
     news: news,
     about: about

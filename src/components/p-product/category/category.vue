@@ -34,7 +34,6 @@
 export default {
   data() {
     return {
-      items: []
     }
   },
   watch: {
@@ -42,16 +41,19 @@ export default {
       this.openItem()
     }
   },
+  computed: {
+    items() {
+      console.log(this.$store.state.productClassify)
+      return this.$store.state.productClassify || []
+    }
+  },
   created() {
-    var arr = []
-    this.$store.state.porducts.forEach((v, i) => {
-      v.open = false
-      arr.push(v)
-    })
-    this.items = arr
     this.openItem()
   },
   methods: {
+    getItems() {
+      this.openItem()
+    },
     openItem() {
       let _this = this
       let path = this.$route.path.toLowerCase()

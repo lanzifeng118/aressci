@@ -1,113 +1,109 @@
 <template>
   <div class="home-category" @mouseenter="clear" @mouseleave="set">
     <ul class="home-category-ul" :style="'top:' + top + 'px'" :class="{smooth: smooth}">
-      <li class="home-category-li" v-for="item in products">
-        <router-link :to="item.link"><img :src="item.logoBigSrc" alt=""></router-link>
+      <li class="home-category-li" v-for="item in items">
+        <router-link target="_blank" :to="item.link"><img :src="item.img" :alt="item.name"></router-link>
       </li>
     </ul>
-    <div class="home-category-btn up" @click="preClick">
+    <div v-if="items.length > 3" class="home-category-btn up" @click="preClick">
       <span class="icon-up"></span>
     </div>
-    <div class="home-category-btn down" @click="nextClick">
+    <div v-if="items.length > 3" class="home-category-btn down" @click="nextClick">
       <span class="icon-down"></span>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        showNum: 3,
-        index: 1,
-        top: -152,
-        timer: null,
-        smooth: true
+export default {
+  data() {
+    return {
+      showNum: 3,
+      index: 1,
+      top: -152,
+      timer: null,
+      smooth: true
+    }
+  },
+  computed: {
+    items() {
+      let items = this.$store.state.productClassify
+      // items = items.concat([{img: 'xxx', name: 'xxx', link: '11'}])
+      if (items.length > 3) {
+        items = items.slice(-1).concat(items).concat(items.slice(0, 2))
+      } else {
+        this.top = 0
       }
-    },
-    computed: {
-      products() {
-        let data = this.$store.state.products
-        let items = []
-        let logoBigSrc = ['/static/images/classify-phoneix.jpg', '/static/images/classify-drager.jpg', '/static/images/classify-a.jpg', '/static/images/classify-4.jpg', '/static/images/classify-5.jpg']
-        data.forEach((value, index) => {
-          value.logoBigSrc = logoBigSrc[index]
-        })
-        data = data.concat([{link: '', logoBigSrc: logoBigSrc[3]}, {link: '', logoBigSrc: logoBigSrc[4]}])
-        if (data.length > 3) {
-          items = data.slice(-1).concat(data).concat(data.slice(0, 2))
-        } else {
-          items = data
-          this.top = 0
-        }
-        return items
+      return items
+    }
+  },
+  created() {
+    this.set()
+  },
+  destroyed() {
+    this.clear()
+  },
+  methods: {
+    preClick() {
+      if (this.index > 0) {
+        this.index--
       }
+      this.calTop(0)
     },
-    created() {
-      this.set()
+    nextClick() {
+      if (this.index >= this.items.length - this.showNum) {
+        return
+      }
+      this.autoPlay()
     },
-    destroyed() {
-      this.clear()
+    set() {
+      if (this.timer) {
+        this.clear()
+      }
+      this.timer = setInterval(this.autoPlay, 2000)
     },
-    methods: {
-      preClick() {
-        if (this.index > 0) {
-          this.index--
-        }
-        this.calTop(0)
-      },
-      nextClick() {
-        if (this.index >= this.products.length - this.showNum) {
-          return
-        }
-        this.autoPlay()
-      },
-      set() {
-        if (this.timer) {
-          this.clear()
-        }
-        this.timer = setInterval(this.autoPlay, 2000)
-      },
-      clear() {
-        clearInterval(this.timer)
-      },
-      autoPlay() {
-        if (this.index < this.products.length - this.showNum) {
-          this.index++
-        }
-
-        this.calTop(1)
-      },
-      calTop(num) {
-        var _this = this
-        if (num === 1) {
-          // next
-          this.top = -this.index * 152
-          if (this.index >= this.products.length - this.showNum) {
-            setTimeout(() => {
-              _this.smooth = false
-              _this.index = 0
-              _this.top = 0
-            }, 700)
-          } else {
-            this.smooth = true
-          }
+    clear() {
+      clearInterval(this.timer)
+    },
+    autoPlay() {
+      if (this.items.length <=3) {
+        return
+      }
+      if (this.index < this.items.length - this.showNum) {
+        this.index++
+      }
+      this.calTop(1)
+    },
+    calTop(num) {
+      var _this = this
+      if (num === 1) {
+        // next
+        this.top = -this.index * 152
+        if (this.index >= this.items.length - this.showNum) {
+          setTimeout(() => {
+            _this.smooth = false
+            _this.index = 0
+            _this.top = 0
+          }, 700)
         } else {
-          // pre
-          this.top = -this.index * 152
-          if (this.index <= 0) {
-            setTimeout(() => {
-              _this.smooth = false
-              _this.index = this.products.length - this.showNum
-              _this.top = -this.index * 152
-            }, 700)
-          } else {
-            this.smooth = true
-          }
+          this.smooth = true
+        }
+      } else {
+        // pre
+        this.top = -this.index * 152
+        if (this.index <= 0) {
+          setTimeout(() => {
+            _this.smooth = false
+            _this.index = this.items.length - this.showNum
+            _this.top = -this.index * 152
+          }, 700)
+        } else {
+          this.smooth = true
         }
       }
     }
   }
+}
 </script>
 
 <style>
@@ -129,9 +125,16 @@
   border: 1px solid #efefef;
   position: relative;
   display: block;
+  width: 294px;
+  height: 147px;
+  overflow: hidden;
   line-height: 0;
   margin-bottom: 5px;
   transition: all 0.2s;
+}
+.home-category-li img {
+  max-width: 100%;
+  max-height: 100%;
 }
 .home-category-li:hover a {
   border-color: #ddd;
