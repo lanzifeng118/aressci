@@ -7,27 +7,55 @@
       All Project Experiences
     </div>
     <!-- items -->
-    <experience-company v-for="item in items" :experience="item" :all="all"></experience-company>
+    <experience-company v-if="items.length > 0" v-for="item in items" :experience="item" :all="all"></experience-company>
+    <toast
+      v-show="toast.show"
+      :text="toast.text"
+      :icon="toast.icon"
+    >
+    </toast>
   </div>
 
 </template>
 
 <script>
+import api from 'components/tools/api'
+import util from 'components/tools/util'
 import experienceCompany from 'components/p-experience/company/company'
+import toast from 'components/toast/toast'
 
 export default {
   data() {
     return {
-      items: null,
-      all: true
+      items: [],
+      all: true,
+      // toast
+      toast: {
+        show: false,
+        text: '',
+        icon: ''
+      }
     }
   },
   created() {
-    this.items = this.$store.state.experience
+    this.getItems()
   },
   methods: {
+    getItems() {
+      this.axios(api.experienceList.query()).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          this.items = data.data.list
+          // console.log(this.items)
+        } else {
+          util.req.queryError(this.toast)
+        }
+      })
+    }
   },
   components: {
+    toast,
     experienceCompany
   }
 }

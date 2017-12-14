@@ -1,11 +1,10 @@
 <template>
   <div class="experience-item-box">
-    <h2 v-if="all"><router-link :to="experience.link">{{experience.name}} <span class="icon-more"></span></router-link></h2>
+    <h2 v-if="all"><router-link :to="'/experience/list/c' + experience.id">{{experience.name}} <span class="icon-more"></span></router-link></h2>
     <h2 v-if="!all">{{experience.name}}</h2>
     <ul class="experience-item-title f-clearfix">
       <li
         v-for="(item, index) in experience.classify"
-        v-if="item.hasLogo"
         @click="change(index)"
         :class="{active: activeIndex === index}"
       >
@@ -15,7 +14,6 @@
     <div class="experience-item-logo">
       <ul
         v-for="(item, index) in experience.classify"
-        v-if="item.hasLogo"
         class="f-clearfix"
         v-show="activeIndex === index"
       >
@@ -47,20 +45,12 @@ export default {
     }
   },
   created() {
+    console.log(this.experience)
     this.init()
   },
   methods: {
     init() {
-      let _this = this
-      let classify = this.experience.classify
-      for (let i = classify.length - 1; i >= 0; i--) {
-        if (classify[i].logo.length === 0) {
-          classify[i].hasLogo = false
-        } else {
-          classify[i].hasLogo = true
-          _this.activeIndex = i
-        }
-      }
+      this.activeIndex = 0
     },
     change(num) {
       this.activeIndex = num
