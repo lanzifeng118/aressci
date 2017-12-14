@@ -29,7 +29,7 @@
         <!-- resources -->
         <div class="product-display-resources" v-show="tabShow[1]">
           <h3>Product Documentations</h3>
-          <table class="product-display-resources-table" v-if="item.resources.length > 0">
+          <table class="product-display-resources-table" v-if="item.resources && item.resources.length > 0">
             <thead>
               <tr>
                 <th width="70">Type</th>

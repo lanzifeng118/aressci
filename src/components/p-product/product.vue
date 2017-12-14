@@ -1,10 +1,8 @@
 <template>
   <div class="product wrap">
-    <div class="product-banner">
-      <img :src="bannerSrc" alt="" height="130">
-    </div>
+    <product-banner></product-banner>
     <div class="product-content f-clearfix">
-      <product-category class="f-left""></product-category>
+      <product-category class="f-left"></product-category>
       <router-view keep-alive class="f-left""></router-view>
     </div>
   </div>
@@ -12,6 +10,7 @@
 
 <script>
 import homeVideo from 'components/p-product/video/video'
+import productBanner from 'components/p-product/banner/banner'
 import productContact from 'components/p-product/contact/contact'
 import productCategory from 'components/p-product/category/category'
 import api from 'components/tools/api'
@@ -24,12 +23,12 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.findBanner()
+      this.getBannerItem()
     }
   },
   created() {
     this.getNav()
-    // this.findBanner()
+    // this.getBannerItem()
   },
   methods: {
     getNav() {
@@ -50,7 +49,7 @@ export default {
         }
       })
     },
-    findBanner() {
+    getBannerItem() {
       let _this = this
       let path = this.$route.path.toLowerCase()
       let allPath = '/product/all'
@@ -78,6 +77,7 @@ export default {
   },
   components: {
     homeVideo,
+    productBanner,
     productContact,
     productCategory
   }
@@ -87,9 +87,6 @@ export default {
 <style>
 .product {
   margin-top: 10px;
-}
-.product-banner {
-  margin-bottom: 12px;
 }
 .product-content {
   position: relative;

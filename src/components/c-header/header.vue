@@ -96,7 +96,7 @@ export default {
           name: 'PROJECT EXPERIENCE',
           link: '/experience'
         },
-        {name: 'SERVICE & SUPPORT', link: '/service'},
+        {name: 'SERVICE & SUPPORT', link: '/support'},
         {name: 'NEWS', link: '/news'},
         {name: 'ABOUT US', link: '/aboutus'}
       ],
