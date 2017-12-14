@@ -1,8 +1,6 @@
 <template>
   <div class="experience wrap">
-    <div class="experience-banner">
-      <img src="/static/images/experience-banner.jpg" alt="">
-    </div>
+    <banner-in page="experience"></banner-in>
     <div class="experience-content f-clearfix">
       <experience-category class="f-left"></experience-category>
       <router-view keep-alive class="f-left""></router-view>
@@ -12,6 +10,7 @@
 
 <script>
 import experienceCategory from 'components/p-experience/category/category'
+import bannerIn from 'components/c-banner-in/banner-in'
 
 export default {
   data() {
@@ -23,7 +22,8 @@ export default {
     this.category = this.$store.state.experience
   },
   components: {
-    experienceCategory
+    experienceCategory,
+    bannerIn
   }
 }
 </script>

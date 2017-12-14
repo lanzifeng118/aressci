@@ -19,11 +19,6 @@ export default {
     return {
     }
   },
-  computed: {
-    products() {
-      return this.$store.state.porducts
-    }
-  },
   components: {
     banner,
     homeInformation,

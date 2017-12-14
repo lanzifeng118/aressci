@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import api from 'components/tools/api'
+
 export default {
   data() {
     return {
@@ -16,10 +18,21 @@ export default {
     }
   },
   created() {
-    this.items = [{name: 'All Experience', link: '/experience/all'}].concat(this.$store.state.experience)
+    this.getItems()
   },
   methods: {
-
+    getItems() {
+      this.axios(api.experienceList.query()).then((res) => {
+        let data = res.data
+        if (data.code === '200') {
+          let list = data.data.list
+          list.forEach((v, i) => {
+            v.link = `/experience/list/c${v.id}`
+          })
+          this.items = [{name: 'All Experience', link: '/experience/all'}].concat(data.data.list)
+        }
+      })
+    }
   },
   components: {
   }
@@ -29,6 +42,7 @@ export default {
 <style>
 .experience-category {
   width: 220px;
+  min-height: 100px;
 }
 .experience-category-item {
 
