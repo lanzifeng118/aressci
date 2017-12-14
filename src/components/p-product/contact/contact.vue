@@ -3,11 +3,11 @@
     <h3>Contact Us</h3>
     <ul>
       <li>
-        Our emai is <b>xxx.mail.com</b>. You can <a href="mailto:lanzifeng118@163.com?subject=Here is a web page you might be interested in seeing&body=Hello">
+        Our emai is <b>{{item.email}}</b>. You can <a :href="'mailto:?' + item.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">
           Click Here
         </a> to send an emai to us handily!
       </li>
-      <li><h4>Our phone number is <b>15989235411</b>. You can call us during work time (9:00am - 6:00pm).</h4></li>
+      <li><h4>Our phone number is <b>{{item.telephone}}</b>. You can call us during work time ({{item.worktime}}).</h4></li>
     </ul>
   </div>
 </template>
@@ -16,6 +16,11 @@
 export default {
   data() {
     return {
+    }
+  },
+  computed: {
+    item() {
+      return this.$store.state.basicInfo
     }
   }
 }

@@ -13,41 +13,25 @@
       <ul class="product-list-show-items">
         <li
           class="white-box"
-          v-for="itemLevel2 in classifyItems"
+          v-for="item in items"
         >
-          <router-link :to="itemLevel2.link" class="f-clearfix">
-            <img :src="itemLevel2.imgSrc" :alt="itemLevel2.name">
+          <router-link :to="item.link" class="f-clearfix">
+            <img :src="item.img" :alt="item.name">
             <div class="product-list-show-item-text">
-              <h4 :title="itemLevel2.name">{{itemLevel2.name}}</h4>
-              <p>Vantage solutions unify Phoenix Controls suite of scalable products for airflow control and system integration, monitoring, and management. The products range from precision valve controllers to network integration hardware and front-end displays of actionable data. Applications are standalone or implemented at the room, floor, or building level. Vantage solutions can complement existing building management systems by providing facilities the information. building management systems by providing facilities the information</p>
+              <h4 :title="item.name">{{item.name}}</h4>
+              <p>{{item.brief}}</p>
             </div>
           </router-link>
         </li>
       </ul>
     </div>
-    <div class="paging" v-show="paging">
-      <ul class="paging-ul noselect">
-        <li
-          :class="{grey: pagingPre}"
-          @click="pagingPreClick"
-        >
-          <span class="icon-back"></span>
-        </li>
-        <li
-          v-for="(item, index) in paging"
-          :class="{active: item.active}"
-          @click="pagingChange(index)"
-        >
-          {{item.num}}
-        </li>
-        <li
-          :class="{grey: pagingNext}"
-          @click="pagingNextClick"
-        >
-          <span class="icon-right"></span>
-        </li>
-      </ul>
-    </div>
+    <paging
+      :paging="paging"
+      @pagingNextClick="pagingNextClick"
+      @pagingPreClick="pagingPreClick"
+      @pagingChange="pagingChange"
+    >
+    </paging>
   </div>
   <div class="f-right">
     <product-contact></product-contact>
@@ -57,107 +41,90 @@
 </template>
 
 <script>
+import paging from 'components/c-paging/paging'
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
+import api from 'components/tools/api'
+
 export default {
   data() {
     return {
-      classifyName: null,
-      classifyItemsAll: null,
-      classifyItems: null,
-      paging: null,
-      pagingTotal: 0,
-      pagingPre: true,
-      pagingNext: true,
-      pagingIndex: 0,
-      pagingNum: 5
+      items: [],
+      id: '',
+      // paging
+      paging: {
+        size: 4,
+        no: 0,
+        list: []
+      }
+    }
+  },
+  computed: {
+    classifyName() {
+      let name = ''
+      let nav = this.$store.state.productNav
+      if (nav) {
+        for (var i = 0; i < nav.length; i++) {
+          if (nav[i].id === this.id) {
+            name = nav[i].name
+            break
+          }
+        }
+      }
+      return name
     }
   },
   created() {
-    this.getClassifyItems()
-    this.pagingInit()
+    this.getId()
   },
   watch: {
     '$route' (to, from) {
-      this.getClassifyItems()
-      this.pagingInit()
+      this.getId()
+      this.getItems()
+    },
+    classifyName() {
+      this.getItems()
     }
   },
   methods: {
-    getClassifyItems() {
-      this.pagingIndex = 0
-      let _this = this
-      let path = this.$route.path.toLowerCase()
-      let listPath = '/product/list'
-      _this.classifyItemsAll = []
-      this.$store.state.porducts.forEach((v, i) => {
-        if (path === listPath) {
-          // all
-          _this.classifyName = null
-          _this.classifyItemsAll = _this.classifyItemsAll.concat(v.classifyLevel1)
+    getId() {
+      this.id = parseInt(this.$route.params.id.slice(1))
+    },
+    getItems() {
+      let pageData = {
+        page_size: this.paging.size,
+        page_no: this.paging.no,
+        classify: this.classifyName
+      }
+      this.axios(api.productList.query(pageData)).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
+          data.data.list.forEach((v, i) => {
+            v.link = `/product/display/c${this.id}-p${v.id}`
+          })
+          this.items = data.data.list
         } else {
-          // some
-          if (v.link.toLowerCase() === path) {
-            _this.classifyName = v.name
-            _this.classifyItemsAll = v.classifyLevel1
-          }
+          // util.req.queryError(this.toast)
         }
       })
     },
-    pagingInit() {
-      this.pagingTotal = Math.ceil(this.classifyItemsAll.length / this.pagingNum)
-      if (this.pagingTotal > 0) {
-        this.paging = []
-        for (let i = 0; i < this.pagingTotal; i++) {
-          var obj = {num: i + 1, active: false}
-          if (i === this.pagingIndex) {
-            obj.active = true
-          }
-          this.paging.push(obj)
-        }
-        this.pagingPreNext()
-      }
-    },
-    pagingPreNext() {
-      this.showClassifyItems()
-      if (this.pagingIndex === 0) {
-        this.pagingPre = true
-      } else {
-        this.pagingPre = false
-      }
-      if (this.pagingIndex === this.pagingTotal - 1) {
-        this.pagingNext = true
-      } else {
-        this.pagingNext = false
-      }
-    },
-    showClassifyItems() {
-      this.classifyItems = this.classifyItemsAll.slice(this.pagingIndex * this.pagingNum, this.pagingIndex * this.pagingNum + this.pagingNum)
-    },
-    pagingChange(index) {
-      this.paging[this.pagingIndex].active = false
-      this.pagingIndex = index
-      this.paging[this.pagingIndex].active = true
-      this.pagingPreNext()
-    },
     pagingPreClick() {
-      if (this.pagingIndex > 0) {
-        this.paging[this.pagingIndex].active = false
-        this.pagingIndex--
-        this.paging[this.pagingIndex].active = true
-        this.pagingPreNext()
-      }
+      this.paging.no --
+      this.getItems()
     },
     pagingNextClick() {
-      if (this.pagingIndex < this.pagingTotal - 1) {
-        this.paging[this.pagingIndex].active = false
-        this.pagingIndex++
-        this.paging[this.pagingIndex].active = true
-        this.pagingPreNext()
-      }
+      this.paging.no ++
+      this.getItems()
+    },
+    pagingChange(index) {
+      this.paging.no = index
+      this.getItems()
     }
   },
   components: {
+    paging,
     productVideo,
     productContact
   }

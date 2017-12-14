@@ -48,6 +48,15 @@ html, body {
   display: inline-block;
   margin-right: 5px;
 }
+.icon-pdf {
+  color: #c00;
+}
+.icon-word {
+  color: #5b83cc;
+}
+.icon-excel {
+  color: #6db665;
+}
 a {
   transition: all 0.2s;
 }
@@ -155,37 +164,6 @@ label.button  {
 }
 .button:hover {
   background-color: #0d93b8;
-}
-/*paging*/
-.paging {
-  margin: 35px 0;
-}
-.paging-ul {
-  text-align: center;
-}
-.paging-ul li {
-  display: inline-block;
-  border: 1px solid #efefef;
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
-  cursor: pointer;
-  margin: 0 2px;
-  color: #666;
-  transition: all 0.2s;
-}
-.paging-ul li:hover {
-  color: #0d93b8;
-}
-.paging-ul li.grey {
-  color: #ccc;
-  cursor: default;
-}
-.paging-ul li.active {
-  cursor: default;
-  background-color: #0d93b8;
-  border-color: #0d93b8;
-  color: #fff;
 }
 /*noselect*/
 .noselect {
