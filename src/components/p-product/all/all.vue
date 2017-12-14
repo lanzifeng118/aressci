@@ -7,17 +7,17 @@
       All Products Categories
     </div>
     <div class="product-all-items-wrap">
-      <ul class="product-all-items">
+      <ul class="product-all-items" v-if="items.length > 0">
         <li class="white-box" v-for="item in items">
           <router-link :to="item.link" class="f-clearfix">
             <div class="f-left product-all-item-left">
               <div class="product-all-item-logo">
-                <img :src="item.logoSrc" alt="">
+                <img :src="item.logo" :alt="item.name">
               </div>
-              <img :src="item.imgSrc" alt="">
+              <img v-if="item.product && item.product.length > 0" :src="item.product[0].img" :alt="item.product[0].name">
             </div>
             <div class="f-right product-all-item-right">
-              <p>Vantage solutions unify Phoenix Controls suite of scalable products for airflow control and system integration, monitoring, and management. The products range from precision valve controllers to network integration hardware and front-end displays of actionable data. Applications are standalone or implemented at the room, floor, or building level. Vantage solutions can complement existing building management systems by providing facilities the information.Applications are standalone or implemented at the room, floor, or building level. Vantage solutions can complement existing building management systems by providing facilities the information.</p>
+              <p v-if="item.product && item.product.length > 0">{{item.product[0].brief}}</p>
             </div>
             <router-link class="product-all-item-more" :to="item.link">MORE<span class="icon-more"></span></router-link>
           </router-link>
@@ -32,20 +32,12 @@
 export default {
   data() {
     return {
-      items: null
     }
   },
-  created() {
-    this.items = []
-    let imgArr = ['/static/images/prodct-phoenix-01.jpg', '/static/images/prodct-drager-01.jpg', '/static/images/prodct-drager-02.jpg']
-    this.$store.state.porducts.forEach((v, i) => {
-      let obj = {
-        logoSrc: v.logoSrc,
-        imgSrc: imgArr[i],
-        link: v.link
-      }
-      this.items.push(obj)
-    })
+  computed: {
+    items() {
+      return this.$store.state.productNav
+    }
   }
 }
 </script>
@@ -77,10 +69,12 @@ export default {
 }
 .product-all-item-logo {
   text-align: center;
+  height: 51px;
   padding: 8px 0;
 }
 .product-all-item-logo img{
-  height: 35px;
+  max-width: 100%;
+  max-height: 35px;
 }
 .product-all-item-right p {
   color: #333;

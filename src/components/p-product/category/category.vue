@@ -12,10 +12,10 @@
       </router-link>
       <ul
         class="product-list-category-ul level02"
-        v-if="item.classifyLevel1"
+        v-if="item.product"
         v-show="item.open"
       >
-        <li v-for="itemLevel2 in item.classifyLevel1">
+        <li v-for="itemLevel2 in item.product">
           <router-link
             :to="itemLevel2.link"
             :src="itemLevel2.name"
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -39,57 +38,44 @@ export default {
   watch: {
     '$route' (to, from) {
       this.openItem()
+    },
+    items() {
+      this.openItem()
     }
   },
   computed: {
     items() {
-      console.log(this.$store.state.productClassify)
-      return this.$store.state.productClassify || []
+      return this.$store.state.productNav || []
     }
   },
-  created() {
-    this.openItem()
-  },
   methods: {
-    getItems() {
-      this.openItem()
-    },
     openItem() {
-      let _this = this
       let path = this.$route.path.toLowerCase()
       let allPath = '/product/all'
       let listPath = '/product/list'
       let displayPath = '/product/display'
       if (path === allPath) {
         // all
-        _this.items.forEach((v, i) => {
+        this.items.forEach((v, i) => {
           if (v.open) {
             v.open = false
-            _this.$set(_this.items, i, v)
           }
         })
       } else if (path.indexOf(listPath) === 0) {
         // list
-        _this.items.forEach((v, i) => {
+        this.items.forEach((v, i) => {
           if (v.link.toLowerCase() === path) {
             v.open = true
-            _this.$set(_this.items, i, v)
           } else {
             v.open = false
-            _this.$set(_this.items, i, v)
           }
         })
       } else if (path.indexOf(displayPath) >= 0) {
-        // display
-        // console.log(path)
-        _this.items.forEach((v, i) => {
-          let name = v.name.replace(/ /g, '').toLowerCase()
-          if (path.indexOf(name) > 0) {
+        this.items.forEach((v, i) => {
+          if (path.indexOf(`c${v.id}-`) > 0) {
             v.open = true
-            _this.$set(_this.items, i, v)
           } else {
             v.open = false
-            _this.$set(_this.items, i, v)
           }
         })
       }
@@ -97,7 +83,6 @@ export default {
     toggle(index) {
       var obj = this.items[index]
       obj.open = !obj.open
-      this.$set(this.items, index, obj)
     }
   }
 }
@@ -106,6 +91,7 @@ export default {
 <style>
 .product-list-category {
   width: 220px;
+  min-height: 100px;
   float: left;
 }
 .product-list-category-ul a {

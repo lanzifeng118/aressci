@@ -14,6 +14,7 @@
 import homeVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
 import productCategory from 'components/p-product/category/category'
+import api from 'components/tools/api'
 
 export default {
   data() {
@@ -27,9 +28,28 @@ export default {
     }
   },
   created() {
-    this.findBanner()
+    this.getNav()
+    // this.findBanner()
   },
   methods: {
+    getNav() {
+      this.axios(api.nav.query()).then((res) => {
+        let data = res.data
+        if (data.code === '200') {
+          let list = data.data.list
+          if (list && list.length > 0) {
+            list.forEach((v, i) => {
+              v.link = `/product/list/c${v.id}`
+              v.open = false
+              v.product.forEach((vP, iP) => {
+                vP.link = `/product/display/c${v.id}-p${vP.id}`
+              })
+            })
+            this.$store.state.productNav = list
+          }
+        }
+      })
+    },
     findBanner() {
       let _this = this
       let path = this.$route.path.toLowerCase()

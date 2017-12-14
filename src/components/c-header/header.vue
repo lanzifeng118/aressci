@@ -116,20 +116,19 @@ export default {
   },
   methods: {
     getNav() {
-      this.axios(api.nav.query()).then((res) => {
+      this.axios(api.nav.query({prdcount: '2'})).then((res) => {
         let data = res.data
         if (data.code === '200') {
           let list = data.data.list
           if (list && list.length > 0) {
             list.forEach((v, i) => {
-              v.link = ' '
+              v.link = `/product/list/c${v.id}`
               v.product.forEach((vP, iP) => {
-                vP.link = ''
+                vP.link = `/product/display/c${v.id}-p${vP.id}`
               })
             })
+            console.log(list)
             this.navItems[1].list = list
-            // console.log()
-            console.log(this.navItems)
           }
         }
       }).catch((err) => {
