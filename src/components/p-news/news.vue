@@ -1,8 +1,6 @@
 <template>
   <div class="news wrap">
-    <div class="news-banner">
-      <img src="/static/images/news-banner.jpg" alt="">
-    </div>
+    <banner-in page="news"></banner-in>
     <div class="news-content f-clearfix">
       <news-category class="f-left"></news-category>
       <router-view keep-alive class="f-left""></router-view>
@@ -12,6 +10,9 @@
 
 <script>
 import newsCategory from 'components/p-news/category/category'
+import bannerIn from 'components/c-banner-in/banner-in'
+import api from 'components/tools/api'
+
 export default {
   data() {
     return {
@@ -19,10 +20,26 @@ export default {
     }
   },
   created() {
-    this.category = this.$store.state.experience
+    this.getClassify()
+  },
+  methods: {
+    getClassify() {
+      this.axios(api.newsClassify.query()).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          let list = data.data.list
+          list.forEach((v, i) => {
+            v.link = `/news/list/c${v.id}`
+          })
+          this.$store.state.newsClassify = [{name: 'All News', link: '/news/all'}].concat(list)
+        }
+      })
+    }
   },
   components: {
-    newsCategory
+    newsCategory,
+    bannerIn
   }
 }
 </script>
@@ -30,9 +47,6 @@ export default {
 <style>
 .news {
   margin-top: 10px;
-}
-.news-banner {
-  margin-bottom: 12px;
 }
 .news-content {
   position: relative;

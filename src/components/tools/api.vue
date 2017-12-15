@@ -178,9 +178,6 @@ let api = {
     },
     queryById(id) {
       return queryByIdFun(newsListUrl, id)
-    },
-    queryByClassify(classify) {
-      return queryByClassifyFun(newsListUrl, classify)
     }
   },
   // newsClassify

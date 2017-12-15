@@ -24,7 +24,7 @@ let req = {
     toast.fade(obj, 'Fail. Try Later!')
   },
   changeError(obj) {
-    toast.fade(obj, '出错了，请稍后再试!', 'sad')
+    toast.fade(obj, 'Error. Try Later!', 'sad')
   }
 }
 export default {

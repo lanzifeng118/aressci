@@ -1,8 +1,6 @@
 <template>
   <div class="service wrap">
-    <div class="service-banner">
-      <img src="/static/images/news-banner.jpg" alt="">
-    </div>
+    <banner-in page="support"></banner-in>
     <div class="service-content">
       <div class="position">
         <span class="icon-location_fill icon"></span>
@@ -20,13 +18,13 @@
               <!-- message -->
               <tr>
                 <td width="150" class="vertical-top">Your message to us</td>
-                <td><textarea name="name" rows="4" v-model="form.message"></textarea></td>
+                <td><textarea name="name" rows="4" v-model="item.message"></textarea></td>
               </tr>
               <!-- topic -->
               <tr>
                 <td>Topic</td>
                 <td>
-                  <select v-model="form.topic">
+                  <select v-model="item.topic">
                     <option disabled value="">Please select</option>
                     <option v-for="item in topicOption">{{item.value}}</option>
                   </select>
@@ -37,14 +35,14 @@
                 <td>Salutation</td>
                 <td>
                   <input
-                    v-for="(item, index) in salutation"
+                    v-for="(itemS, index) in salutation"
                     type="radio"
                     :id="'salutation' + index"
-                    :value="item.value"
-                    v-model="form.salutation"
+                    :value="itemS.value"
+                    v-model="item.salutation"
                   >
-                  <label v-for="(item, index) in salutation" :for="'salutation' + index">
-                    <span class="icon" :class="[form.salutation == item.value ? 'icon-square_check_fill' : 'icon-square']"></span>{{item.value}}
+                  <label v-for="(itemS, index) in salutation" :for="'salutation' + index">
+                    <span class="icon" :class="[item.salutation == itemS.value ? 'icon-square_check_fill' : 'icon-square']"></span>{{itemS.value}}
                   </label>
 
                 </td>
@@ -52,33 +50,33 @@
               <!-- First name -->
               <tr>
                 <td><span class="icon-nessisary"></span>First name</td>
-                <td><input type="text" name="" v-model="form.fisrtName"></td>
+                <td><input type="text" v-model="item.firstName"></td>
               </tr>
               <!-- Last name -->
               <tr>
                 <td><span class="icon-nessisary"></span>Last name</td>
-                <td><input type="text" name="" v-model="form.lastName"></td>
+                <td><input type="text" v-model="item.lastName"></td>
               </tr>
               <!-- Email -->
               <tr>
                 <td><span class="icon-nessisary"></span>E-Mail</td>
-                <td><input type="text" name="" v-model="form.email"></td>
+                <td><input type="text" v-model="item.email"></td>
               </tr>
               <!-- tel -->
               <tr>
                 <td>Tel/Phone</td>
-                <td><input type="text" name="" v-model="form.tel"></td>
+                <td><input type="text" v-model="item.tel"></td>
               </tr>
               <!-- Company -->
               <tr>
                 <td>Company</td>
-                <td><input type="text" name="" v-model="form.company"></td>
+                <td><input type="text" v-model="item.company"></td>
               </tr>
               <!-- Country -->
               <tr>
                 <td>Country</td>
                 <td>
-                  <select v-model="form.country">
+                  <select v-model="item.country">
                     <option disabled value="">Please select</option>
                     <option v-for="item in country">{{item[1]}}</option>
                   </select>
@@ -87,27 +85,41 @@
               <!-- Address -->
               <tr>
                 <td class="vertical-top">Address</td>
-                <td><textarea name="name" rows="3" v-model="form.address"></textarea></td>
+                <td><textarea name="name" rows="3" v-model="item.address"></textarea></td>
               </tr>
               <!-- submit -->
               <tr>
                 <td></td>
-                <td><button type="button" class="button">SUBMIT</button></td>
+                <td>
+                  <p class="service-warn">{{warnText}}</p>
+                  <button type="button" class="button" @click="submit">SUBMIT</button>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
+    <toast
+      v-show="toast.show"
+      :text="toast.text"
+      :icon="toast.icon"
+    >
+    </toast>
   </div>
 </template>
 
 <script>
+import api from 'components/tools/api'
+import util from 'components/tools/util'
+import toast from 'components/toast/toast'
 import global from 'components/tools/global'
+import bannerIn from 'components/c-banner-in/banner-in'
+
 export default {
   data() {
     return {
-      form: {
+      item: {
         topic: '',
         salutation: '',
         country: 'China',
@@ -131,13 +143,66 @@ export default {
         {value: 'MRS'},
         {value: 'MS'}
       ],
-      country: global.country
+      country: global.country,
+      warnText: '',
+      // toast
+      toast: {
+        show: false,
+        text: '',
+        icon: ''
+      }
     }
   },
   created() {
 
   },
+  methods: {
+    submit() {
+      if (!this.verify()) {
+        return
+      }
+      this.axios(api.support.insert(this.item)).then((res) => {
+        let data = res.data
+        if (data.code === '200') {
+          util.toast.fade(this.toast, 'Success!', 'appreciate')
+          this.item = {
+            topic: '',
+            salutation: '',
+            country: 'China',
+            message: '',
+            firstName: '',
+            lastName: '',
+            company: '',
+            address: '',
+            tel: '',
+            email: ''
+          }
+        } else {
+          util.req.changeError(this.toast)
+        }
+      })
+    },
+    verify() {
+      let item = this.item
+      if (!item.firstName.trim()) {
+        this.warnText = `First name can't be empty.`
+        return false
+      }
+      if (!item.lastName.trim()) {
+        this.warnText = `Last name can't be empty.`
+        return false
+      }
+      if (!item.email.trim()) {
+        this.warnText = `Email can't be empty.`
+        return false
+      }
+      this.warnText = ``
+      return true
+    }
+  },
   components: {
+    bannerIn,
+    toast
   }
 }
 </script>
@@ -172,5 +237,9 @@ export default {
   width: 700px;
   padding: 10px 20px;
   margin: 15px auto 0 auto;
+}
+.service-warn {
+  color: #FF0C07;
+  margin-bottom: 10px;
 }
 </style>

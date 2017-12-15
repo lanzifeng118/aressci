@@ -14,7 +14,7 @@
       <span class="icon-right"></span>
       <router-link to="/news">All News</router-link>
       <span class="icon-right"></span>
-      {{position}}
+      {{classifyName}}
     </div>
     <!-- news-list -->
     <div class="news-list-wrap">
@@ -25,74 +25,139 @@
         >
           <router-link :to="item.link">
             <div class="news-list-img">
-              <img :src="item.imgSrc">
+              <img v-if="item.img" :src="item.img">
             </div>
             <div class="news-list-text">
-              <h3 class="news-list-text-title">{{item.title}}</h3>
-              <h4 class="news-list-text-summary">{{item.summary}}</h4>
-              <p class="news-list-text-time">{{item.time}}</p>
+              <h3 class="news-list-text-title">{{item.name}}</h3>
+              <h4 class="news-list-text-summary">{{item.brief}}</h4>
+              <p class="news-list-text-time">{{item.modifytime}}</p>
             </div>
           </router-link>
         </li>
       </ul>
+      <paging
+        :paging="paging"
+        @pagingNextClick="pagingNextClick"
+        @pagingPreClick="pagingPreClick"
+        @pagingChange="pagingChange"
+      >
+      </paging>
     </div>
   </div>
 </template>
 
 <script>
-let dataAll = [
-  {imgSrc: 'static/images/news-01.jpg', classify: '1', id: '01', title: 'Scaramucci sacked as Trump media chief', summary: 'White House communications director Anthony Scaramucci has been fired after fewer than 10 days in the post.', time: '2017.08.01'},
-  {imgSrc: 'static/images/news-02.jpg', classify: '2', id: '02', title: 'What could change in the summer break?', summary: 'Floods in the western Indian state of Gujarat have killed 218 people, government officials have confirmed.', time: '2017.07.20'},
-  {imgSrc: 'static/images/news-03.jpg', classify: '3', id: '03', title: 'Drivers and teams will be busy', summary: 'Formula 1 heads off on its official summer break at the end of this week but away from the cameras there will be plenty going on.', time: '2017.07.10'},
-  {imgSrc: 'static/images/news-04.jpg', classify: '1', id: '04', title: 'Japan famous Nara deer face capture', summary: 'The free-roaming deer of Nara, Japan have become an Instagram favourite for their endearing boldness and their apparent habit of bowing to get snacks.', time: '2017.02.09'},
-  {imgSrc: 'static/images/news-02.jpg', classify: '1', id: '05', title: 'What could change in the summer break?', summary: 'Floods in the western Indian state of Gujarat have killed 218 people, government officials have confirmed.', time: '2017.07.20'},
-  {imgSrc: 'static/images/news-03.jpg', classify: '', id: '06', title: 'Drivers and teams will be busy', summary: 'Formula 1 heads off on its official summer break at the end of this week but away from the cameras there will be plenty going on.', time: '2017.07.10'}
-]
-dataAll.forEach((v, i) => {
-  v.link = '/news/display/'+ v.classify + '-' + v.id
-})
+import api from 'components/tools/api'
+import paging from 'components/c-paging/paging'
 
 export default {
   data() {
     return {
       items: null,
       all: true,
-      position: ''
+      id: 0,
+      // paging
+      paging: {
+        size: 8,
+        no: 0,
+        list: []
+      }
+    }
+  },
+  computed: {
+    classifyName() {
+      let name = ''
+      let id = this.id
+      if (id) {
+        let classify = this.$store.state.newsClassify
+        for (var i = 0; i < classify.length; i++) {
+          if (id === classify[i].id) {
+            name = classify[i].name
+            break
+          }
+        }
+      }
+      return name
     }
   },
   watch: {
     '$route' (to, from) {
-      this.getData()
+      this.getId()
+      this.getAll()
+      this.getItems()
+    },
+    classifyName() {
+      if (this.all) {
+        return
+      }
+      this.getItems()
     }
   },
   created() {
-    this.getData()
+    this.getId()
+    this.getAll()
+    if (this.all) {
+      this.getItems()
+    }
   },
   methods: {
-    getData() {
-      let path = this.$route.path
-      let allPath = '/news/all'
-      let _this = this
-      if (path === allPath) {
+    getId() {
+      let id = this.$route.params.id
+      if (id) {
+        this.id = parseInt(id.slice(1))
+      } else {
+        this.id = 0
+      }
+      console.log(this.id)
+    },
+    getAll() {
+      if (this.$route.path === '/news/all') {
         this.all = true
-        this.items = dataAll
       } else {
         this.all = false
-        this.items = []
-        this.$store.state.news.forEach((v, i) => {
-          if (v.link === path) {
-            dataAll.forEach((v1, i1) => {
-              if (v1.classify === v.id) {
-                _this.items.push(v1)
-              }
-            })
-            _this.position = v.name
-          }
-        })
       }
+    },
+    getItems() {
+      let obj = {}
+      let pageData = {
+        page_size: this.paging.size,
+        page_no: this.paging.no,
+        classify: this.classifyName
+      }
+      if (this.all) {
+        obj = api.newsList.query(pageData)
+      } else {
+        obj = api.newsList.query(pageData)
+      }
+      // ajax
+      this.axios(obj).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
+          let list = data.data.list
+          list.forEach((v, i) => {
+            v.link = `/news/display/p${v.id}`
+          })
+          this.items = data.data.list
+        }
+      })
+    },
+    pagingPreClick() {
+      this.paging.no --
+      this.getItems()
+    },
+    pagingNextClick() {
+      this.paging.no ++
+      this.getItems()
+    },
+    pagingChange(index) {
+      this.paging.no = index
+      this.getItems()
     }
   },
   components: {
+    paging
   }
 }
 </script>

@@ -178,6 +178,7 @@ const store = new Vuex.Store({
     basicInfo: {},
     productNav: [],
     productClassify: [],
+    newsClassify: [],
     experience: experience,
     news: news,
     about: about
