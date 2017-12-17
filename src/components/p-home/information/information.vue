@@ -15,15 +15,7 @@
         </li>
         <!-- news -->
         <li class="home-information-item home-news white-box">
-          <h3 class="home-information-item-title">News</h3>
-          <router-link to="news" class="home-information-item-more">
-            MORE<span class="icon-more"></span>
-          </router-link>
-          <h4 class="home-information-item-h4">
-            <router-link to="/news/display/01">Drivers will be busy</router-link>
-          </h4>
-          <h5 class="home-information-item-time">2017.02.10</h5>
-          <p class="home-information-item-p">Formula 1 heads off on its official summer break at the end of this week but away from the cameras there will be plenty going on.</p>
+          <news></news>
         </li>
         <!-- product -->
         <li class="home-information-item home-product white-box">
@@ -53,15 +45,7 @@
         </li>
         <!-- service -->
         <li class="home-information-item home-service white-box">
-          <h3 class="home-information-item-title">Service & Support</h3>
-          <router-link to="" class="home-information-item-more">
-            MORE<span class="icon-more"></span>
-          </router-link>
-          <ul class="home-information-product-ul">
-            <li></span><router-link to="">Phoenixcontrols Precision Airflow Controls Products Service</router-link></li>
-            <li><router-link to="">Dräger Gas Detectors Products Service</router-link></li>
-            <li><router-link to="">Aircuity Critical Indoor Environmental Monitoring  Service </router-link></li>
-          </ul>
+          <support></support>
         </li>
       </ul>
     </div>
@@ -70,6 +54,8 @@
 
 <script>
 import slider from 'components/slider/slider'
+import news from 'components/p-home/news/news'
+import support from 'components/p-home/support/support'
 import api from 'components/tools/api'
 
 export default {
@@ -100,7 +86,7 @@ export default {
         let data = res.data
         if (data.code === '200') {
           data.data.list.forEach((v, i) => {
-            v.link = ' '
+            v.link = `product/list/c${v.id}`
           })
           let list = data.data.list
           this.product.list = list
@@ -158,7 +144,9 @@ export default {
     }
   },
   components: {
-    slider
+    slider,
+    support,
+    news
   }
 }
 </script>

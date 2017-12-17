@@ -3,7 +3,7 @@
   <div class="footer-top wrap">
     <ul class="f-clearfix">
       <li>
-        <a href="mailto:lanzifeng118@163.com?subject=Here is a web page you might be interested in seeing&body=Hello">
+        <a :href="'mailto:?' + basicInfo.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">
           <span class="icon icon-mail"></span>Email Page
         </a>
       </li>
@@ -11,9 +11,7 @@
       <li class="footer-link">
         <a href="javascrip: void(0);"><span class="icon icon-share"></span>Friend Links</a>
         <ul class="footer-link-ul">
-          <li><a href="https://www.phoenixcontrols.com/" target="_blank"><span class="icon icon-dot"></span>Phoenix Controls</a></li>
-          <li><a href="http://www.drager.net/" target="_blank"><span class="icon icon-dot"></span>Drager</a></li>
-          <li><a href="http://www.drager.net/" target="_blank"><span class="icon icon-dot"></span>Aircuity</a></li>
+          <li v-for="itemF in friendLinkItems"><a :href="itemF.link" target="_blank"><span class="icon icon-dot"></span>{{itemF.name}}</a></li>
         </ul>
       </li>
     </ul>
@@ -21,36 +19,66 @@
   <div class="footer-bottom">
     <div class="wrap footer-nav">
       <ul>
-        <li v-for="item in items">
+        <li v-for="item in navItems">
           <router-link :to="item.link">{{item.name}}</router-link>
         </li>
       </ul>
     </div>
     <div class="wrap">
       <ul class="footer-info">
-        <li><span class="icon icon-people_fill"></span>Linkman: Eric</li>
-        <li><span class="icon icon-phone"></span>15989023422</li>
-        <li><span class="icon icon-mail"></span>kcisand@mail.com</li>
+        <li><span class="icon icon-people_fill"></span>Linkman: {{basicInfo.linkman}}</li>
+        <li><span class="icon icon-phone"></span>{{basicInfo.telephone}}</li>
+        <li><span class="icon icon-mail"></span>{{basicInfo.email}}</li>
       </ul>
-      <p class="footer-copyright">Copyright © 2017 Air Safety Controls and Energy Saving All rights reserved.</p>
+      <p class="footer-copyright">Copyright © 2017 {{basicInfo.full_name}} All rights reserved.</p>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+import api from 'components/tools/api'
 
 export default {
   data() {
     return {
+      // navItems
+      navItems: [
+        {name: 'HOME', link: '/home'},
+        {
+          name: 'PRODUCT',
+          link: '/product',
+          list: []
+        },
+        {
+          name: 'PROJECT EXPERIENCE',
+          link: '/experience'
+        },
+        {name: 'SERVICE & SUPPORT', link: '/support'},
+        {name: 'NEWS', link: '/news'},
+        {name: 'ABOUT US', link: '/aboutus'}
+      ],
+      friendLinkItems: []
     }
   },
   computed: {
-    items() {
-      return this.$store.state.mainNav
+    basicInfo() {
+      return this.$store.state.basicInfo
     }
   },
+  created() {
+    this.getFriendLink()
+  },
   methods: {
+    getFriendLink() {
+      this.axios(api.friendlink.query()).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          this.friendLinkItems = data.data.list
+        }
+      })
+    },
     print() {
       window.print()
     }

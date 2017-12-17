@@ -12,22 +12,13 @@ Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
-let about = [
-  {name: 'Basic Information', id: '01'},
-  {name: 'Enterprise Culture', id: '02'},
-  {name: 'Contact Us', id: '03'}
-]
-about.forEach((v, i) => {
-  v.link = '/aboutus/display/' + v.id
-})
 const store = new Vuex.Store({
   state: {
     basicInfo: {},
     productNav: [],
     productClassify: [],
     newsClassify: [],
-    aboutusNav: [],
-    about: about
+    aboutusNav: []
   }
 })
 

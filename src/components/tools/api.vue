@@ -13,6 +13,7 @@ let experienceClassifyUrl = '/api/guest/experience/classify'
 let experienceBannerUrl = '/api/guest/experience/banner'
 let friendlinkUrl = '/api/guest/friendlink'
 let supportUrl = '/api/guest/support'
+let supportClassifyUrl = '/api/admin/support/classify'
 let supportBannerUrl = '/api/guest/support/banner'
 let newsListUrl = '/api/guest/news/list'
 let newsClassifyUrl = '/api/guest/news/classify'
@@ -165,6 +166,11 @@ let api = {
       return insertFun(supportUrl, data)
     }
   },
+  supportClassify: {
+    query() {
+      return queryFun(supportClassifyUrl)
+    }
+  },
   // supportBannerUrl
   supportBanner: {
     query() {
@@ -178,6 +184,18 @@ let api = {
     },
     queryById(id) {
       return queryByIdFun(newsListUrl, id)
+    },
+    queryByOne() {
+      return {
+        method: 'post',
+        url: newsListUrl,
+        data: {
+          method: 'queryByOne',
+          data: {
+            lang: LANG
+          }
+        }
+      }
     }
   },
   // newsClassify

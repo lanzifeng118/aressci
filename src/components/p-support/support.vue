@@ -20,13 +20,13 @@
                 <td width="150" class="vertical-top">Your message to us</td>
                 <td><textarea name="name" rows="4" v-model="item.message"></textarea></td>
               </tr>
-              <!-- topic -->
+              <!-- classify -->
               <tr>
                 <td>Topic</td>
                 <td>
-                  <select v-model="item.topic">
+                  <select v-model="item.classify">
                     <option disabled value="">Please select</option>
-                    <option v-for="item in topicOption">{{item.value}}</option>
+                    <option v-for="item in classifyOption">{{item.name}}</option>
                   </select>
                 </td>
               </tr>
@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       item: {
-        topic: '',
+        classify: '',
         salutation: '',
         country: 'China',
         message: '',
@@ -131,12 +131,7 @@ export default {
         tel: '',
         email: ''
       },
-      topicOption: [
-        {value: 'Phoenixcontrols Precision Airflow Controls'},
-        {value: 'Third Party Purchasing Services'},
-        {value: 'Dräger Gas Detectors'},
-        {value: 'Aircuity Critical Indoor Environmental Monitoring'}
-      ],
+      classifyOption: [],
       salutation: [
         {value: 'DR'},
         {value: 'MR'},
@@ -154,9 +149,18 @@ export default {
     }
   },
   created() {
-
+    this.getClassify()
   },
   methods: {
+    getClassify() {
+      this.axios(api.supportClassify.query()).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          this.classifyOption = data.data.list
+        }
+      })
+    },
     submit() {
       if (!this.verify()) {
         return
@@ -166,7 +170,7 @@ export default {
         if (data.code === '200') {
           util.toast.fade(this.toast, 'Success!', 'appreciate')
           this.item = {
-            topic: '',
+            classify: '',
             salutation: '',
             country: 'China',
             message: '',
