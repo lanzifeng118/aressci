@@ -120,7 +120,6 @@ let obj = {
       children: [
         {
           path: 'display',
-          redirect: 'display/01',
           component: AboutDisplay,
           children: [
             {path: ':id', component: AboutDisplay}
@@ -128,48 +127,6 @@ let obj = {
         }
       ]
     }
-    // {
-    //   path: '/resource',
-    //   redirect: 'resource/phoenix',
-    //   component: Resource,
-    //   children: [
-    //     {
-    //       path: 'phoenix',
-    //       component: ResourcePhoenix,
-    //       redirect: 'phoenix/ask',
-    //       children: [
-    //         {
-    //           path: 'ask',
-    //           component: ResourceAsk
-    //         },
-    //         {
-    //           path: 'case',
-    //           component: ResourceCase
-    //         },
-    //         {
-    //           path: 'industrylinks',
-    //           component: ResourceCase
-    //         },
-    //         {
-    //           path: 'industryterms',
-    //           component: ResourceCase
-    //         },
-    //         {
-    //           path: 'PCoptimizer',
-    //           component: ResourceCase
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       path: 'drager',
-    //       component: ResourceDrager
-    //     },
-    //     {
-    //       path: 'aircuity',
-    //       component: ResourceAircuity
-    //     }
-    //   ]
-    // }
   ]
 }
 export default new Router(obj)

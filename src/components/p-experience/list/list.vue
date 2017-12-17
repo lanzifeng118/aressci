@@ -66,9 +66,8 @@ export default {
       })
     },
     goBack() {
-      let _this = this
       setTimeout(() => {
-        _this.$router.push('/experience')
+        this.$router.push('/experience')
       }, 700)
     }
   },

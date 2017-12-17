@@ -11,35 +11,34 @@
     <div class="about-display-wrap">
       <div class="about-display-info">
         <h1>{{item.title}}</h1>
-        <p v-if="item.summary">{{item.summary}}</p>
+        <p v-if="item.brief">{{item.brief}}</p>
       </div>
-      <div class="about-display-editor" v-html="item.detail"></div>
+      <div class="about-display-editor editor" v-html="item.detail"></div>
     </div>
+    <toast
+      v-show="toast.show"
+      :text="toast.text"
+      :icon="toast.icon"
+    >
+    </toast>
   </div>
 </template>
 
 <script>
-let aboutDisplay = {
-  '01': {
-    title: 'Air Safety Controls and Energy Saving',
-    summary: 'As Phoenixcontrols and Aircuity authorized distributor in China, we offer innovative, technologically sound airflow and pressurization. As Phoenixcontrols and Aircuity authorized distributor in China.',
-    detail: '<h1>Anthony Scaramucci</h1><p>The free-roaming deer of Nara, Japan have become an Instagram favourite for their endearing boldness and their apparent habit of bowing to get snacks. Favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p><p>The free-roaming deer of Nara, Japan have become an Instagram favourite for their and their apparent habit of bowing to get snacks. Favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p><h1>Instagram favourite</h1><p>Japan have become an Instagram favourite for their endearing boldness and their apparent habit of bowing to get snacks. Favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p><p>The free-roaming deer of Nara, Japan have become an Instagram favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p>'
-  },
-  '02': {
-    title: 'Enterprise Culture',
-    summary: '',
-    detail: '<h1>Anthony Scaramucci</h1><p>The free-roaming deer of Nara, Japan have become an Instagram favourite for their endearing boldness and their apparent habit of bowing to get snacks. Favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p><p>The free-roaming deer of Nara, Japan have become an Instagram favourite for their and their apparent habit of bowing to get snacks. Favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p><h1>Instagram favourite</h1><p>Japan have become an Instagram favourite for their endearing boldness and their apparent habit of bowing to get snacks. Favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p><p>The free-roaming deer of Nara, Japan have become an Instagram favourite for their endearing boldness and their apparent habit of bowing to get snacks.</p>'
-  },
-  '03': {
-    title: 'Contact Us',
-    summary: '',
-    detail: '<p>Our emai is kcisand@mail.com. </p><p>Our phone number is 15989235411. You can call us during work time (9:00am - 6:00pm).</p>'
-  }
-}
+import api from 'components/tools/api'
+import util from 'components/tools/util'
+import toast from 'components/toast/toast'
+
 export default {
   data() {
     return {
-      item: null
+      item: {},
+      // toast
+      toast: {
+        show: false,
+        text: '',
+        icon: ''
+      }
     }
   },
   watch: {
@@ -52,10 +51,28 @@ export default {
   },
   methods: {
     getItem() {
-      this.item = aboutDisplay[this.$route.params.id]
+      let id = parseInt(this.$route.params.id.slice(1))
+      this.axios(api.aboutus.queryById(id)).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          if (data.data) {
+            this.item = data.data
+          } else {
+            util.toast.fade(this.toast, 'NO DATA EXIST', 'close')
+            this.goBack()
+          }
+        }
+      })
+    },
+    goBack() {
+      setTimeout(() => {
+        this.$router.push('/aboutus')
+      }, 700)
     }
   },
   components: {
+    toast
   }
 }
 </script>
@@ -81,17 +98,5 @@ export default {
   color: #999;
   border-left: 2px solid #ebebeb;
   background-color: #f9f9f9;
-}
-.about-display-editor h1{
-  font-size: 15px;
-  padding-left: 10px;
-  border-left: 2px solid #0d93b8;
-  margin: 15px 0;
-}
-.about-display-editor p {
-  padding-left: 10px;
-  color: #666;
-  margin: 8px 0;
-  line-height: 1.5em;
 }
 </style>

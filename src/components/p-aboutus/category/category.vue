@@ -2,7 +2,7 @@
   <div class="about-category f-left">
     <ul>
       <li v-for="(item, index) in items" class="about-category-item">
-        <router-link :to="item.link">{{item.name}} <span class="icon-right"></span></router-link>
+        <router-link :to="item.link">{{item.title}} <span class="icon-right"></span></router-link>
       </li>
     </ul>
   </div>
@@ -12,12 +12,12 @@
 export default {
   data() {
     return {
-      items: null
     }
   },
-  created() {
-    let category = this.$store.state.about
-    this.items = category
+  computed: {
+    items() {
+      return this.$store.state.aboutusNav
+    }
   },
   methods: {
 

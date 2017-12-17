@@ -242,5 +242,43 @@ table {
   color: #e29800;
 }
 
+/*editor*/
+.editor h1 {
+  font-size: 14px;
+  color: #0d93b8;
+  font-weight: bold;
+  margin: 15px 0;
+}
+.editor img {
+  max-width: 100%;
+}
+.editor h2 {
+  font-size: 15px;
+  padding-left: 10px;
+  border-left: 2px solid #0d93b8;
+  margin: 15px 0;
+}
+.editor p {
+  margin-bottom: 10px;
+}
+.editor ul {
+  margin: 10px 0 10px 15px;
+}
+.editor li {
+  position: relative;
+  display: block;
+  padding: 0 0 5px 12px;
+  line-height: 1.5em;
+}
+.editor li::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #86b513;
+  top: 7px;
+  left: 0px;
+}
+
 /*baseColor  black: 363f46 green:0d93b8 light-green: cff5ff blue: 2965a0  light-blue 2d74b9*/
 /*waring e29800  error d24900*/
