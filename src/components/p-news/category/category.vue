@@ -2,7 +2,7 @@
   <div class="news-category f-left">
     <ul>
       <li v-for="(item, index) in items" class="news-category-item">
-        <router-link :to="item.link">{{item.name}}<span class="icon-right"></span></router-link>
+        <router-link :to="item.link" :class="{border: item.border}">{{item.name}}<span class="icon-right"></span></router-link>
       </li>
     </ul>
   </div>
@@ -37,7 +37,14 @@ export default {
   margin-bottom: 5px;
   border: 1px solid #efefef;
 }
-.news-category-item a.active, .news-category-item a.activeD {
+.news-category-item a:hover {
+  border-color: #0d93b8;
+  color: #333;
+}
+.news-category-item a.border {
+  color: #0d93b8;
+}
+.news-category-item a.active {
   background-color: #0d93b8;
   color: #f5f5f5;
   border-color: #0d93b8;

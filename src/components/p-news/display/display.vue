@@ -5,6 +5,8 @@
       <router-link to="/">Home</router-link>
       <span class="icon-right"></span>
       <router-link to="/news">All News</router-link>
+      <span class="icon-right" v-if="classifyId"></span>
+      <router-link :to="'/news/lsit/c' + classifyId" v-if="classifyId">{{item.classify}}</router-link>
       <span class="icon-right"></span>
       {{item.name}}
     </div>
@@ -26,6 +28,23 @@ export default {
   data() {
     return {
       item: {}
+    }
+  },
+  computed: {
+    classifyId() {
+      let newsClassify = this.$store.state.newsClassify
+      let id = ''
+      newsClassify.forEach((v, i) => {
+        v.border = false
+        if (v.name === this.item.classify) {
+          id = v.id
+          v.border = true
+        }
+      })
+      if (!id && newsClassify.length > 0) {
+        newsClassify[0].border = true
+      }
+      return id
     }
   },
   watch: {

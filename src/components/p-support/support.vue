@@ -150,6 +150,7 @@ export default {
   },
   created() {
     this.getClassify()
+    this.item.classify = util.parseUrl(this.$route.fullPath).topic || ''
   },
   methods: {
     getClassify() {

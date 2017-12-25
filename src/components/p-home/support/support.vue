@@ -5,7 +5,7 @@
       MORE<span class="icon-more"></span>
     </router-link>
     <ul class="home-information-product-ul">
-      <li v-for="item in items"><router-link to="/support">{{item.name}}</router-link></li>
+      <li v-for="item in items"><router-link :to="'/support?topic=' + item.name">{{item.name}}</router-link></li>
     </ul>
   </div>
 </template>

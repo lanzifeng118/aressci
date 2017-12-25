@@ -27,7 +27,22 @@ let req = {
     toast.fade(obj, 'Error. Try Later!', 'sad')
   }
 }
+
+function parseUrl(url) {
+  let search = url.split('?')[1]
+  let obj = {}
+  if (search) {
+    let searchArr = decodeURIComponent(search).split('&')
+    searchArr.forEach((v, i) => {
+      let arr = v.split('=')
+      obj[arr[0]] = arr[1]
+    })
+  }
+  return obj
+}
+
 export default {
+  parseUrl,
   toast,
   req
 }

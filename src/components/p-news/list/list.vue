@@ -108,7 +108,9 @@ export default {
       } else {
         this.id = 0
       }
-      console.log(this.id)
+      this.$store.state.newsClassify.forEach((v, i) => {
+        v.border = false
+      })
     },
     getAll() {
       if (this.$route.path === '/news/all') {

@@ -51,7 +51,12 @@ export default {
   },
   methods: {
     getItem() {
-      let id = parseInt(this.$route.params.id.slice(1))
+      let id = this.$route.params.id
+      console.log(id)
+      if (!id) {
+        return
+      }
+      id = parseInt(id.slice(1))
       this.axios(api.aboutus.queryById(id)).then((res) => {
         let data = res.data
         console.log(data)
@@ -67,7 +72,7 @@ export default {
     },
     goBack() {
       setTimeout(() => {
-        this.$router.push('/aboutus')
+        this.$router.push('/aboutus/display')
       }, 700)
     }
   },

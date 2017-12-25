@@ -15,12 +15,6 @@ import Support from 'components/p-support/support'
 import About from 'components/p-aboutus/aboutus'
 import AboutDisplay from 'components/p-aboutus/display/display'
 import ErrorPage from 'components/p-error/error'
-// import Resource from 'components/resource/resource'
-// import ResourcePhoenix from 'components/resource/phoenix/phoenix'
-// import ResourceAsk from 'components/resource/phoenix/ask/ask'
-// import ResourceCase from 'components/resource/phoenix/case/case'
-// import ResourceDrager from 'components/resource/drager/drager'
-// import ResourceAircuity from 'components/resource/aircuity/aircuity'
 
 Vue.use(Router)
 let obj = {

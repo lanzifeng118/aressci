@@ -43,7 +43,7 @@ export default {
       })
     },
     redirect() {
-      if (this.$route.path === '/aboutus/display') {
+      if (/^\/aboutus\/display\/{0,1}$/.test(this.$route.path)) {
         this.$router.push(this.$store.state.aboutusNav[0].link)
       }
     }

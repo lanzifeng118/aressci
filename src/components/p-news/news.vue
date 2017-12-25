@@ -16,7 +16,6 @@ import api from 'components/tools/api'
 export default {
   data() {
     return {
-      category: null
     }
   },
   created() {
@@ -30,9 +29,10 @@ export default {
         if (data.code === '200') {
           let list = data.data.list
           list.forEach((v, i) => {
+            v.border = false
             v.link = `/news/list/c${v.id}`
           })
-          this.$store.state.newsClassify = [{name: 'All News', link: '/news/all'}].concat(list)
+          this.$store.state.newsClassify = [{name: 'All News', link: '/news/all', border: false}].concat(list)
         }
       })
     }
