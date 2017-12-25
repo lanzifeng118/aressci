@@ -1,6 +1,6 @@
 <template>
   <div class="video">
-    <h3 class="video-title">{{title}}</h3>
+    <h3 class="video-name">{{name}}</h3>
     <div class="video-wrap" @click="playToggle">
       <video :src="link" ref="video"></video>
       <div class="video-cover" v-show="coverShow">
@@ -28,7 +28,7 @@
 <script>
 
 export default {
-  props: ['link', 'title', 'active'],
+  props: ['link', 'name', 'active'],
   data() {
     return {
       iconPlay: false,
@@ -80,9 +80,11 @@ export default {
         clearInterval(this.time.counter)
       } else {
         this.$refs.video.play()
-        this.time.total = this.changeTime(this.$refs.video.duration)
-        this.time.played = this.changeTime(this.$refs.video.currentTime)
-        this.time.counter = setInterval(this.calPlayedTime, 1000)
+        if (this.$refs.video.total) {
+          this.time.total = this.changeTime(this.$refs.video.duration)
+          this.time.played = this.changeTime(this.$refs.video.currentTime)
+          this.time.counter = setInterval(this.calPlayedTime, 1000)
+        }
         this.coverShow = false
         this.iconPlay = true
       }
@@ -130,7 +132,7 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-.video-title {
+.video-name {
   padding: 15px 20px;
   font-size: 16px;
   background: #f5f5f5;

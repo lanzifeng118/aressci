@@ -1,7 +1,7 @@
 <template>
-  <div class="home-video">
-    <h2 class="home-video-title">Product Video</h2>
-    <div class="home-video-btns">
+  <div class="product-video">
+    <h2 class="product-video-name">Product Video</h2>
+    <div class="product-video-btns">
       <button type="button" name="button" @mouseenter="clear">
         <span class="icon-stop"></span>
       </button>
@@ -13,38 +13,38 @@
       </button>
     </div>
     <!-- items -->
-    <div class="home-video-wrap">
+    <div class="product-video-wrap">
       <ul
-        class="home-video-items"
+        class="product-video-items"
         :style="'top:'+params.top+'px; height:'+itemHeight+'px;'"
       >
         <li
-          class="home-video-item white-box"
+          class="product-video-item white-box"
           v-for="(item,index) in items"
           @click="showCover(index)"
         >
-          <div class="home-video-item-img">
-            <img :src="item.Imgsrc">
-            <div class="home-video-item-icon">
+          <div class="product-video-item-img">
+            <img :src="item.img">
+            <div class="product-video-item-icon">
               <span class="icon-play_fill"></span>
             </div>
           </div>
 
-          <div class="home-video-item-text">
-            <p>{{item.title}}</p>
+          <div class="product-video-item-text">
+            <p>{{item.name}}</p>
           </div>
         </li>
       </ul>
     </div>
     <!-- videoCover -->
-    <div class="home-video-cover" v-show="videoCover.show">
-      <div class="home-video-cover-wrap">
-        <div class="home-video-cover-close" @click="closeCover">
+    <div class="product-video-cover" v-show="videoCover.show">
+      <div class="product-video-cover-wrap">
+        <div class="product-video-cover-close" @click="closeCover">
           <span class="icon-round_close_fill"></span>
         </div>
         <v-video
           :link="videoCover.link"
-          :title="videoCover.title"
+          :name="videoCover.name"
           :active="videoCover.active"
           v-if="videoCover.show"
         >
@@ -55,19 +55,17 @@
 </template>
 
 <script>
+import api from 'components/tools/api'
+
 import vVideo from 'components/video/video'
-import videoImg01 from 'src/common/images/video-01.jpg'
-import videoImg02 from 'src/common/images/video-02.jpg'
-import videoImg03 from 'src/common/images/video-03.jpg'
-import videoImg04 from 'src/common/images/video-04.jpg'
-import videoImg05 from 'src/common/images/video-05.jpg'
 
 export default {
+  props: ['classify'],
   data() {
     return {
       liLength: 3,
       items: [],
-      videoSrc: '',
+      video: '',
       params: {
         timer: null,
         width: 234,
@@ -82,7 +80,7 @@ export default {
         show: false,
         play: false,
         link: '',
-        title: '',
+        name: '',
         active: false
       }
     }
@@ -96,26 +94,28 @@ export default {
     }
   },
   created() {
-    let data = [
-      {Imgsrc: videoImg01, title: '01Fume Hood Controls', videoSrc: 'static/video-01.mp4'},
-      {Imgsrc: videoImg02, title: 'Sensor Suite', videoSrc: 'static/video-01.mp4'},
-      {Imgsrc: videoImg03, title: 'Room Sensor', videoSrc: 'static/video-01.mp4'},
-      {Imgsrc: videoImg04, title: 'Sensor Suite Sensors', videoSrc: 'static/video-01.mp4'},
-      {Imgsrc: videoImg05, title: 'Dashboards', videoSrc: 'static/video-01.mp4'},
-      {Imgsrc: videoImg03, title: '06Room Sensor', videoSrc: 'static/video-01.mp4'}
-    ]
-    if (data.length > this.liLength) {
-      this.items = data.slice(-1).concat(data).concat(data.slice(0, this.liLength))
-    } else {
-      this.items = data
-      this.params.top = 0
-    }
+    this.getItems()
     // this.set()
   },
   destroyed() {
     this.clear()
   },
   methods: {
+    getItems() {
+      this.axios(api.productVideo.query(this.classify)).then((res) => {
+        let data = res.data
+        console.log(data)
+        if (data.code === '200') {
+          let list = data.data.list
+          if (list.length > this.liLength) {
+            this.items = list.slice(-1).concat(list).concat(list.slice(0, this.liLength))
+          } else {
+            this.items = list
+            this.params.top = 0
+          }
+        }
+      })
+    },
     changeDireciton(param) {
       if (this.params.timer) {
         this.clear()
@@ -151,10 +151,10 @@ export default {
       }
     },
     showCover(index) {
+      this.videoCover.link = this.items[index].video
+      this.videoCover.name = this.items[index].name
       this.videoCover.active = true
       this.videoCover.show = true
-      this.videoCover.link = this.items[index].videoSrc
-      this.videoCover.title = this.items[index].title
     },
     closeCover() {
       this.videoCover.active = false
@@ -169,18 +169,18 @@ export default {
 </script>
 
 <style>
-.home-video {
+.product-video {
   width: 254px;
   padding: 10px 0;
   border: 1px solid #efefef;
   position: relative;
 }
-.home-video-btns {
+.product-video-btns {
   position: absolute;
   right: 10px;
   top: 5px;
 }
-.home-video-btns button {
+.product-video-btns button {
   float: left;
   width: 20px;
   height: 20px;
@@ -189,48 +189,50 @@ export default {
   background: none;
   transition: all 0.2s;
 }
-.home-video-btns button:hover {
+.product-video-btns button:hover {
   color: #0d93b8;
 }
-.home-video-btns button:nth-child(2) {
+.product-video-btns button:nth-child(2) {
   border-left: none;
 }
-.home-video-btns span {
+.product-video-btns span {
   display: inline-block;
   line-height: 20px;
 }
-.home-video-btns span.icon-stop {
+.product-video-btns span.icon-stop {
   font-size: 18px;
 }
-.home-video-title {
+.product-video-name {
   font-weight: bold;
   margin-bottom: 12px;
   padding-left: 10px;
 }
-.home-video-wrap {
+.product-video-wrap {
   position: relative;
   overflow: hidden;
   line-height: 0;
   height: 621px;
 }
-.home-video-items {
+.product-video-items {
   padding: 0 10px;
   position: absolute;
 }
-.home-video-item {
+.product-video-item {
   width: 234px;
   margin-bottom: 14px;
   position: relative;
   cursor: pointer;
 }
-.home-video-item-img {
+.product-video-item-img {
   position: relative;
   line-height: 0;
+  height: 141px;
+  overflow: hidden;
 }
-.home-video-item-img img {
+.product-video-item-img img {
   width: 100%;
 }
-.home-video-item-icon {
+.product-video-item-icon {
   position: absolute;
   left: 20px;
   bottom: 10px;
@@ -243,16 +245,16 @@ export default {
   border-radius: 12px;
   transition: all 0.2s;
 }
-.home-video-item:hover .home-video-item-icon {
+.product-video-item:hover .product-video-item-icon {
   border-color: #2d74b9;
   background: #2d74b9;
 }
-.home-video-item-text {
+.product-video-item-text {
   padding: 25px 0;
   border-top: none;
   text-align: center;
 }
-.home-video-cover {
+.product-video-cover {
   position: fixed;
   top:0;
   left:0;
@@ -261,14 +263,14 @@ export default {
   background-color: rgba(0,0,0,0.5);
   z-index:9;
 }
-.home-video-cover-wrap {
+.product-video-cover-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
   margin-top: -300px;
   margin-left: -210px;
 }
-.home-video-cover-close {
+.product-video-cover-close {
   cursor: pointer;
   position: absolute;
   top: 10px;
@@ -277,7 +279,7 @@ export default {
   z-index: 99;
   transition: all 0.2s;
 }
-.home-video-cover-close:hover {
+.product-video-cover-close:hover {
   color: #2d74b9;
 }
 </style>

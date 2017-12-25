@@ -35,7 +35,7 @@
   </div>
   <div class="f-right">
     <product-contact></product-contact>
-    <product-video></product-video>
+    <product-video v-if="classifyName" classify="classifyName"></product-video>
   </div>
 </div>
 </template>

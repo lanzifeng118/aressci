@@ -158,7 +158,7 @@ export default {
 <style>
   .header {
     position: relative;
-    z-index: 999;
+    z-index: 3;
     background-color: #fff;
   }
   /*header-box*/
