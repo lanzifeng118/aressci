@@ -118,6 +118,7 @@ export default {
     getNav() {
       this.axios(api.nav.query({prdcount: '2'})).then((res) => {
         let data = res.data
+        console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           if (list && list.length > 0) {
@@ -127,8 +128,12 @@ export default {
                 vP.link = `/product/display/c${v.id}-p${vP.id}`
               })
             })
-            console.log(list)
             this.navItems[1].list = list
+          }
+          let aboutusId = data.data.aboutusId
+          if (aboutusId) {
+            this.$store.state.aboutusId = aboutusId
+            this.items[5].link = `/news/display/c${aboutusId}`
           }
         }
       }).catch((err) => {

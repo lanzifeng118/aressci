@@ -1,5 +1,5 @@
 <template>
-  <div class="home-information-news">
+  <div class="home-information-news" v-if="item">
     <h3 class="home-information-item-title">News</h3>
     <router-link to="news" class="home-information-item-more">
       MORE<span class="icon-more"></span>
@@ -14,9 +14,13 @@
 
 <script>
 export default {
-  props: ['item'],
   data() {
     return {
+    }
+  },
+  computed: {
+    item() {
+      return this.$store.state.news
     }
   }
 }

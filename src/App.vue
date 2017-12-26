@@ -18,9 +18,36 @@ export default {
   },
   created() {
     this.getBisicInfo()
-    this.getProdcutClassify()
+    this.getHome()
   },
   methods: {
+    getHome() {
+      this.axios(api.home.query()).then((res) => {
+        let data = res.data
+        if (data.code === '200') {
+          let state = this.$store.state
+
+          let aboutus = data.data.aboutUs
+          if (aboutus) {
+            state.aboutusId = aboutus.id
+          }
+
+          let news = data.data.news
+          if (news) {
+            news.detail = ''
+            state.news = news
+          }
+
+          state.supportClassify = data.data.supportClassify
+
+          let productClassify = data.data.productClassify
+          productClassify.forEach((v, i) => {
+            v.link = `product/list/c${v.id}`
+          })
+          state.productClassify = productClassify
+        }
+      })
+    },
     getBisicInfo() {
       this.axios(api.basicInfo.query()).then((res) => {
         let data = res.data
@@ -34,23 +61,6 @@ export default {
           })
           this.$store.state.basicInfo = data.data
         }
-      }).catch((err) => {
-        console.log(err)
-      })
-    },
-    getProdcutClassify() {
-      this.axios(api.productClassify.query()).then((res) => {
-        let data = res.data
-        let state = this.$store.state
-        if (data.code === '200') {
-          data.data.list.forEach((v, i) => {
-            v.link = '1111'
-            v.open = false
-          })
-          state.productClassify = data.data.list
-        }
-      }).catch((err) => {
-        console.log(err)
       })
     }
   },

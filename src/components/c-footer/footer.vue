@@ -42,8 +42,15 @@ import api from 'components/tools/api'
 export default {
   data() {
     return {
-      // navItems
-      navItems: [
+      friendLinkItems: []
+    }
+  },
+  computed: {
+    basicInfo() {
+      return this.$store.state.basicInfo
+    },
+    navItems() {
+      let navItems = [
         {name: 'HOME', link: '/home'},
         {
           name: 'PRODUCT',
@@ -57,13 +64,12 @@ export default {
         {name: 'SERVICE & SUPPORT', link: '/support'},
         {name: 'NEWS', link: '/news'},
         {name: 'ABOUT US', link: '/aboutus'}
-      ],
-      friendLinkItems: []
-    }
-  },
-  computed: {
-    basicInfo() {
-      return this.$store.state.basicInfo
+      ]
+      let aboutusId = this.$store.state.aboutusId
+      if (aboutusId) {
+        navItems[5].link = `/news/display/c${aboutusId}`
+      }
+      return navItems
     }
   },
   created() {

@@ -14,7 +14,10 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
-    basicInfo: {},
+    basicInfo: {}, // 基础信息
+    aboutusId: null, // 第一条关于我们id
+    news: null, // 第一条新闻数据
+    supportClassify: [],
     productNav: [],
     productClassify: [],
     newsClassify: [],

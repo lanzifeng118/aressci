@@ -28,7 +28,6 @@ export default {
   computed: {
     items() {
       let items = this.$store.state.productClassify
-      // items = items.concat([{img: 'xxx', name: 'xxx', link: '11'}])
       if (items.length > 3) {
         items = items.slice(-1).concat(items).concat(items.slice(0, 2))
       } else {

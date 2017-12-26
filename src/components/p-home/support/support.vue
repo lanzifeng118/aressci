@@ -12,9 +12,13 @@
 
 <script>
 export default {
-  props: ['items'],
   data() {
     return {
+    }
+  },
+  computed: {
+    items() {
+      return this.$store.state.supportClassify
     }
   }
 }

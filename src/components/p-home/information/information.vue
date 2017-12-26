@@ -5,7 +5,7 @@
         <!-- us -->
         <li class="home-information-item home-us white-box">
           <h3 class="home-information-item-title">About Us</h3>
-          <router-link v-show="aboutus" :to="'/aboutus/display/c' + aboutus.id" class="home-information-item-more">
+          <router-link v-if="aboutusId" :to="'/aboutus/display/c' + aboutusId" class="home-information-item-more">
             MORE<span class="icon-more"></span>
           </router-link>
           <h4 class="home-information-item-h4">
@@ -16,7 +16,7 @@
 
         <!-- news -->
         <li class="home-information-item home-news white-box">
-          <news v-if="news" :item="news"></news>
+          <news></news>
         </li>
 
         <!-- product -->
@@ -48,7 +48,7 @@
 
         <!-- service -->
         <li class="home-information-item home-service white-box">
-          <support v-if="supportClassify" :items="supportClassify"></support>
+          <support></support>
         </li>
       </ul>
     </div>
@@ -59,16 +59,11 @@
 import slider from 'components/slider/slider'
 import news from 'components/p-home/news/news'
 import support from 'components/p-home/support/support'
-import api from 'components/tools/api'
 
 export default {
   data() {
     return {
-      aboutus: null,
-      supportClassify: null,
-      news: null,
       product: {
-        list: [],
         slice: [],
         index: 0,
         num: 4,
@@ -80,47 +75,45 @@ export default {
   computed: {
     basicInfo() {
       return this.$store.state.basicInfo
+    },
+    aboutusId() {
+      return this.$store.state.aboutusId
+    },
+    productClassify() {
+      return this.$store.state.productClassify
+    }
+  },
+  watch: {
+    productClassify() {
+      this.getProductSlice()
     }
   },
   created() {
-    this.getHome()
+    this.getProductSlice()
   },
   methods: {
-    getHome() {
-      this.axios(api.home.query()).then((res) => {
-        let data = res.data
-        console.log(data)
-        if (data.code === '200') {
-          this.aboutus = data.data.aboutUs
-          this.news = data.data.news
-          this.supportClassify = data.data.supportClassify
-
-          let productClassify = data.data.productClassify
-          productClassify.forEach((v, i) => {
-            v.link = `product/list/c${v.id}`
-          })
-          this.product.list = productClassify
-          this.getProductSlice()
-          this.dotShow()
-        }
-      })
-    },
     getProductSlice() {
       let product = this.product
-      product.slice = product.list.slice(product.index * product.num, (product.index + 1) * product.num)
+      let pClassify = this.productClassify
+      let pClassifyLength = pClassify.length
+      if (pClassifyLength === 0) {
+        return
+      }
+      product.slice = pClassify.slice(product.index * product.num, (product.index + 1) * product.num)
+      if (pClassifyLength > product.num) {
+        this.dotShow()
+      }
     },
     dotShow() {
       let product = this.product
-      product.total = Math.ceil(product.list.length / product.num)
-      if (product.total > 1) {
-        product.page = []
-        for (let i = 0; i < product.total; i++) {
-          let obj = {active: false}
-          if (i === product.index) {
-            obj.active = true
-          }
-          product.page.push(obj)
+      product.total = Math.ceil(this.productClassify.length / product.num)
+      product.page = []
+      for (let i = 0; i < product.total; i++) {
+        let obj = {active: false}
+        if (i === product.index) {
+          obj.active = true
         }
+        product.page.push(obj)
       }
     },
     chagePage(index) {
