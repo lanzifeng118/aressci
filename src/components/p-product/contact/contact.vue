@@ -1,13 +1,13 @@
 <template>
   <div class="product-contact">
-    <h3>Contact Us</h3>
+    <h3>联系我们</h3>
     <ul>
       <li>
-        Our emai is <b>{{item.email}}</b>. You can <a :href="'mailto:?' + item.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">
-          Click Here
-        </a> to send an emai to us handily!
+        我们的邮箱 <b>{{item.email}}</b>. 你可以 <a :href="'mailto:?' + item.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">
+          点击这里
+        </a>很方便地发邮件给我们!
       </li>
-      <li><h4>Our phone number is <b>{{item.telephone}}</b>. You can call us during work time ({{item.worktime}}).</h4></li>
+      <li><h4>我们的电话 <b>{{item.telephone}}</b>. 你可以在工作时间 ({{item.worktime}})联系我们.</h4></li>
     </ul>
   </div>
 </template>

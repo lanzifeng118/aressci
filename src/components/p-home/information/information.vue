@@ -4,9 +4,9 @@
       <ul>
         <!-- us -->
         <li class="home-information-item home-us white-box">
-          <h3 class="home-information-item-title">About Us</h3>
+          <h3 class="home-information-item-title">关于我们</h3>
           <router-link v-if="aboutusId" :to="'/aboutus/display/c' + aboutusId" class="home-information-item-more">
-            MORE<span class="icon-more"></span>
+            更多<span class="icon-more"></span>
           </router-link>
           <h4 class="home-information-item-h4">
             <router-link to="/aboutus/display">{{basicInfo.name}}</router-link>
@@ -21,9 +21,9 @@
 
         <!-- product -->
         <li class="home-information-item home-product white-box">
-          <h3 class="home-information-item-title">Our Products</h3>
+          <h3 class="home-information-item-title">我们的产品</h3>
           <router-link to="/product" class="home-information-item-more">
-            MORE<span class="icon-more"></span>
+            更多<span class="icon-more"></span>
           </router-link>
           <ul class="home-information-product-ul">
             <li v-for="item in product.slice">

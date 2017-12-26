@@ -2,9 +2,9 @@
 <div class="product-list">
   <div class="product-position position">
     <span class="icon-location_fill icon"></span>
-    <router-link to="/">Home</router-link>
+    <router-link to="/">首页</router-link>
     <span class="icon-right"></span>
-    <router-link to="/product">All Products Categories</router-link>
+    <router-link to="/product">所有品牌</router-link>
     <span class="icon-right" v-if="classifyName"></span>
     <span v-if="classifyName">{{classifyName}}</span>
   </div>

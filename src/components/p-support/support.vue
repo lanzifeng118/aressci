@@ -4,9 +4,9 @@
     <div class="service-content">
       <div class="position">
         <span class="icon-location_fill icon"></span>
-        <router-link to="/">Home</router-link>
+        <router-link to="/">首页</router-link>
         <span class="icon-right"></span>
-        Servive & Support
+        服务与支持
       </div>
       <div class="service-text">
         <h2>Technical Services</h2>
@@ -22,7 +22,7 @@
               </tr>
               <!-- classify -->
               <tr>
-                <td>Topic</td>
+                <td>主题</td>
                 <td>
                   <select v-model="item.classify">
                     <option disabled value="">Please select</option>
@@ -92,7 +92,7 @@
                 <td></td>
                 <td>
                   <p class="service-warn">{{warnText}}</p>
-                  <button type="button" class="button" @click="submit">SUBMIT</button>
+                  <button type="button" class="button" @click="submit">提交</button>
                 </td>
               </tr>
             </tbody>

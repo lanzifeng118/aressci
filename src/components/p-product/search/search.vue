@@ -2,12 +2,12 @@
 <div class="product-list">
   <div class="product-position position">
     <span class="icon-location_fill icon"></span>
-    <router-link to="/">Home</router-link>
+    <router-link to="/">首页</router-link>
     <span class="icon-right"></span>
-    <router-link to="/product">All Products Categories</router-link>
+    <router-link to="/product">所有品牌</router-link>
     <span class="icon-right"></span>
-    <span v-if="searchText">SEARCH-{{searchText}}</span>
-    <span v-if="!searchText">SEARCH ALL</span>
+    <span v-if="searchText">查询-{{searchText}}</span>
+    <span v-if="!searchText">查询所有</span>
   </div>
   <div class="product-list-show f-left">
     <div class="product-list-show-classify">

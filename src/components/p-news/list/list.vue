@@ -3,9 +3,9 @@
     <!-- position-all -->
     <div class="position news-position" v-if="all">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">首页</router-link>
       <span class="icon-right"></span>
-      All News
+      所有分类
     </div>
     <!-- position-list -->
     <div class="position news-position" v-if="!all">

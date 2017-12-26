@@ -1,8 +1,8 @@
 <template>
   <div class="home-information-news" v-if="item">
-    <h3 class="home-information-item-title">News</h3>
+    <h3 class="home-information-item-title">新闻</h3>
     <router-link to="news" class="home-information-item-more">
-      MORE<span class="icon-more"></span>
+      更多<span class="icon-more"></span>
     </router-link>
     <h4 class="home-information-item-h4">
       <router-link :to="'/news/display/p' + item.id">{{item.name}}</router-link>

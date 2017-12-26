@@ -9,8 +9,8 @@
       <!--header-version-->
       <div class="f-right">
         <div class="header-version">
-          <p><a href="#"><img src="static/images/icon-Chinese.png" alt=""></a></p>
-          <p><img src="static/images/icon-English.png" alt=""></p>
+          <p><img src="static/images/icon-Chinese.png" alt=""></p>
+          <p><a href="http://lanzifeng.com/en" target="_blank"><img src="static/images/icon-English.png" alt=""></a></p>
         </div>
         <!-- header-search -->
         <div class="header-search">
@@ -18,7 +18,7 @@
             <input class="header-search-input f-left" v-model="searchText">
             <div class="header-search-submit f-right" @click="searchSubmit">
               <span class="icon-search"></span>
-              SEARCH
+              搜索
             </div>
           </div>
         </div>
@@ -86,19 +86,19 @@ export default {
     return {
       // navItems
       navItems: [
-        {name: 'HOME', link: '/home'},
+        {name: '首页', link: '/home'},
         {
-          name: 'PRODUCT',
+          name: '产品',
           link: '/product',
           list: []
         },
         {
-          name: 'PROJECT EXPERIENCE',
+          name: '项目经验',
           link: '/experience'
         },
-        {name: 'SERVICE & SUPPORT', link: '/support'},
-        {name: 'NEWS', link: '/news'},
-        {name: 'ABOUT US', link: '/aboutus'}
+        {name: '服务与支持', link: '/support'},
+        {name: '新闻', link: '/news'},
+        {name: '关于我们', link: '/aboutus'}
       ],
 
       searchText: '',

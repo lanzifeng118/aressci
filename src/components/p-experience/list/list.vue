@@ -2,9 +2,9 @@
   <div class="experience-list">
     <div class="experience-position position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">首页</router-link>
       <span class="icon-right"></span>
-      <router-link to="/experience/all">All Project Experiences</router-link>
+      <router-link to="/experience/all">项目经验列表</router-link>
       <span class="icon-right"></span>
       <span>{{item.name}}</span>
     </div>

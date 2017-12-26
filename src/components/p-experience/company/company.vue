@@ -25,7 +25,7 @@
     </div>
     <!-- more -->
     <div class="experience-item-more" v-if="all">
-      <router-link :to="'/experience/list/c' + experience.id">MORE <span class="icon-more"></span></router-link>
+      <router-link :to="'/experience/list/c' + experience.id">更多 <span class="icon-more"></span></router-link>
     </div>
   </div>
 </template>

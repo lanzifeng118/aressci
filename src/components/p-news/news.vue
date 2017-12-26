@@ -32,7 +32,7 @@ export default {
             v.border = false
             v.link = `/news/list/c${v.id}`
           })
-          this.$store.state.newsClassify = [{name: 'All News', link: '/news/all', border: false}].concat(list)
+          this.$store.state.newsClassify = [{name: '所有分类', link: '/news/all', border: false}].concat(list)
         }
       })
     }

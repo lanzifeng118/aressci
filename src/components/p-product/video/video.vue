@@ -1,6 +1,6 @@
 <template>
   <div class="product-video" v-if="items.length > 0">
-    <h2 class="product-video-name">Product Video</h2>
+    <h2 class="product-video-name">产品视频</h2>
     <div class="product-video-btns" v-if="items.length > 3">
       <button type="button" name="button" @mouseenter="clear">
         <span class="icon-stop"></span>

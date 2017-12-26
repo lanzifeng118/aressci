@@ -2,9 +2,9 @@
   <div class="product-all wrap">
     <div class="product-position position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">首页</router-link>
       <span class="icon-right"></span>
-      All Products Categories
+      所有品牌
     </div>
     <div class="product-all-items-wrap">
       <ul class="product-all-items" v-if="items.length > 0">

@@ -29,7 +29,7 @@ export default {
           list.forEach((v, i) => {
             v.link = `/experience/list/c${v.id}`
           })
-          this.items = [{name: 'All Experience', link: '/experience/all'}].concat(data.data.list)
+          this.items = [{name: '项目经验列表', link: '/experience/all'}].concat(data.data.list)
         }
       })
     }

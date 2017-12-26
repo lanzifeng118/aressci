@@ -2,9 +2,9 @@
   <div class="about-display">
     <div class="position about-position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">首页</router-link>
       <span class="icon-right"></span>
-      <router-link to="/aboutus">About Us</router-link>
+      <router-link to="/aboutus">关于我们</router-link>
       <span class="icon-right"></span>
       {{item.title}}
     </div>

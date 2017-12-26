@@ -2,9 +2,9 @@
   <div class="news-display">
     <div class="position news-position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">首页</router-link>
       <span class="icon-right"></span>
-      <router-link to="/news">All News</router-link>
+      <router-link to="/news">所有分类</router-link>
       <span class="icon-right" v-if="classifyId"></span>
       <router-link :to="'/news/lsit/c' + classifyId" v-if="classifyId">{{item.classify}}</router-link>
       <span class="icon-right"></span>

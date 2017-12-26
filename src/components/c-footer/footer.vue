@@ -4,12 +4,12 @@
     <ul class="f-clearfix">
       <li>
         <a :href="'mailto:?' + basicInfo.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">
-          <span class="icon icon-mail"></span>Email Page
+          <span class="icon icon-mail"></span>邮件
         </a>
       </li>
-      <li><a href="javascrip: void(0);" @click="print"><span class="icon icon-Print"></span>Print Page</a></li>
+      <li><a href="javascrip: void(0);" @click="print"><span class="icon icon-Print"></span>打印页面</a></li>
       <li class="footer-link">
-        <a href="javascrip: void(0);"><span class="icon icon-share"></span>Friend Links</a>
+        <a href="javascrip: void(0);"><span class="icon icon-share"></span>友情链接</a>
         <ul class="footer-link-ul">
           <li v-for="itemF in friendLinkItems"><a :href="itemF.link" target="_blank"><span class="icon icon-dot"></span>{{itemF.name}}</a></li>
         </ul>
@@ -26,7 +26,7 @@
     </div>
     <div class="wrap">
       <ul class="footer-info">
-        <li><span class="icon icon-people_fill"></span>Linkman: {{basicInfo.linkman}}</li>
+        <li><span class="icon icon-people_fill"></span>联系人: {{basicInfo.linkman}}</li>
         <li><span class="icon icon-phone"></span>{{basicInfo.telephone}}</li>
         <li><span class="icon icon-mail"></span>{{basicInfo.email}}</li>
       </ul>
@@ -51,19 +51,18 @@ export default {
     },
     navItems() {
       let navItems = [
-        {name: 'HOME', link: '/home'},
+        {name: '首页', link: '/home'},
         {
-          name: 'PRODUCT',
-          link: '/product',
-          list: []
+          name: '产品',
+          link: '/product'
         },
         {
-          name: 'PROJECT EXPERIENCE',
+          name: '项目经验',
           link: '/experience'
         },
-        {name: 'SERVICE & SUPPORT', link: '/support'},
-        {name: 'NEWS', link: '/news'},
-        {name: 'ABOUT US', link: '/aboutus'}
+        {name: '服务与支持', link: '/support'},
+        {name: '新闻', link: '/news'},
+        {name: '关于我们', link: '/aboutus'}
       ]
       let aboutusId = this.$store.state.aboutusId
       if (aboutusId) {

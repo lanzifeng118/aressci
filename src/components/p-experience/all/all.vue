@@ -2,9 +2,9 @@
   <div class="experience-all">
     <div class="experience-position position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">首页</router-link>
       <span class="icon-right"></span>
-      All Project Experiences
+      项目经验列表
     </div>
     <!-- items -->
     <experience-company v-if="items.length > 0" v-for="item in items" :experience="item" :all="all"></experience-company>
