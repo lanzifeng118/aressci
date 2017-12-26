@@ -4,6 +4,7 @@ import Home from 'components/p-home/home'
 import Product from 'components/p-product/product'
 import ProductAll from 'components/p-product/all/all'
 import ProductList from 'components/p-product/list/list'
+import ProductSearch from 'components/p-product/search/search'
 import ProductDisplay from 'components/p-product/display/display'
 import Experience from 'components/p-experience/experience'
 import ExperienceAll from 'components/p-experience/all/all'
@@ -45,6 +46,13 @@ let obj = {
         {
           path: 'list',
           component: ProductList,
+          children: [
+            {path: ':id'}
+          ]
+        },
+        {
+          path: 'search',
+          component: ProductSearch,
           children: [
             {path: ':id'}
           ]

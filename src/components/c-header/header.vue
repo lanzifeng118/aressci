@@ -141,7 +141,7 @@ export default {
       })
     },
     searchSubmit() {
-
+      this.$router.push(`/product/search/${this.searchText}`)
     },
     hoverInList(index) {
       if (index === 1) {

@@ -48,7 +48,7 @@ export default {
   methods: {
     getItem() {
       let path = this.$route.path
-      if (path === '/product/all') {
+      if (path === '/product/all' || path.indexOf('/product/search') >= 0) {
         this.axios(api.productBanner.query()).then((res) => {
           let data = res.data
           if (data.code === '200') {

@@ -54,7 +54,7 @@ export default {
       let allPath = '/product/all'
       let listPath = '/product/list'
       let displayPath = '/product/display'
-      if (path === allPath) {
+      if (path === allPath || path.indexOf('/product/search') >= 0) {
         // all
         this.items.forEach((v, i) => {
           if (v.open) {

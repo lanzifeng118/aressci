@@ -112,7 +112,9 @@ export default {
   },
   methods: {
     getItems() {
-      this.axios(api.productVideo.queryByClassify(this.classify)).then((res) => {
+      let productVideo = api.productVideo
+      let obj = this.classify ? productVideo.queryByClassify(this.classify) : productVideo.query()
+      this.axios(obj).then((res) => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {
