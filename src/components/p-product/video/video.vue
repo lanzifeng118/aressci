@@ -85,6 +85,11 @@ export default {
       }
     }
   },
+  watch: {
+    classify() {
+      this.getItems()
+    }
+  },
   computed: {
     itemHeight() {
       return (this.params.height + this.params.padding) * this.items.length
@@ -102,7 +107,7 @@ export default {
   },
   methods: {
     getItems() {
-      this.axios(api.productVideo.query(this.classify)).then((res) => {
+      this.axios(api.productVideo.queryByClassify(this.classify)).then((res) => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {

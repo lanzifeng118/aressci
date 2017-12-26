@@ -11,26 +11,10 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-
 export default {
+  props: ['items'],
   data() {
     return {
-      items: []
-    }
-  },
-  created() {
-    this.getItems()
-  },
-  methods: {
-    getItems() {
-      this.axios(api.supportClassify.query()).then((res) => {
-        let data = res.data
-        console.log(data)
-        if (data.code === '200') {
-          this.items = data.data.list
-        }
-      })
     }
   }
 }

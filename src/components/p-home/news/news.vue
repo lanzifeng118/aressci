@@ -13,27 +13,10 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-
 export default {
+  props: ['item'],
   data() {
     return {
-      item: {}
-    }
-  },
-  created() {
-    this.getItem()
-  },
-  methods: {
-    getItem() {
-      this.axios(api.newsList.queryByOne()).then((res) => {
-        let data = res.data
-        console.log(data)
-        if (data.code === '200') {
-          data.data.modifytime = data.data.modifytime.replace(/\s.+$/g, '')
-          this.item = data.data
-        }
-      })
     }
   }
 }

@@ -5,7 +5,7 @@
         <!-- us -->
         <li class="home-information-item home-us white-box">
           <h3 class="home-information-item-title">About Us</h3>
-          <router-link to="/aboutus" class="home-information-item-more">
+          <router-link v-show="aboutus" :to="'/aboutus/display/c' + aboutus.id" class="home-information-item-more">
             MORE<span class="icon-more"></span>
           </router-link>
           <h4 class="home-information-item-h4">
@@ -13,10 +13,12 @@
           </h4>
           <p class="home-information-item-p" v-html="basicInfo.brief"></p>
         </li>
+
         <!-- news -->
         <li class="home-information-item home-news white-box">
-          <news></news>
+          <news v-if="news" :item="news"></news>
         </li>
+
         <!-- product -->
         <li class="home-information-item home-product white-box">
           <h3 class="home-information-item-title">Our Products</h3>
@@ -43,9 +45,10 @@
             <span class="icon-right"></span>
           </div>
         </li>
+
         <!-- service -->
         <li class="home-information-item home-service white-box">
-          <support></support>
+          <support v-if="supportClassify" :items="supportClassify"></support>
         </li>
       </ul>
     </div>
@@ -61,7 +64,9 @@ import api from 'components/tools/api'
 export default {
   data() {
     return {
-      items: [],
+      aboutus: null,
+      supportClassify: null,
+      news: null,
       product: {
         list: [],
         slice: [],
@@ -78,18 +83,23 @@ export default {
     }
   },
   created() {
-    this.getProdcutClassify()
+    this.getHome()
   },
   methods: {
-    getProdcutClassify() {
-      this.axios(api.productClassify.query()).then((res) => {
+    getHome() {
+      this.axios(api.home.query()).then((res) => {
         let data = res.data
+        console.log(data)
         if (data.code === '200') {
-          data.data.list.forEach((v, i) => {
+          this.aboutus = data.data.aboutUs
+          this.news = data.data.news
+          this.supportClassify = data.data.supportClassify
+
+          let productClassify = data.data.productClassify
+          productClassify.forEach((v, i) => {
             v.link = `product/list/c${v.id}`
           })
-          let list = data.data.list
-          this.product.list = list
+          this.product.list = productClassify
           this.getProductSlice()
           this.dotShow()
         }

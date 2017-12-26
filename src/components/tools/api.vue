@@ -1,5 +1,6 @@
 <script>
 const LANG = 'cn'
+let homeUrl = '/api/guest/index/summary'
 let navUrl = '/api/guest/nav'
 let basicInfoUrl = '/api/guest/basicinfo'
 let productListUrl = '/api/guest/product/list'
@@ -75,6 +76,11 @@ let insertFun = (url, data) => {
   }
 }
 let api = {
+  home: {
+    query() {
+      return queryFun(homeUrl)
+    }
+  },
   nav: {
     query() {
       return queryFun(navUrl)
