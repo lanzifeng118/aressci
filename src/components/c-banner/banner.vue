@@ -6,7 +6,8 @@
         v-for="item in items"
         :class="{active: item.active}"
       >
-        <a :href="item.link" target="_blank"><img :src="item.img"></a>
+        <a v-if="item.link" :href="item.link" target="_blank" :data-link="item.link"><img :src="item.img"></a>
+        <a v-if="!item.link" href="javascript: void(0);" target="_blank" :data-link="item.link"><img :src="item.img"></a>
       </li>
     </ul>
     <!-- dot -->

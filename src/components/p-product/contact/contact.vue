@@ -62,8 +62,8 @@ export default {
   color: #0d93b8;
 }
 .product-contact a {
+  font-weight: bold;
   font-size: 12px;
-  color: #666;
   text-transform: uppercase;
   display: inline-block;
 }

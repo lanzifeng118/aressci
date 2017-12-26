@@ -1,6 +1,6 @@
 <template>
 <div class="banner-in">
-  <a v-if="item.link" :href="item.link"><img v-if="item.img" :src="item.img"></a>
+  <a v-if="item.link" :href="item.link" target="_blank"><img v-if="item.img" :src="item.img"></a>
   <img v-if="!item.link && item.img" :src="item.img">
 </div>
 </template>
