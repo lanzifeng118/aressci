@@ -1,7 +1,7 @@
 <template>
-  <div class="product-video">
+  <div class="product-video" v-if="items.length > 0">
     <h2 class="product-video-name">Product Video</h2>
-    <div class="product-video-btns">
+    <div class="product-video-btns" v-if="items.length > 3">
       <button type="button" name="button" @mouseenter="clear">
         <span class="icon-stop"></span>
       </button>
@@ -13,10 +13,10 @@
       </button>
     </div>
     <!-- items -->
-    <div class="product-video-wrap">
+    <div class="product-video-wrap" :style="'height:' + wrapHeight + 'px'">
       <ul
         class="product-video-items"
-        :style="'top:'+params.top+'px; height:'+itemHeight+'px;'"
+        :style="'top:'+params.top+'px; height:'+itemsHeight+'px;'"
       >
         <li
           class="product-video-item white-box"
@@ -91,7 +91,12 @@ export default {
     }
   },
   computed: {
-    itemHeight() {
+    wrapHeight() {
+      let length = this.items.length
+      let itemHeight = this.params.height + this.params.padding
+      return length < 3 ? itemHeight * length : itemHeight * this.liLength
+    },
+    itemsHeight() {
       return (this.params.height + this.params.padding) * this.items.length
     },
     criticalTop() {
@@ -216,7 +221,6 @@ export default {
   position: relative;
   overflow: hidden;
   line-height: 0;
-  height: 621px;
 }
 .product-video-items {
   padding: 0 10px;

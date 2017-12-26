@@ -76,7 +76,7 @@ export default {
       this.index = index
     },
     bannerAuto() {
-      if (this.items.length === 0) {
+      if (this.items.length <= 1) {
         return
       }
       this.items[this.index].active = false
