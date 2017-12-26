@@ -34,11 +34,13 @@ export default {
         console.log(data)
         if (data.code === '200') {
           let list = data.data.list
-          list.forEach((v, i) => {
-            v.link = `/aboutus/display/c${v.id}`
-          })
-          this.$store.state.aboutusNav = data.data.list
-          this.redirect()
+          if (list.length > 0) {
+            list.forEach((v, i) => {
+              v.link = `/aboutus/display/c${v.id}`
+            })
+            this.$store.state.aboutusNav = data.data.list
+            this.redirect()
+          }
         }
       })
     },

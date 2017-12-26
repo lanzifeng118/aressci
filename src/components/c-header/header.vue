@@ -133,7 +133,7 @@ export default {
           let aboutusId = data.data.aboutusId
           if (aboutusId) {
             this.$store.state.aboutusId = aboutusId
-            this.items[5].link = `/news/display/c${aboutusId}`
+            this.navItems[5].link = `/aboutus/display/c${aboutusId}`
           }
         }
       }).catch((err) => {

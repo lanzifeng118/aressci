@@ -67,7 +67,7 @@ export default {
       ]
       let aboutusId = this.$store.state.aboutusId
       if (aboutusId) {
-        navItems[5].link = `/news/display/c${aboutusId}`
+        navItems[5].link = `/aboutus/display/c${aboutusId}`
       }
       return navItems
     }

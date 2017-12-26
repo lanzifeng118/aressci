@@ -73,6 +73,9 @@ export default {
       return min + ':' + second
     },
     playToggle() {
+      if (!this.$refs.video.duration) {
+        return
+      }
       if (!this.$refs.video.paused) {
         this.$refs.video.pause()
         this.coverShow = true
@@ -80,11 +83,9 @@ export default {
         clearInterval(this.time.counter)
       } else {
         this.$refs.video.play()
-        if (this.$refs.video.total) {
-          this.time.total = this.changeTime(this.$refs.video.duration)
-          this.time.played = this.changeTime(this.$refs.video.currentTime)
-          this.time.counter = setInterval(this.calPlayedTime, 1000)
-        }
+        this.time.total = this.changeTime(this.$refs.video.duration)
+        this.time.played = this.changeTime(this.$refs.video.currentTime)
+        this.time.counter = setInterval(this.calPlayedTime, 1000)
         this.coverShow = false
         this.iconPlay = true
       }
@@ -108,6 +109,9 @@ export default {
   background: #000;
   position: relative;
   line-height: 0;
+}
+.video-wrap video{
+  max-width: 100%;
 }
 .video-cover {
   position: absolute;
