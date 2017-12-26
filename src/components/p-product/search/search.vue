@@ -93,6 +93,7 @@ export default {
         if (data.code === '200') {
           let list = data.data.list
           if (list.length === 0) {
+            this.items = list
             this.noneText = 'None'
           } else {
             this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
