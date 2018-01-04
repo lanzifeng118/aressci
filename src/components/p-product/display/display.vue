@@ -20,35 +20,40 @@
     </div>
     <div class="product-display-box">
       <ul class="product-display-tab f-clearfix">
-        <li :class="{active: tabShow[0]}" @click="show(0)">Product Info</li>
-        <li :class="{active: tabShow[1]}" @click="show(1)">Resources</li>
+        <li :class="{active: tabShow[0]}" @click="tabClick(0)">产品信息</li>
+        <li :class="{active: tabShow[1]}" @click="tabClick(1)">产品资源</li>
       </ul>
       <div class="product-display-detail">
         <!-- info -->
         <div class="product-display-info" v-show="tabShow[0]" v-html="item.detail"></div>
         <!-- resources -->
         <div class="product-display-resources" v-show="tabShow[1]">
-          <h3>Product Documentations</h3>
+          <h3>产品文档</h3>
           <table class="product-display-resources-table" v-if="item.resources && item.resources.length > 0">
             <thead>
               <tr>
-                <th width="70">Type</th>
-                <th>Name</th>
-                <th width="70">Size</th>
+                <th width="70">类型</th>
+                <th>文件名</th>
+                <th width="70">下载</th>
+                <th width="70">大小</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="itemR in item.resources">
-                <td class="type">
+                <td class="center">
                   <span v-if="itemR.type === 'pdf'" class="icon icon-pdf"></span>
                   <span v-if="itemR.type === 'doc'" class="icon icon-word"></span>
                   <span v-if="itemR.type === 'xlsx' || itemR.type === 'xls'" class="icon icon-excel"></span>
                 </td>
-                <td class="name pointer">
-                  <a v-if="itemR.type === 'pdf'" :href="itemR.url" target="_blank">{{itemR.name}}</a>
+                <td class="name">
+                  <a v-if="itemR.type === 'pdf'" :href="itemR.url" target="_blank">{{itemR.name}}
+                  </a>
                   <a v-if="itemR.type !== 'pdf'" :href="itemR.url" :download="itemR.name">{{itemR.name}}</a>
                 </td>
-                <td class="size">{{itemR.size}}</td>
+                <td class="center">
+                  <a :href="itemR.url" :download="itemR.name"><span class="icon-download"></span></a>
+                </td>
+                <td class="center">{{itemR.size}}</td>
               </tr>
             </tbody>
           </table>
@@ -60,6 +65,12 @@
     <product-contact></product-contact>
     <product-video></product-video>
   </div>
+  <toast
+    v-show="toast.show"
+    :text="toast.text"
+    :icon="toast.icon"
+  >
+  </toast>
 </div>
 </template>
 
@@ -67,6 +78,8 @@
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
 import api from 'components/tools/api'
+import util from 'components/tools/util'
+import toast from 'components/toast/toast'
 
 export default {
   data() {
@@ -74,7 +87,13 @@ export default {
       classifyId: 0,
       productId: 0,
       item: {},
-      tabShow: [true, false, false]
+      tabShow: [true, false],
+      // toast
+      toast: {
+        show: false,
+        text: '',
+        icon: ''
+      }
     }
   },
   computed: {
@@ -94,6 +113,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
+      this.tabClick(0)
       this.getIds()
       this.getItem()
     }
@@ -109,7 +129,6 @@ export default {
       this.productId = parseInt(arr[1].slice(1))
     },
     getItem() {
-      console.log('getItem')
       this.axios(api.productList.queryById(this.productId)).then((res) => {
         let data = res.data
         console.log(data)
@@ -117,17 +136,21 @@ export default {
           if (data.data) {
             this.item = data.data
           } else {
-            // util.toast.show(this.toast, '此产品不存在', 'close')
-            // this.goBack()
+            util.toast.show(this.toast, '此产品不存在', 'close')
+            util.goBack(() => {
+              this.$router.push('/product/all')
+            })
           }
         }
       })
     },
-    show(index) {
+    tabClick(index) {
       this.tabShow.forEach((v, i) => {
         let show = false
         if (i === index) {
           show = true
+        } else {
+
         }
         this.$set(this.tabShow, i, show)
       })
@@ -135,7 +158,8 @@ export default {
   },
   components: {
     productVideo,
-    productContact
+    productContact,
+    toast
   }
 }
 </script>
@@ -246,10 +270,10 @@ div.product-display-info {
   vertical-align: middle;
   border-bottom: 1px solid #efefef;
 }
-.product-display-resources-table td.type {
-  text-align: center;
+.product-display-resources-table a {
+  display: block;
 }
-.product-display-resources-table td.size {
+.product-display-resources-table td.center {
   text-align: center;
 }
 </style>

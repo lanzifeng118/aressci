@@ -3,9 +3,7 @@
     <h3>联系我们</h3>
     <ul>
       <li>
-        我们的邮箱 <b>{{item.email}}</b>. 你可以 <a :href="'mailto:?' + item.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">
-          点击这里
-        </a>很方便地发邮件给我们!
+        我们的邮箱是<b>{{item.email}}</b>， 你可以<a :href="'mailto:?' + item.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">点击这里</a>很方便地发邮件给我们!
       </li>
       <li><h4>我们的电话 <b>{{item.telephone}}</b>. 你可以在工作时间 ({{item.worktime}})联系我们.</h4></li>
     </ul>
@@ -63,8 +61,6 @@ export default {
 }
 .product-contact a {
   font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
   display: inline-block;
 }
 .product-contact a:hover {

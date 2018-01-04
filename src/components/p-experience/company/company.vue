@@ -123,6 +123,7 @@ export default {
 }
 .experience-item-logo li {
   width: 227px;
+  height: 81px;
   padding: 10px 0;
   text-align: center;
   float: left;
@@ -130,7 +131,8 @@ export default {
   border: 1px solid #f1f1f1;
 }
 .experience-item-logo li img {
-  width: 150px;
+  max-width: 100%;
+  max-height: 100%;
 }
 .experience-item-more {
   margin-bottom: 15px;

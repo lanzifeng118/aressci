@@ -36,21 +36,14 @@
         </li>
       </ul>
     </div>
-    <!-- videoCover -->
-    <div class="product-video-cover" v-show="videoCover.show">
-      <div class="product-video-cover-wrap">
-        <div class="product-video-cover-close" @click="closeCover">
-          <span class="icon-round_close_fill"></span>
-        </div>
-        <v-video
-          :link="videoCover.link"
-          :name="videoCover.name"
-          :active="videoCover.active"
-          v-if="videoCover.show"
-        >
-        </v-video>
-      </div>
-    </div>
+    <!-- video -->
+      <v-video
+        :link="video.link"
+        :name="video.name"
+        v-if="video.show"
+        @close="closeCover"
+      >
+      </v-video>
   </div>
 </template>
 
@@ -65,7 +58,6 @@ export default {
     return {
       liLength: 3,
       items: [],
-      video: '',
       params: {
         timer: null,
         width: 234,
@@ -75,13 +67,12 @@ export default {
         index: 0,
         direction: true
       },
-      // videoCover
-      videoCover: {
+      // video
+      video: {
         show: false,
         play: false,
         link: '',
-        name: '',
-        active: false
+        name: ''
       }
     }
   },
@@ -105,7 +96,6 @@ export default {
   },
   created() {
     this.getItems()
-    // this.set()
   },
   destroyed() {
     this.clear()
@@ -121,6 +111,7 @@ export default {
           let list = data.data.list
           if (list.length > this.liLength) {
             this.items = list.slice(-1).concat(list).concat(list.slice(0, this.liLength))
+            this.set()
           } else {
             this.items = list
             this.params.top = 0
@@ -163,15 +154,14 @@ export default {
       }
     },
     showCover(index) {
-      this.videoCover.link = this.items[index].video
-      this.videoCover.name = this.items[index].name
-      this.videoCover.active = true
-      this.videoCover.show = true
+      // this.video.link = 'http://localhost:8090/static/upload/upload_0d0fb6110bb83c038e656da2ec38ac92.mp4'
+      this.video.link = this.items[index].video
+      this.video.name = this.items[index].name
+      this.video.show = true
     },
     closeCover() {
-      this.videoCover.active = false
-      this.videoCover.show = false
-      this.videoCover.link = ''
+      this.video.show = false
+      this.video.link = ''
     }
   },
   components: {
@@ -264,33 +254,5 @@ export default {
   padding: 25px 0;
   border-top: none;
   text-align: center;
-}
-.product-video-cover {
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color: rgba(0,0,0,0.5);
-  z-index:9;
-}
-.product-video-cover-wrap {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -300px;
-  margin-left: -210px;
-}
-.product-video-cover-close {
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 22px;
-  z-index: 99;
-  transition: all 0.2s;
-}
-.product-video-cover-close:hover {
-  color: #2d74b9;
 }
 </style>

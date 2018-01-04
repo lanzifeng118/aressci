@@ -41,9 +41,14 @@ function parseUrl(url) {
   return obj
 }
 
+function goBack(callback) {
+  setTimeout(callback, 700)
+}
+
 export default {
   parseUrl,
   toast,
-  req
+  req,
+  goBack
 }
 </script>

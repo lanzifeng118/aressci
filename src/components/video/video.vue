@@ -1,36 +1,44 @@
 <template>
   <div class="video">
-    <h3 class="video-name">{{name}}</h3>
-    <div class="video-wrap" @click="playToggle">
-      <video :src="link" ref="video"></video>
-      <div class="video-cover" v-show="coverShow">
-        <div class="video-cover-btn">
-          <span class="icon-play_fill"></span>
+    <div class="video-wrap" :style="'margin-top:' +  marginTop + 'px'">
+      <!-- close-btn -->
+      <div class="video-cover-close" @click="close">
+        <span class="icon-round_close_fill"></span>
+      </div>
+      <h3 class="video-name">{{name}}</h3>
+      <!-- box -->
+      <div class="video-box" @click="playToggle">
+        <video :src="link" ref="video"></video>
+        <div class="video-cover" v-show="coverShow"><span class="video-cover-btn icon-play_fill"></span></div>
+      </div>
+      <!-- bottom -->
+      <div class="video-bottom f-clearfix">
+        <div class="video-btn-play f-left" @click="playToggle">
+          <span :class="[iconPlay? 'icon-stop' : 'icon-play_fill']"></span>
+        </div>
+        <div class="video-time f-left">
+          <span>{{time.played}}</span>
+          <span class="icon-slash"></span>
+          <span>{{time.total}}</span>
+        </div>
+        <div class="video-btn-muted f-right" @click="mutedToggle">
+          <span :class="[iconMuted? 'icon-muted' : 'icon-notification_fill']"></span>
         </div>
       </div>
-    </div>
-    <div class="video-bottom f-clearfix">
-      <div class="video-btn-play f-left" @click="playToggle">
-        <span :class="[iconPlay? 'icon-stop' : 'icon-play_fill']"></span>
-      </div>
-      <div class="video-time f-left">
-        <span>{{time.played}}</span>
-        <span class="icon-slash"></span>
-        <span>{{time.total}}</span>
-      </div>
-      <div class="video-btn-muted f-right" @click="mutedToggle">
-        <span :class="[iconMuted? 'icon-muted' : 'icon-notification_fill']"></span>
-      </div>
+
     </div>
   </div>
 </template>
 
 <script>
+import global from 'components/tools/global'
 
 export default {
-  props: ['link', 'name', 'active'],
+  props: ['link', 'name'],
   data() {
     return {
+      // marginTop
+      videoHeight: 200,
       iconPlay: false,
       iconMuted: false,
       coverShow: true,
@@ -41,15 +49,21 @@ export default {
       }
     }
   },
-  watch: {
-    active: function() {
-      if (!this.active) {
-        clearInterval(this.time.counter)
-      }
+  computed: {
+    marginTop() {
+      return (global.winHeigth - this.videoHeight - 110) / 2
     }
   },
   destroyed() {
     clearInterval(this.time.counter)
+  },
+  mounted() {
+    let video = this.$refs.video
+    video.addEventListener('durationchange', () => {
+      console.log(video.videoHeight)
+      this.time.total = this.changeTime(this.$refs.video.duration)
+      this.videoHeight = video.videoHeight
+    })
   },
   methods: {
     calPlayedTime() {
@@ -73,6 +87,7 @@ export default {
       return min + ':' + second
     },
     playToggle() {
+      console.log(this.$refs.video.videoHeight)
       if (!this.$refs.video.duration) {
         return
       }
@@ -83,7 +98,6 @@ export default {
         clearInterval(this.time.counter)
       } else {
         this.$refs.video.play()
-        this.time.total = this.changeTime(this.$refs.video.duration)
         this.time.played = this.changeTime(this.$refs.video.currentTime)
         this.time.counter = setInterval(this.calPlayedTime, 1000)
         this.coverShow = false
@@ -93,6 +107,9 @@ export default {
     mutedToggle() {
       this.$refs.video.muted = !this.$refs.video.muted
       this.iconMuted = !this.iconMuted
+    },
+    close() {
+      this.$emit('close')
     }
   }
 }
@@ -100,18 +117,43 @@ export default {
 
 <style>
 .video {
-  display: block;
-  width: 420px;
-  margin-bottom: 50px;
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index:9;
+  text-align: center;
 }
 .video-wrap {
+  position: relative;
+  display: inline-block;
+}
+.video-cover-close {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 22px;
+  z-index: 99;
+  transition: all 0.2s;
+}
+.video-cover-close:hover {
+  color: #2d74b9;
+}
+
+.video-box {
+  min-width: 300px;
+  min-height: 200px;
   text-align: center;
   background: #000;
   position: relative;
   line-height: 0;
 }
-.video-wrap video{
+.video-box video{
   max-width: 100%;
+  max-height: 100%;
 }
 .video-cover {
   position: absolute;

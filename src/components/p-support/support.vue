@@ -9,9 +9,9 @@
         服务与支持
       </div>
       <div class="service-text">
-        <h2>Technical Services</h2>
-        <h4>We appreciate your business and want to provide outstanding and excellent customer service!</h4>
-        <h4>Please complete the form below. The boxes marked with * are required. We will respond as soon as possible.</h4>
+        <h2>技术服务</h2>
+        <h4>感谢您对我们关注，我们希望为您提供优秀的服务!</h4>
+        <h4>请填写下面的表格，带有*是必填项，我们将尽快回复您。</h4>
         <div class="form-table-wrap service-table-wrap">
           <table>
             <tbody>
@@ -25,14 +25,14 @@
                 <td>主题</td>
                 <td>
                   <select v-model="item.classify">
-                    <option disabled value="">Please select</option>
+                    <option disabled value="">请选择</option>
                     <option v-for="item in classifyOption">{{item.name}}</option>
                   </select>
                 </td>
               </tr>
               <!-- Salutation -->
               <tr>
-                <td>Salutation</td>
+                <td>称呼</td>
                 <td>
                   <input
                     v-for="(itemS, index) in salutation"
@@ -47,34 +47,29 @@
 
                 </td>
               </tr>
-              <!-- First name -->
-              <tr>
-                <td><span class="icon-nessisary"></span>First name</td>
-                <td><input type="text" v-model="item.firstName"></td>
-              </tr>
               <!-- Last name -->
               <tr>
-                <td><span class="icon-nessisary"></span>Last name</td>
-                <td><input type="text" v-model="item.lastName"></td>
+                <td><span class="icon-nessisary"></span>姓名</td>
+                <td><input type="text" v-model="item.firstName"></td>
               </tr>
               <!-- Email -->
               <tr>
-                <td><span class="icon-nessisary"></span>E-Mail</td>
+                <td><span class="icon-nessisary"></span>邮箱</td>
                 <td><input type="text" v-model="item.email"></td>
               </tr>
               <!-- tel -->
               <tr>
-                <td>Tel/Phone</td>
+                <td>电话</td>
                 <td><input type="text" v-model="item.tel"></td>
               </tr>
               <!-- Company -->
               <tr>
-                <td>Company</td>
+                <td>公司</td>
                 <td><input type="text" v-model="item.company"></td>
               </tr>
               <!-- Country -->
               <tr>
-                <td>Country</td>
+                <td>国家</td>
                 <td>
                   <select v-model="item.country">
                     <option disabled value="">Please select</option>
@@ -84,7 +79,7 @@
               </tr>
               <!-- Address -->
               <tr>
-                <td class="vertical-top">Address</td>
+                <td class="vertical-top">地址</td>
                 <td><textarea name="name" rows="3" v-model="item.address"></textarea></td>
               </tr>
               <!-- submit -->
@@ -133,10 +128,8 @@ export default {
       },
       classifyOption: [],
       salutation: [
-        {value: 'DR'},
-        {value: 'MR'},
-        {value: 'MRS'},
-        {value: 'MS'}
+        {value: '先生'},
+        {value: '女士'}
       ],
       country: global.country,
       warnText: '',
