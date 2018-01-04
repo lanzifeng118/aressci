@@ -154,7 +154,7 @@ export default {
       }
     },
     showCover(index) {
-      // this.video.link = 'http://localhost:8090/static/upload/upload_0d0fb6110bb83c038e656da2ec38ac92.mp4'
+      // this.video.link = 'http://lanzifeng.com/admin/upload/upload_91d90d5bf20a53d49337f3b0be24be88.mp4'
       this.video.link = this.items[index].video
       this.video.name = this.items[index].name
       this.video.show = true

@@ -17,7 +17,7 @@
             <tbody>
               <!-- message -->
               <tr>
-                <td width="150" class="vertical-top">Your message to us</td>
+                <td width="70" class="vertical-top">留言</td>
                 <td><textarea name="name" rows="4" v-model="item.message"></textarea></td>
               </tr>
               <!-- classify -->
@@ -117,7 +117,7 @@ export default {
       item: {
         classify: '',
         salutation: '',
-        country: 'China',
+        country: '中国',
         message: '',
         firstName: '',
         lastName: '',

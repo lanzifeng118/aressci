@@ -60,9 +60,21 @@ export default {
   mounted() {
     let video = this.$refs.video
     video.addEventListener('durationchange', () => {
-      console.log(video.videoHeight)
+      let winWidth = global.winWidth * 0.95
+      let winHeigth = global.winHeigth * 0.95
+      let videoHeight = 200
+
+      if (video.videoWidth > winWidth) {
+        videoHeight = winWidth / video.videoWidth * video.videoHeight
+        if (videoHeight > winHeigth) {
+          videoHeight = winHeigth - 110
+          video.style.height = videoHeight + 'px'
+        }
+      } else {
+        videoHeight = video.videoHeight
+      }
+      this.videoHeight = videoHeight
       this.time.total = this.changeTime(this.$refs.video.duration)
-      this.videoHeight = video.videoHeight
     })
   },
   methods: {
@@ -127,6 +139,9 @@ export default {
   text-align: center;
 }
 .video-wrap {
+  max-width: 95%;
+  max-height: 95%;
+  overflow: hidden;
   position: relative;
   display: inline-block;
 }
@@ -144,7 +159,7 @@ export default {
 }
 
 .video-box {
-  min-width: 300px;
+  min-width: 400px;
   min-height: 200px;
   text-align: center;
   background: #000;

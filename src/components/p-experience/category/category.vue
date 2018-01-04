@@ -9,30 +9,18 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-
 export default {
   data() {
     return {
-      items: null
+    }
+  },
+  computed: {
+    items() {
+      let items = [{name: '所有品牌', link: '/experience/all'}]
+      return items.concat(this.$store.state.experienceList)
     }
   },
   created() {
-    this.getItems()
-  },
-  methods: {
-    getItems() {
-      this.axios(api.experienceList.query()).then((res) => {
-        let data = res.data
-        if (data.code === '200') {
-          let list = data.data.list
-          list.forEach((v, i) => {
-            v.link = `/experience/list/c${v.id}`
-          })
-          this.items = [{name: '项目经验列表', link: '/experience/all'}].concat(data.data.list)
-        }
-      })
-    }
   },
   components: {
   }

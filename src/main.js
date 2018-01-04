@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     aboutusId: null, // 第一条关于我们id
     news: null, // 第一条新闻数据
     supportClassify: [],
+    experienceList: [],
     productNav: [],
     productClassify: [],
     newsClassify: [],

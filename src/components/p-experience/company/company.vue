@@ -4,23 +4,23 @@
     <h2 v-if="!all">{{experience.name}}</h2>
     <ul class="experience-item-title f-clearfix">
       <li
-        v-for="(item, index) in experience.classify"
+        v-for="(item, index) in experience.logo"
         @click="change(index)"
         :class="{active: activeIndex === index}"
       >
-        {{item.name}}
+        {{item.classify}}
       </li>
     </ul>
     <div class="experience-item-logo">
       <ul
-        v-for="(item, index) in experience.classify"
+        v-for="(item, index) in experience.logo"
         class="f-clearfix"
         v-show="activeIndex === index"
       >
         <!-- all -->
-        <li v-for="(itemLogo, indexLogo) in item.logo" v-if="all && indexLogo < 8"><img :src="itemLogo"></li>
+        <li v-for="(itemLogo, indexLogo) in item.list" v-if="all && indexLogo < 8"><img :src="itemLogo"></li>
         <!-- list -->
-        <li v-for="(itemLogo, indexLogo) in item.logo" v-if="!all"><img :src="itemLogo"></li>
+        <li v-for="(itemLogo, indexLogo) in item.list" v-if="!all"><img :src="itemLogo"></li>
       </ul>
     </div>
     <!-- more -->

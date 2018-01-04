@@ -21,10 +21,10 @@ let toast = {
 
 let req = {
   queryError(obj) {
-    toast.fade(obj, 'Fail. Try Later!')
+    toast.fade(obj, '出意外了，稍后再试 !')
   },
   changeError(obj) {
-    toast.fade(obj, 'Error. Try Later!', 'sad')
+    toast.fade(obj, '出错了，稍后再试 !', 'sad')
   }
 }
 
