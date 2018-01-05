@@ -127,13 +127,14 @@ export default {
   width: 294px;
   height: 147px;
   overflow: hidden;
-  line-height: 0;
+  line-height: 147px;
   margin-bottom: 5px;
   transition: all 0.2s;
 }
 .home-category-li img {
   max-width: 100%;
   max-height: 100%;
+  vertical-align: middle;
 }
 .home-category-li:hover a {
   border-color: #ddd;

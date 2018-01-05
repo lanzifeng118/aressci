@@ -162,11 +162,11 @@ export default {
       this.axios(api.support.insert(this.item)).then((res) => {
         let data = res.data
         if (data.code === '200') {
-          util.toast.fade(this.toast, 'Success!', 'appreciate')
+          util.toast.fade(this.toast, '提交成功!', 'appreciate')
           this.item = {
             classify: '',
             salutation: '',
-            country: 'China',
+            country: '中国',
             message: '',
             firstName: '',
             lastName: '',
@@ -183,15 +183,11 @@ export default {
     verify() {
       let item = this.item
       if (!item.firstName.trim()) {
-        this.warnText = `First name can't be empty.`
-        return false
-      }
-      if (!item.lastName.trim()) {
-        this.warnText = `Last name can't be empty.`
+        this.warnText = `姓名不能为空`
         return false
       }
       if (!item.email.trim()) {
-        this.warnText = `Email can't be empty.`
+        this.warnText = `邮箱不能唯恐`
         return false
       }
       this.warnText = ``

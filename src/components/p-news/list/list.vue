@@ -190,6 +190,11 @@ export default {
   display: block;
   height: 100%;
 }
+.news-list-img {
+  height: 156px;
+  overflow: hidden;
+  font-size: 0;
+}
 .news-list-img img {
   width: 100%;
 }
