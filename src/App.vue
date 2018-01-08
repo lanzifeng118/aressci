@@ -73,8 +73,22 @@ export default {
 
 <style>
 @import "./common/common.css";
-#app {
+html {
+  overflow-y: scroll;
+}
 
+:root {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:root body {
+  position: absolute;
+}
+
+body {
+  width: 100vw;
+  overflow: hidden;
 }
 
 </style>

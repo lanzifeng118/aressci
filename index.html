@@ -24,9 +24,9 @@
       width: 72px;
       position: absolute;
       top: 50%;
-      left: 50%;
+      width: 100%;
+      left: 0;
       margin-top: -60px;
-      margin-left: -36px;
     }
     .loading-logo {
       text-align: center;
@@ -37,11 +37,10 @@
       animation: rotate 2s ease-in-out infinite;
     }
     .loading-dot {
-      height: 14px;
-      width: 200px;
+      text-align: center;
     }
-    #loading span {
-      float: left;
+    .loading-dot span {
+      display: inline-block;
       width: 14px;
       height: 14px;
       border-radius: 7px;
@@ -49,13 +48,14 @@
       margin-right: 15px;
       animation: loading 1.5s cubic-bezier(0.57, 0, 0.36, 1) infinite;
     }
-    #loading span.loading-02 {
+    .loading-dot span.loading-02 {
       background-color: #acce13;
       animation-delay: 0.25s;
     }
-    #loading span.loading-03 {
+    .loading-dot span.loading-03 {
       background-color: #50c5ff;
       animation-delay: 0.5s;
+      margin-right: 0;
     }
     @keyframes loading {
       0, 100% {
@@ -90,13 +90,17 @@
     </div>
     <div id="app"></div>
     <script type="text/javascript">
-    setTimeout(function() {
-        var loading = document.getElementById('loading');
-        loading.style.opacity = '0'
-        setTimeout(function() {
-          loading.style.display = 'none'
-        }, 200)
-      }, 1400)
+      var timer = setInterval(function() {
+        var app = document.getElementById('app');
+        if (app.childNodes.length > 0) {
+          var loading = document.getElementById('loading');
+          loading.style.opacity = '0'
+          setTimeout(function() {
+            loading.style.display = 'none'
+          }, 200)
+          clearInterval(timer)
+        }
+      }, 100)
     </script>
     <!-- built files will be auto injected -->
   </body>

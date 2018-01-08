@@ -196,7 +196,7 @@ export default {
     margin-left: 20px;
     line-height: 80px;
     color: #0d93b8;
-    font-size: 18px;
+    font-size: 28px;
   }
   /*header-search-box*/
   .header-search-box {

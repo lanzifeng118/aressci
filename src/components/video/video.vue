@@ -10,6 +10,11 @@
       <div class="video-box" @click="playToggle">
         <video :src="link" ref="video"></video>
         <div class="video-cover" v-show="coverShow"><span class="video-cover-btn icon-play_fill"></span></div>
+        <div class="video-loading" v-show="isWaiting"><loading color="#eee" size="middle"></loading></div>
+      </div>
+      <div class="video-buffer">
+          <div class="video-buffer-ok" :style="'width:' + bufferWidth + '%;'"></div>
+          <div class="video-buffer-done" :style="'width:' + playedWidth + '%;'"></div>
       </div>
       <!-- bottom -->
       <div class="video-bottom f-clearfix">
@@ -25,18 +30,19 @@
           <span :class="[iconMuted? 'icon-muted' : 'icon-notification_fill']"></span>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
 import global from 'components/tools/global'
+import loading from 'components/c-loading/loading'
 
 export default {
   props: ['link', 'name'],
   data() {
     return {
+      isWaiting: false,
       // marginTop
       videoHeight: 200,
       iconPlay: false,
@@ -46,12 +52,30 @@ export default {
         played: '00:00',
         total: '00:00',
         counter: {}
-      }
+      },
+      duration: 0,
+      played: 0,
+      buffer: 0
     }
   },
   computed: {
     marginTop() {
       return (global.winHeigth - this.videoHeight - 110) / 2
+    },
+    bufferWidth() {
+      let width = 0
+      if (this.duration > 0) {
+        width = (this.buffer / this.duration * 100).toFixed(2)
+      }
+      console.log(width + 'bufferWidth')
+      return width
+    },
+    playedWidth() {
+      let width = 0
+      if (this.duration > 0) {
+        width = (this.played / this.duration * 100).toFixed(2)
+      }
+      return width
     }
   },
   destroyed() {
@@ -59,6 +83,20 @@ export default {
   },
   mounted() {
     let video = this.$refs.video
+    video.addEventListener('waiting', () => {
+      console.log('waiting')
+      if (!this.coverShow) {
+        this.isWaiting = true
+      }
+    })
+    video.addEventListener('progress', () => {
+      this.buffer = video.buffered.end(0)
+      console.log(this.buffer)
+    })
+    video.addEventListener('canplay', () => {
+      console.log('canplay')
+      this.isWaiting = false
+    })
     video.addEventListener('durationchange', () => {
       let winWidth = global.winWidth * 0.95
       let winHeigth = global.winHeigth * 0.95
@@ -74,13 +112,18 @@ export default {
         videoHeight = video.videoHeight
       }
       this.videoHeight = videoHeight
-      this.time.total = this.changeTime(this.$refs.video.duration)
+      this.duration = video.duration
+      this.time.total = this.changeTime(video.duration)
     })
   },
   methods: {
     calPlayedTime() {
-      this.time.played = this.changeTime(this.$refs.video.currentTime)
-      if (this.$refs.video.ended) {
+      let video = this.$refs.video
+      this.played = video.currentTime
+      this.time.played = this.changeTime(video.currentTime)
+      // console.log(video.buffered.start(0))
+      // console.log(video.buffered.end(0))
+      if (video.ended) {
         clearInterval(this.time.counter)
         this.coverShow = true
         this.iconPlay = false
@@ -123,6 +166,9 @@ export default {
     close() {
       this.$emit('close')
     }
+  },
+  components: {
+    loading
   }
 }
 </script>
@@ -182,8 +228,8 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -20px;
-  margin-top: -20px;
+  margin-left: -30px;
+  margin-top: -30px;
   font-size: 40px;
   width: 60px;
   height: 60px;
@@ -232,5 +278,39 @@ export default {
 }
 .video-btn-muted span.icon-muted {
   font-size: 16px;
+}
+.video-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  background-color: rgba(0,0,0,0.5);
+  z-index:9;
+
+}
+.video-loading .loading-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -27px;
+  margin-top: -5px;
+}
+.video-buffer {
+  position: relative;
+  height: 3px;
+  background: #222;
+}
+.video-buffer-ok,
+.video-buffer-done {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #393939;
+}
+.video-buffer-done {
+  background: #555;
 }
 </style>
