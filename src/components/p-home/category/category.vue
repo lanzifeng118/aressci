@@ -121,6 +121,7 @@ export default {
   transition: all 0.75s;
 }
 .home-category-li>a {
+  text-align: center;
   border: 1px solid #efefef;
   position: relative;
   display: block;
