@@ -19,10 +19,12 @@
       </div>
     </div>
     <div class="product-display-box">
-      <ul class="product-display-tab f-clearfix">
-        <li :class="{active: tabShow[0]}" @click="tabClick(0)">产品信息</li>
-        <li :class="{active: tabShow[1]}" @click="tabClick(1)">产品资源</li>
-      </ul>
+      <div class="product-display-tab">
+        <ul class="f-clearfix">
+          <li :class="{active: tabShow[0]}" @click="tabClick(0)">产品信息</li>
+          <li :class="{active: tabShow[1]}" @click="tabClick(1)">产品资源</li>
+        </ul>
+      </div>
       <div class="product-display-detail">
         <!-- info -->
         <div class="product-display-info" v-show="tabShow[0]" v-html="item.detail"></div>
@@ -197,9 +199,15 @@ export default {
 }
 /*tab*/
 .product-display-tab {
+  margin-top: -1px;
+  height: 32px;
+  overflow: hidden;
+}
+.product-display-tab ul {
   height: 32px;
   background: #f6f6f6;
-  border-bottom: 1px solid #E5E5E5;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
 }
 .product-display-tab li{
   cursor: pointer;
@@ -213,7 +221,7 @@ export default {
 }
 .product-display-tab li.active {
   background-color: #fff;
-  padding: 6px 10px 10px 10px;
+  padding: 7px 12px 8px 12px;
   border-top: 2px solid #0d93b8;
   color: #0d93b8;
 }
@@ -222,8 +230,10 @@ export default {
   margin-top: -1px;
 }
 .product-display-detail>div {
+  overflow: hidden;
   padding: 30px 25px;
-  min-height: 605px;
+  height: 605px;
+  overflow-y: scroll;
 }
 div.product-display-info {
   color: #7d6666;

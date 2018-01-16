@@ -18,9 +18,15 @@
         v-show="activeIndex === index"
       >
         <!-- all -->
-        <li v-for="(itemLogo, indexLogo) in item.list" v-if="all && indexLogo < 8"><img :src="itemLogo"></li>
+        <li v-for="(itemLogo, indexLogo) in item.list" v-if="all && indexLogo < 8">
+          <img :src="itemLogo">
+          <!-- <p>{{itemLogo.brief}}</p> -->
+        </li>
+
         <!-- list -->
-        <li v-for="(itemLogo, indexLogo) in item.list" v-if="!all"><img :src="itemLogo"></li>
+        <li v-for="(itemLogo, indexLogo) in item.list" v-if="!all">
+          <img :src="itemLogo">
+        </li>
       </ul>
     </div>
     <!-- more -->
@@ -122,17 +128,26 @@ export default {
   width: 950px;
 }
 .experience-item-logo li {
+  height: 116px;
   width: 227px;
-  height: 81px;
-  padding: 10px 0;
+  padding: 8px 0;
   text-align: center;
   float: left;
   margin: 0 10px 10px 0;
   border: 1px solid #f1f1f1;
 }
 .experience-item-logo li img {
+  height: 60px;
   max-width: 100%;
-  max-height: 100%;
+}
+.experience-item-logo li p {
+  color: #666;
+  height: 32px;
+  overflow: hidden;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.4em;
+  padding: 0 10px;
 }
 .experience-item-more {
   margin-bottom: 15px;

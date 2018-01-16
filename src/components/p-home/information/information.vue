@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="home-information">
     <div class="home-information-wrap">
       <ul>
@@ -188,7 +188,12 @@ export default {
 .home-information-item-p {
   word-break: break-all;
   line-height: 1.5em;
+  max-height: 146px;
+  overflow: hidden;
   color: #555;
+}
+.home-information-item-p * {
+  word-break: break-all;
 }
 .home-information-item-time {
   text-align: right;

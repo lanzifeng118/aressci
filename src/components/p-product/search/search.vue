@@ -94,7 +94,7 @@ export default {
           let list = data.data.list
           if (list.length === 0) {
             this.items = list
-            this.noneText = 'None'
+            this.noneText = '无相关产品'
           } else {
             this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
             // 查询分类
