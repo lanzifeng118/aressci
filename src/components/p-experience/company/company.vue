@@ -19,13 +19,14 @@
       >
         <!-- all -->
         <li v-for="(itemLogo, indexLogo) in item.list" v-if="all && indexLogo < 8">
-          <img :src="itemLogo">
-          <!-- <p>{{itemLogo.brief}}</p> -->
+          <img :src="itemLogo.img">
+          <p>{{itemLogo.brief}}</p>
         </li>
 
         <!-- list -->
         <li v-for="(itemLogo, indexLogo) in item.list" v-if="!all">
-          <img :src="itemLogo">
+          <img :src="itemLogo.img">
+          <p>{{itemLogo.brief}}</p>
         </li>
       </ul>
     </div>
@@ -128,6 +129,7 @@ export default {
   width: 950px;
 }
 .experience-item-logo li {
+  line-height: 0;
   height: 116px;
   width: 227px;
   padding: 8px 0;
@@ -141,12 +143,13 @@ export default {
   max-width: 100%;
 }
 .experience-item-logo li p {
+  margin-top: 3px;
   color: #666;
-  height: 32px;
+  height: 35px;
   overflow: hidden;
   text-align: left;
   font-size: 12px;
-  line-height: 1.4em;
+  line-height: 1.5em;
   padding: 0 10px;
 }
 .experience-item-more {
