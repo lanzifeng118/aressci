@@ -2,9 +2,15 @@
   <div class="about-display">
     <div class="position about-position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">首页</router-link>
+      <router-link to="/">
+        <span v-if="lang === 'cn'">首页</span>
+        <span v-if="lang === 'en'">Home</span>
+      </router-link>
       <span class="icon-right"></span>
-      <router-link to="/aboutus">关于我们</router-link>
+      <router-link to="/aboutus">
+        <span v-if="lang === 'cn'">关于我们</span>
+        <span v-if="lang === 'en'">About Us</span>
+      </router-link>
       <span class="icon-right"></span>
       {{item.title}}
     </div>
@@ -44,6 +50,11 @@ export default {
   watch: {
     '$route' (to, from) {
       this.getItem()
+    }
+  },
+  computed: {
+    lang() {
+      return this.$store.state.lang
     }
   },
   created() {

@@ -12,7 +12,7 @@ Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
-let lang = 'cn'
+let lang = 'en'
 
 let navItems = [
   {name: '首页', link: '/home'},

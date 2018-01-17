@@ -10,6 +10,7 @@
 
 <script>
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 import aboutCategory from 'components/p-aboutus/category/category'
 import bannerIn from 'components/c-banner-in/banner-in'
 
@@ -24,12 +25,17 @@ export default {
       this.redirect()
     }
   },
+  computed: {
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    }
+  },
   created() {
     this.getNav()
   },
   methods: {
     getNav() {
-      this.axios(api.aboutus.query()).then((res) => {
+      this.axios(this.api.aboutus.query()).then((res) => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {
