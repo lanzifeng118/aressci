@@ -1,107 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Air Safety Controls and Energy Saving</title>
-    <!--[if lte IE 9 ]>
-    <meta http-equiv="refresh" content="0;url=http://lanzifeng.com/update">
-    <![endif]-->
-    <link rel="shortcut icon" href="./static/images/icon.ico"/>
-    <link rel="stylesheet" href="./static/reset.css">
-    <style type="text/css">
-    #loading {
-      position: fixed;
-      z-index: 99;
-      transition: opacity .2s;
-      opacity: 1;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: #fff;
-    }
-    .loading-box {
-      width: 72px;
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      left: 0;
-      margin-top: -60px;
-    }
-    .loading-logo {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    .loading-logo img {
-      width: 60px;
-      animation: rotate 2s ease-in-out infinite;
-    }
-    .loading-dot {
-      text-align: center;
-    }
-    .loading-dot span {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border-radius: 7px;
-      background-color: #88c00b;
-      margin-right: 15px;
-      animation: loading 1.5s cubic-bezier(0.57, 0, 0.36, 1) infinite;
-    }
-    .loading-dot span.loading-02 {
-      background-color: #acce13;
-      animation-delay: 0.25s;
-    }
-    .loading-dot span.loading-03 {
-      background-color: #50c5ff;
-      animation-delay: 0.5s;
-      margin-right: 0;
-    }
-    @keyframes loading {
-      0, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(0);
-      }
-    }
-    @keyframes rotate {
-      0, 100% {
-        transform: rotateY(0);
-      }
-      50% {
-        transform: rotateY(180deg);
-      }
-    }
-  </style>
-  </head>
-  <body>
-    <div id="loading">
-      <div class="loading-box">
-        <div class="loading-logo">
-          <img src="./static/images/icon.ico">
-        </div>
-        <div class="loading-dot">
-          <span class="loading-01"></span>
-          <span class="loading-02"></span>
-          <span class="loading-03"></span>
-        </div>
+<head>
+  <meta charset="utf-8">
+  <title>Air Safety Controls and Energy Saving</title>
+  <!--[if lte IE 9 ]>
+  <meta http-equiv="refresh" content="0;url=http://lanzifeng.com/update">
+  <![endif]-->
+  <link rel="shortcut icon" href="./static/images/icon.ico"/>
+  <link rel="stylesheet" href="./static/reset.css">
+</head>
+<body>
+  <div id="loading">
+    <div class="loading-box">
+      <div class="loading-logo">
+        <img src="./static/images/icon.ico">
+      </div>
+      <div class="loading-dot">
+        <span class="loading-01"></span>
+        <span class="loading-02"></span>
+        <span class="loading-03"></span>
       </div>
     </div>
-    <div id="app"></div>
-    <script type="text/javascript">
-      var timer = setInterval(function() {
-        var app = document.getElementById('app');
-        if (app.childNodes.length > 0) {
-          var loading = document.getElementById('loading');
-          loading.style.opacity = '0'
-          setTimeout(function() {
-            loading.style.display = 'none'
-          }, 200)
-          clearInterval(timer)
-        }
-      }, 150)
-    </script>
-    <!-- built files will be auto injected -->
-  </body>
+  </div>
+  <div id="app"></div>
+  <script type="text/javascript">
+    var timer = setInterval(function() {
+      var app = document.getElementById('app');
+      if (app.childNodes.length > 0) {
+        var loading = document.getElementById('loading');
+        loading.style.opacity = '0'
+        setTimeout(function() {
+          loading.style.display = 'none'
+        }, 200)
+        clearInterval(timer)
+      }
+    }, 150)
+  </script>
+  <!-- built files will be auto injected -->
+</body>
 </html>

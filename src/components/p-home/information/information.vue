@@ -4,9 +4,9 @@
       <ul>
         <!-- us -->
         <li class="home-information-item home-us white-box">
-          <h3 class="home-information-item-title">关于我们</h3>
+          <h3 class="home-information-item-title"><span v-if="lang === 'cn'">关于我们</span><span v-if="lang === 'en'">About Us</span></h3>
           <router-link v-if="aboutusId" :to="'/aboutus/display/c' + aboutusId" class="home-information-item-more">
-            更多<span class="icon-more"></span>
+            <span v-if="lang === 'cn'">更多</span><span v-if="lang === 'en'">MORE</span><span class="icon-more"></span>
           </router-link>
           <h4 class="home-information-item-h4">
             <router-link to="/aboutus/display">{{basicInfo.name}}</router-link>
@@ -21,9 +21,9 @@
 
         <!-- product -->
         <li class="home-information-item home-product white-box">
-          <h3 class="home-information-item-title">我们的产品</h3>
+          <h3 class="home-information-item-title"><span v-if="lang === 'cn'">我们的产品</span><span v-if="lang === 'en'">Our Products</span></h3>
           <router-link to="/product" class="home-information-item-more">
-            更多<span class="icon-more"></span>
+            <span v-if="lang === 'cn'">更多</span><span v-if="lang === 'en'">MORE</span><span class="icon-more"></span>
           </router-link>
           <ul class="home-information-product-ul">
             <li v-for="item in product.slice">
@@ -73,6 +73,9 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
     basicInfo() {
       return this.$store.state.basicInfo
     },
@@ -176,9 +179,11 @@ export default {
   height: 293px;
 }
 .home-information-item-title {
-  font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
+}
+.home-information-item-title > span {
+  font-weight: bold;
 }
 .home-information-item-h4 {
   text-transform: uppercase;

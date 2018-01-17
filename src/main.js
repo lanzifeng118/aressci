@@ -12,8 +12,43 @@ Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
+let lang = 'cn'
+
+let navItems = [
+  {name: '首页', link: '/home'},
+  {
+    name: '产品',
+    link: '/product',
+    list: []
+  },
+  {
+    name: '项目经验',
+    link: '/experience'
+  },
+  {name: '服务与支持', link: '/support'},
+  {name: '新闻', link: '/news'},
+  {name: '关于我们', link: '/aboutus'}
+]
+let navItemsEn = [
+  {name: 'HOME', link: '/home'},
+  {
+    name: 'PRODUCT',
+    link: '/product',
+    list: []
+  },
+  {
+    name: 'PROJECT EXPERIENCE',
+    link: '/experience'
+  },
+  {name: 'SERVICE & SUPPORT', link: '/support'},
+  {name: 'NEWS', link: '/news'},
+  {name: 'ABOUT US', link: '/aboutus'}
+]
+
 const store = new Vuex.Store({
   state: {
+    lang: lang,
+    navItems: lang === 'cn' ? navItems : navItemsEn,
     basicInfo: {}, // 基础信息
     aboutusId: null, // 第一条关于我们id
     news: null, // 第一条新闻数据
@@ -23,6 +58,14 @@ const store = new Vuex.Store({
     productClassify: [],
     newsClassify: [],
     aboutusNav: []
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.length === 0) {
+    from.name ? next({name: from.name}) : next('/home')
+  } else {
+    next()
   }
 })
 

@@ -82,8 +82,8 @@ let api = {
     }
   },
   nav: {
-    query() {
-      return queryFun(navUrl)
+    query(data) {
+      return queryFun(navUrl, data)
     }
   },
   basicInfo: {

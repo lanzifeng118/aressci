@@ -3,13 +3,19 @@
   <div class="footer-top wrap">
     <ul class="f-clearfix">
       <li>
-        <a :href="'mailto:?' + basicInfo.email + '&subject=Here is a web page you might be interested in seeing&body=Hello'">
-          <span class="icon icon-mail"></span>邮件
+        <a :href="'mailto:' + basicInfo.email + '?subject=&body='">
+          <span class="icon icon-mail"></span><span v-if="lang === 'cn'">邮件</span><span v-if="lang === 'en'">Email Page</span>
         </a>
       </li>
-      <li><a href="javascrip: void(0);" @click="print"><span class="icon icon-Print"></span>打印页面</a></li>
+      <li>
+        <a href="javascrip: void(0);" @click="print">
+          <span class="icon icon-Print"></span><span v-if="lang === 'cn'">打印页面</span><span v-if="lang === 'en'">Print Page</span>
+        </a>
+      </li>
       <li class="footer-link">
-        <a href="javascrip: void(0);"><span class="icon icon-share"></span>友情链接</a>
+        <a href="javascrip: void(0);">
+          <span class="icon icon-share"></span><span v-if="lang === 'cn'">友情链接</span><span v-if="lang === 'en'">Friend Links</span>
+        </a>
         <ul class="footer-link-ul">
           <li v-for="itemF in friendLinkItems"><a :href="itemF.link" target="_blank"><span class="icon icon-dot"></span>{{itemF.name}}</a></li>
         </ul>
@@ -26,11 +32,12 @@
     </div>
     <div class="wrap">
       <ul class="footer-info">
-        <li><span class="icon icon-people_fill"></span>联系人: {{basicInfo.linkman}}</li>
+        <li v-if="lang === 'cn'"><span class="icon icon-people_fill"></span>联系人: {{basicInfo.linkman}}</li>
+        <li v-if="lang === 'en'"><span class="icon icon-people_fill"></span>Linkman: {{basicInfo.linkman}}</li>
         <li><span class="icon icon-phone"></span>{{basicInfo.telephone}}</li>
         <li><span class="icon icon-mail"></span>{{basicInfo.email}}</li>
       </ul>
-      <p class="footer-copyright">Copyright © 2017 {{basicInfo.full_name}} All rights reserved.</p>
+      <p class="footer-copyright">Copyright © 2018 {{basicInfo.full_name}} All rights reserved.</p>
     </div>
   </div>
 </div>
@@ -38,6 +45,7 @@
 
 <script>
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   data() {
@@ -49,26 +57,14 @@ export default {
     basicInfo() {
       return this.$store.state.basicInfo
     },
+    lang() {
+      return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    },
     navItems() {
-      let navItems = [
-        {name: '首页', link: '/home'},
-        {
-          name: '产品',
-          link: '/product'
-        },
-        {
-          name: '项目经验',
-          link: '/experience'
-        },
-        {name: '服务与支持', link: '/support'},
-        {name: '新闻', link: '/news'},
-        {name: '关于我们', link: '/aboutus'}
-      ]
-      let aboutusId = this.$store.state.aboutusId
-      if (aboutusId) {
-        navItems[5].link = `/aboutus/display/c${aboutusId}`
-      }
-      return navItems
+      return this.$store.state.navItems
     }
   },
   created() {
@@ -76,9 +72,8 @@ export default {
   },
   methods: {
     getFriendLink() {
-      this.axios(api.friendlink.query()).then((res) => {
+      this.axios(this.api.friendlink.query()).then((res) => {
         let data = res.data
-        console.log(data)
         if (data.code === '200') {
           this.friendLinkItems = data.data.list
         }
@@ -187,5 +182,4 @@ export default {
   padding: 5px 10px;
   color: #999;
 }
-
 </style>

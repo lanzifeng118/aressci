@@ -10,6 +10,7 @@
 import vHeader from 'components/c-header/header'
 import vFooter from 'components/c-footer/footer'
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   data() {
@@ -20,9 +21,14 @@ export default {
     this.getBisicInfo()
     this.getHome()
   },
+  computed: {
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    }
+  },
   methods: {
     getHome() {
-      this.axios(api.home.query()).then((res) => {
+      this.axios(this.api.home.query()).then((res) => {
         let data = res.data
         if (data.code === '200') {
           let state = this.$store.state
@@ -49,7 +55,7 @@ export default {
       })
     },
     getBisicInfo() {
-      this.axios(api.basicInfo.query()).then((res) => {
+      this.axios(this.api.basicInfo.query()).then((res) => {
         let data = res.data
         if (data.code === '200') {
           data.data.banner.forEach((v, i) => {
@@ -90,5 +96,4 @@ body {
   width: 100vw;
   overflow: hidden;
 }
-
 </style>

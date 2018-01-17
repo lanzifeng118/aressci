@@ -74,15 +74,14 @@ export default {
       this.calTop(1)
     },
     calTop(num) {
-      var _this = this
       if (num === 1) {
         // next
         this.top = -this.index * 152
         if (this.index >= this.items.length - this.showNum) {
           setTimeout(() => {
-            _this.smooth = false
-            _this.index = 0
-            _this.top = 0
+            this.smooth = false
+            this.index = 0
+            this.top = 0
           }, 700)
         } else {
           this.smooth = true
@@ -92,9 +91,9 @@ export default {
         this.top = -this.index * 152
         if (this.index <= 0) {
           setTimeout(() => {
-            _this.smooth = false
-            _this.index = this.items.length - this.showNum
-            _this.top = -this.index * 152
+            this.smooth = false
+            this.index = this.items.length - this.showNum
+            this.top = -this.index * 152
           }, 700)
         } else {
           this.smooth = true
