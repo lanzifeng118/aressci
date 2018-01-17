@@ -12,10 +12,16 @@
 import newsCategory from 'components/p-news/category/category'
 import bannerIn from 'components/c-banner-in/banner-in'
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   data() {
     return {
+    }
+  },
+  computed: {
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
     }
   },
   created() {
@@ -23,7 +29,7 @@ export default {
   },
   methods: {
     getClassify() {
-      this.axios(api.newsClassify.query()).then((res) => {
+      this.axios(this.api.newsClassify.query()).then((res) => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {
@@ -32,7 +38,12 @@ export default {
             v.border = false
             v.link = `/news/list/c${v.id}`
           })
-          this.$store.state.newsClassify = [{name: '所有分类', link: '/news/all', border: false}].concat(list)
+          let allObj = {
+            name: this.$store.state.lang === 'cn' ? '所有新闻' : 'All News',
+            link: '/news/all',
+            border: false
+          }
+          this.$store.state.newsClassify = [allObj].concat(list)
         }
       })
     }

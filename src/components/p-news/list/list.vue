@@ -1,18 +1,28 @@
 <template>
   <div class="news-list">
-    <!-- position-all -->
+    <!-- all -->
     <div class="position news-position" v-if="all">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">首页</router-link>
+      <router-link to="/">
+        <span v-if="lang === 'cn'">首页</span>
+        <span v-if="lang === 'en'">Home</span>
+      </router-link>
       <span class="icon-right"></span>
-      所有分类
+      <span v-if="lang === 'cn'">所有新闻</span>
+      <span v-if="lang === 'en'">All News</span>
     </div>
-    <!-- position-list -->
+    <!-- list -->
     <div class="position news-position" v-if="!all">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">Home</router-link>
+      <router-link to="/">
+        <span v-if="lang === 'cn'">首页</span>
+        <span v-if="lang === 'en'">Home</span>
+      </router-link>
       <span class="icon-right"></span>
-      <router-link to="/news">All News</router-link>
+      <router-link to="/news">
+        <span v-if="lang === 'cn'">所有新闻</span>
+        <span v-if="lang === 'en'">All News</span>
+      </router-link>
       <span class="icon-right"></span>
       {{classifyName}}
     </div>
@@ -48,6 +58,7 @@
 
 <script>
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 import paging from 'components/c-paging/paging'
 
 export default {
@@ -65,6 +76,12 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    },
     classifyName() {
       let name = ''
       let id = this.id
@@ -120,19 +137,13 @@ export default {
       }
     },
     getItems() {
-      let obj = {}
       let pageData = {
         page_size: this.paging.size,
         page_no: this.paging.no,
         classify: this.classifyName
       }
-      if (this.all) {
-        obj = api.newsList.query(pageData)
-      } else {
-        obj = api.newsList.query(pageData)
-      }
       // ajax
-      this.axios(obj).then((res) => {
+      this.axios(this.api.newsList.query(pageData)).then((res) => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {
