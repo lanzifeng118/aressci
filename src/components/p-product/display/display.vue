@@ -215,7 +215,7 @@ export default {
   padding: 8px 12px;
   line-height: 16px;
   margin-top: -1px;
-  border-right: 1px solid #E5E5E5;
+  border-right: 1px solid #e5e5e5;
 }
 .product-display-tab li:hover {
 }
@@ -230,10 +230,9 @@ export default {
   margin-top: -1px;
 }
 .product-display-detail>div {
-  overflow: hidden;
   padding: 30px 25px;
   height: 605px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 div.product-display-info {
   color: #7d6666;
