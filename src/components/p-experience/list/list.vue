@@ -2,9 +2,15 @@
   <div class="experience-list">
     <div class="experience-position position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">首页</router-link>
+      <router-link to="/">
+        <span v-if="lang === 'cn'">首页</span>
+        <span v-if="lang === 'en'">Home</span>
+      </router-link>
       <span class="icon-right"></span>
-      <router-link to="/experience/all">项目经验</router-link>
+      <router-link to="/experience/all">
+        <span v-if="lang === 'cn'">项目经验</span>
+        <span v-if="lang === 'en'">Project Experiences</span>
+      </router-link>
       <span class="icon-right"></span>
       <span>{{item.name}}</span>
     </div>
@@ -43,6 +49,9 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
     item() {
       let item = {}
       let list = this.$store.state.experienceList
@@ -54,8 +63,9 @@ export default {
           }
         }
         if (!item.logo) {
-          util.toast.show(this.toast, '数据不存在', 'close')
-          this.goBack()
+          let text = this.lang === 'cn' ? '数据不存在' : 'NO DATA EXIST'
+          util.toast.show(this.toast, text, 'close')
+          util.goBack(this.$router.push('/experience/all'))
         }
       }
       return item
@@ -67,11 +77,6 @@ export default {
   methods: {
     getId() {
       this.id = parseInt(this.$route.params.id.slice(1))
-    },
-    goBack() {
-      setTimeout(() => {
-        this.$router.push('/experience/all')
-      }, 700)
     }
   },
   components: {

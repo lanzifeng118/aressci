@@ -17,6 +17,9 @@ export default {
   computed: {
     items() {
       let items = [{name: '所有品牌', link: '/experience/all'}]
+      if (this.$store.state.lang === 'en') {
+        items[0].name = 'All Brands'
+      }
       return items.concat(this.$store.state.experienceList)
     }
   },

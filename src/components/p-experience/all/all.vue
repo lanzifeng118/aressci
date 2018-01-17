@@ -2,9 +2,13 @@
   <div class="experience-all">
     <div class="experience-position position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">首页</router-link>
+      <router-link to="/">
+        <span v-if="lang === 'cn'">首页</span>
+        <span v-if="lang === 'en'">Home</span>
+      </router-link>
       <span class="icon-right"></span>
-      项目经验
+      <span v-if="lang === 'cn'">项目经验</span>
+      <span v-if="lang === 'en'">Project Experiences</span>
     </div>
     <!-- items -->
     <experience-company v-if="items.length > 0" v-for="item in items" :experience="item" :all="all"></experience-company>
@@ -22,9 +26,10 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
     items() {
-      console.log('this.$strore.state.experienceList')
-      console.log(this.$store.state.experienceList)
       return this.$store.state.experienceList
     }
   },
