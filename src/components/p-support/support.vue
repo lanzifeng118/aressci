@@ -4,34 +4,48 @@
     <div class="service-content">
       <div class="position">
         <span class="icon-location_fill icon"></span>
-        <router-link to="/">首页</router-link>
+        <router-link to="/">
+          <span v-if="lang === 'cn'">首页</span>
+          <span v-if="lang === 'en'">Home</span>
+        </router-link>
         <span class="icon-right"></span>
-        服务与支持
+        <span v-if="lang === 'cn'">服务与支持</span>
+        <span v-if="lang === 'en'">Servive & Support</span>
       </div>
       <div class="service-text">
-        <h2>技术服务</h2>
-        <h4>感谢您对我们关注，我们希望为您提供优秀的服务!</h4>
-        <h4>请填写下面的表格，带有*是必填项，我们将尽快回复您。</h4>
+        <div v-if="lang === 'cn'" class="">
+          <h2>技术服务</h2>
+          <h4>感谢您对我们关注，我们希望为您提供优秀的服务!</h4>
+          <h4>请填写下面的表格，带有*是必填项，我们将尽快回复您。</h4>
+        </div>
+        <div v-if="lang === 'en'" class="">
+          <h2>Technical Services</h2>
+          <h4>We appreciate your business and want to provide outstanding and excellent customer service!</h4>
+          <h4>Please complete the form below. The boxes marked with * are required. We will respond as soon as possible.</h4>
+        </div>
         <div class="form-table-wrap service-table-wrap">
           <table>
             <tbody>
               <!-- message -->
               <tr>
-                <td width="70" class="vertical-top">留言</td>
+                <td v-if="lang === 'cn'" width="70" class="vertical-top">留言</td>
+                <td v-if="lang === 'en'" width="150" class="vertical-top">Your message to us</td>
                 <td><textarea name="name" rows="4" v-model="item.message"></textarea></td>
               </tr>
               <!-- classify -->
               <tr>
-                <td>主题</td>
+                <td v-if="lang === 'cn'">主题</td>
+                <td v-if="lang === 'en'">Topic</td>
                 <td>
                   <select v-model="item.classify">
-                    <option disabled value="">请选择</option>
+                    <option v-if="lang === 'cn'" disabled value="">请选择</option>
+                    <option v-if="lang === 'en'" disabled value="">Please select</option>
                     <option v-for="item in classifyOption">{{item.name}}</option>
                   </select>
                 </td>
               </tr>
               <!-- Salutation -->
-              <tr>
+              <tr v-if="lang === 'cn'">
                 <td>称呼</td>
                 <td>
                   <input
@@ -47,29 +61,56 @@
 
                 </td>
               </tr>
-              <!-- Last name -->
+              <!-- Salutation -->
+              <tr v-if="lang === 'en'">
+                <td>Salutation</td>
+                <td>
+                  <input
+                    v-for="(itemS, index) in salutation"
+                    type="radio"
+                    :id="'salutation' + index"
+                    :value="itemS.value"
+                    v-model="item.salutation"
+                  >
+                  <label v-for="(itemS, index) in salutation" :for="'salutation' + index">
+                    <span class="icon" :class="[item.salutation == itemS.value ? 'icon-square_check_fill' : 'icon-square']"></span>{{itemS.value}}
+                  </label>
+
+                </td>
+              </tr>
+              <!-- first name -->
               <tr>
-                <td><span class="icon-nessisary"></span>姓名</td>
+                <td v-if="lang === 'cn'"><span class="icon-nessisary"></span>姓名</td>
+                <td v-if="lang === 'en'"><span class="icon-nessisary"></span>First name</td>
                 <td><input type="text" v-model="item.firstName"></td>
+              </tr>
+              <!-- Last name -->
+              <tr v-if="lang === 'en'">
+                <td><span class="icon-nessisary"></span>Last name</td>
+                <td><input type="text" v-model="item.lastName"></td>
               </tr>
               <!-- Email -->
               <tr>
-                <td><span class="icon-nessisary"></span>邮箱</td>
+                <td v-if="lang === 'cn'"><span class="icon-nessisary"></span>邮箱</td>
+                <td v-if="lang === 'en'"><span class="icon-nessisary"></span>Email</td>
                 <td><input type="text" v-model="item.email"></td>
               </tr>
               <!-- tel -->
               <tr>
-                <td>电话</td>
+                <td v-if="lang === 'cn'">电话</td>
+                <td v-if="lang === 'en'">Tel/Phone</td>
                 <td><input type="text" v-model="item.tel"></td>
               </tr>
               <!-- Company -->
               <tr>
-                <td>公司</td>
+                <td v-if="lang === 'cn'">公司</td>
+                <td v-if="lang === 'en'">Company</td>
                 <td><input type="text" v-model="item.company"></td>
               </tr>
               <!-- Country -->
               <tr>
-                <td>国家</td>
+                <td v-if="lang === 'cn'">国家</td>
+                <td v-if="lang === 'en'">Country</td>
                 <td>
                   <select v-model="item.country">
                     <option disabled value="">Please select</option>
@@ -79,7 +120,8 @@
               </tr>
               <!-- Address -->
               <tr>
-                <td class="vertical-top">地址</td>
+                <td v-if="lang === 'cn'" class="vertical-top">地址</td>
+                <td v-if="lang === 'en'" class="vertical-top">Address</td>
                 <td><textarea name="name" rows="3" v-model="item.address"></textarea></td>
               </tr>
               <!-- submit -->
@@ -87,7 +129,8 @@
                 <td></td>
                 <td>
                   <p class="service-warn">{{warnText}}</p>
-                  <button type="button" class="button" @click="submit">提交</button>
+                  <button v-if="lang === 'cn'" type="button" class="button" @click="submit">提交</button>
+                  <button v-if="lang === 'en'" type="button" class="button" @click="submit">SUBMIT</button>
                 </td>
               </tr>
             </tbody>
@@ -106,6 +149,7 @@
 
 <script>
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
 import global from 'components/tools/global'
@@ -117,7 +161,7 @@ export default {
       item: {
         classify: '',
         salutation: '',
-        country: '中国',
+        country: '',
         message: '',
         firstName: '',
         lastName: '',
@@ -127,11 +171,6 @@ export default {
         email: ''
       },
       classifyOption: [],
-      salutation: [
-        {value: '先生'},
-        {value: '女士'}
-      ],
-      country: global.country,
       warnText: '',
       // toast
       toast: {
@@ -141,15 +180,39 @@ export default {
       }
     }
   },
+  computed: {
+    lang() {
+      return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    },
+    country() {
+      return this.$store.state.lang === 'cn' ? global.country : global.countryEn
+    },
+    salutation() {
+      let salutation = [
+        {value: '先生'},
+        {value: '女士'}
+      ]
+      let salutationEn = [
+        {value: 'DR'},
+        {value: 'MR'},
+        {value: 'MRS'},
+        {value: 'MS'}
+      ]
+      return this.$store.state.lang === 'cn' ? salutation : salutationEn
+    }
+  },
   created() {
-    this.getClassify()
+    this.item.country = this.lang === 'cn' ? '中国' : 'China'
     this.item.classify = util.parseUrl(this.$route.fullPath).topic || ''
+    this.getClassify()
   },
   methods: {
     getClassify() {
-      this.axios(api.supportClassify.query()).then((res) => {
+      this.axios(this.api.supportClassify.query()).then((res) => {
         let data = res.data
-        console.log(data)
         if (data.code === '200') {
           this.classifyOption = data.data.list
         }
@@ -159,14 +222,15 @@ export default {
       if (!this.verify()) {
         return
       }
-      this.axios(api.support.insert(this.item)).then((res) => {
+      this.axios(this.api.support.insert(this.item)).then((res) => {
         let data = res.data
         if (data.code === '200') {
-          util.toast.fade(this.toast, '提交成功!', 'appreciate')
+          let text = this.lang === 'cn' ? '提交成功!' : 'Success!'
+          util.toast.fade(this.toast, text, 'appreciate')
           this.item = {
             classify: '',
             salutation: '',
-            country: '中国',
+            country: this.lang === 'cn' ? '中国' : 'China',
             message: '',
             firstName: '',
             lastName: '',
@@ -183,11 +247,15 @@ export default {
     verify() {
       let item = this.item
       if (!item.firstName.trim()) {
-        this.warnText = `姓名不能为空`
+        this.warnText = this.lang === 'cn' ? '姓名不能为空' : 'First name can\'t be empty.'
+        return false
+      }
+      if (this.lang === 'en' && !item.lastName.trim()) {
+        this.warnText = `Last name can't be empty.`
         return false
       }
       if (!item.email.trim()) {
-        this.warnText = `邮箱不能唯恐`
+        this.warnText = this.lang === 'cn' ? '邮箱不能为空' : 'Email can\'t be empty.'
         return false
       }
       this.warnText = ``
