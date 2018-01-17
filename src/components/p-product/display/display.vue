@@ -2,15 +2,21 @@
 <div class="product-display">
   <div class="product-position position">
     <span class="icon-location_fill icon"></span>
-    <router-link to="/">首页</router-link>
+    <router-link to="/">
+      <span v-if="lang === 'cn'">首页</span>
+      <span v-if="lang === 'en'">Home</span>
+    </router-link>
     <span class="icon-right"></span>
-    <router-link to="/product">所有品牌</router-link>
+    <router-link to="/product">
+      <span v-if="lang === 'cn'">所有品牌</span>
+      <span v-if="lang === 'en'">All Brands</span>
+    </router-link>
     <span class="icon-right"></span>
     <router-link :to="'/product/list/c' + classifyId">{{classifyName}}</router-link>
     <span class="icon-right"></span>
     {{item.name}}
   </div>
-  <div class="product-display-wrap f-left">
+  <div class="product-display-wrap f-left" v-if="item.name">
     <div class="product-display-summary f-clearfix">
       <img v-if="item.img" :src="item.img" :alt="item.name" class="f-left">
       <div class="product-display-summary-text">
@@ -21,8 +27,14 @@
     <div class="product-display-box">
       <div class="product-display-tab">
         <ul class="f-clearfix">
-          <li :class="{active: tabShow[0]}" @click="tabClick(0)">产品信息</li>
-          <li :class="{active: tabShow[1]}" @click="tabClick(1)">产品资源</li>
+          <li :class="{active: tabShow[0]}" @click="tabClick(0)">
+            <span v-if="lang === 'cn'">产品信息</span>
+            <span v-if="lang === 'en'">Product Info</span>
+          </li>
+          <li :class="{active: tabShow[1]}" @click="tabClick(1)">
+            <span v-if="lang === 'cn'">产品资源</span>
+            <span v-if="lang === 'en'">Resources</span>
+          </li>
         </ul>
       </div>
       <div class="product-display-detail">
@@ -34,10 +46,22 @@
           <table class="product-display-resources-table" v-if="item.resources && item.resources.length > 0">
             <thead>
               <tr>
-                <th width="70">类型</th>
-                <th>文件名</th>
-                <th width="70">下载</th>
-                <th width="70">大小</th>
+                <th width="70">
+                  <span v-if="lang === 'cn'">类型</span>
+                  <span v-if="lang === 'en'">Type</span>
+                </th>
+                <th>
+                  <span v-if="lang === 'cn'">文件名</span>
+                  <span v-if="lang === 'en'">Name</span>
+                </th>
+                <th width="70">
+                  <span v-if="lang === 'cn'">下载</span>
+                  <span v-if="lang === 'en'">Download</span>
+                </th>
+                <th width="70">
+                  <span v-if="lang === 'cn'">大小</span>
+                  <span v-if="lang === 'en'">Size</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -80,6 +104,7 @@
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
 
@@ -99,6 +124,12 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    },
     classifyName() {
       let name = ''
       let nav = this.$store.state.productNav
@@ -138,7 +169,8 @@ export default {
           if (data.data) {
             this.item = data.data
           } else {
-            util.toast.show(this.toast, '此产品不存在', 'close')
+            let text = this.lang === 'cn' ? '此产品不存在' : 'This product does not exist.'
+            util.toast.show(this.toast, text)
             util.goBack(() => {
               this.$router.push('/product/all')
             })
@@ -151,8 +183,6 @@ export default {
         let show = false
         if (i === index) {
           show = true
-        } else {
-
         }
         this.$set(this.tabShow, i, show)
       })

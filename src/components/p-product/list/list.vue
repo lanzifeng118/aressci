@@ -2,9 +2,15 @@
 <div class="product-list">
   <div class="product-position position">
     <span class="icon-location_fill icon"></span>
-    <router-link to="/">首页</router-link>
+    <router-link to="/">
+      <span v-if="lang === 'cn'">首页</span>
+      <span v-if="lang === 'en'">Home</span>
+    </router-link>
     <span class="icon-right"></span>
-    <router-link to="/product">所有品牌</router-link>
+    <router-link to="/product">
+      <span v-if="lang === 'cn'">所有品牌</span>
+      <span v-if="lang === 'en'">All Brands</span>
+    </router-link>
     <span class="icon-right" v-if="classifyName"></span>
     <span v-if="classifyName">{{classifyName}}</span>
   </div>
@@ -45,6 +51,7 @@ import paging from 'components/c-paging/paging'
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   data() {
@@ -60,6 +67,12 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    },
     classifyName() {
       let name = ''
       let nav = this.$store.state.productNav
@@ -96,7 +109,7 @@ export default {
         page_no: this.paging.no,
         classify: this.classifyName
       }
-      this.axios(api.productList.query(pageData)).then((res) => {
+      this.axios(this.api.productList.query(pageData)).then((res) => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {

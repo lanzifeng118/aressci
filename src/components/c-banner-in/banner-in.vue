@@ -7,6 +7,7 @@
 
 <script>
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   props: {
@@ -23,6 +24,11 @@ export default {
       }
     }
   },
+  computed: {
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    }
+  },
   created() {
     this.getItem()
   },
@@ -31,7 +37,7 @@ export default {
       if (!this.page) {
         return
       }
-      this.axios(api[`${this.page}Banner`].query()).then((res) => {
+      this.axios(this.api[`${this.page}Banner`].query()).then((res) => {
         let data = res.data
         if (data.code === '200') {
           this.item = data.data

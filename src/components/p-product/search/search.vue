@@ -2,12 +2,20 @@
 <div class="product-list">
   <div class="product-position position">
     <span class="icon-location_fill icon"></span>
-    <router-link to="/">首页</router-link>
+    <router-link to="/">
+      <span v-if="lang === 'cn'">首页</span>
+      <span v-if="lang === 'en'">Home</span>
+    </router-link>
     <span class="icon-right"></span>
-    <router-link to="/product">所有品牌</router-link>
+    <router-link to="/product">
+      <span v-if="lang === 'cn'">所有品牌</span>
+      <span v-if="lang === 'en'">All Brands</span>
+    </router-link>
     <span class="icon-right"></span>
-    <span v-if="searchText">查询-{{searchText}}</span>
-    <span v-if="!searchText">查询所有</span>
+    <span v-if="lang === 'cn' && searchText">查询-{{searchText}}</span>
+    <span v-if="lang === 'cn' && !searchText">查询所有</span>
+    <span v-if="lang === 'en' && searchText">SEARCH-{{searchText}}</span>
+    <span v-if="lang === 'en' && !searchText">SEARCH ALL</span>
   </div>
   <div class="product-list-show f-left">
     <div class="product-list-show-classify">
@@ -50,6 +58,7 @@ import paging from 'components/c-paging/paging'
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   data() {
@@ -69,6 +78,14 @@ export default {
   created() {
     this.getItems()
   },
+  computed: {
+    lang() {
+      return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    }
+  },
   watch: {
     '$route' (to, from) {
       this.getItems()
@@ -87,18 +104,18 @@ export default {
         page_no: this.paging.no,
         name: this.searchText
       }
-      this.axios(api.productList.query(pageData)).then((res) => {
+      this.axios(this.api.productList.query(pageData)).then((res) => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           if (list.length === 0) {
             this.items = list
-            this.noneText = '无相关产品'
+            this.noneText = this.lang === 'cn' ? '无相关产品' : 'None'
           } else {
             this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
             // 查询分类
-            this.axios(api.productClassify.query()).then((resC) => {
+            this.axios(this.api.productClassify.query()).then((resC) => {
               let dataC = resC.data
               if (dataC.code === '200') {
                 let obj = {}

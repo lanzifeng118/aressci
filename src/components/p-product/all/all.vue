@@ -2,9 +2,13 @@
   <div class="product-all wrap">
     <div class="product-position position">
       <span class="icon-location_fill icon"></span>
-      <router-link to="/">首页</router-link>
+      <router-link to="/">
+        <span v-if="lang === 'cn'">首页</span>
+        <span v-if="lang === 'en'">Home</span>
+      </router-link>
       <span class="icon-right"></span>
-      所有品牌
+      <span v-if="lang === 'cn'">所有品牌</span>
+      <span v-if="lang === 'en'">All Brands</span>
     </div>
     <div class="product-all-items-wrap">
       <ul class="product-all-items" v-if="items.length > 0">
@@ -35,6 +39,9 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
     items() {
       return this.$store.state.productNav
     }

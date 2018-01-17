@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import homeVideo from 'components/p-product/video/video'
 import productBanner from 'components/p-product/banner/banner'
 import productContact from 'components/p-product/contact/contact'
 import productCategory from 'components/p-product/category/category'
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   data() {
@@ -21,12 +21,17 @@ export default {
       bannerSrc: '/static/images/product-banner-all.jpg'
     }
   },
+  computed: {
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    }
+  },
   created() {
     this.getNav()
   },
   methods: {
     getNav() {
-      this.axios(api.nav.query()).then((res) => {
+      this.axios(this.api.nav.query()).then((res) => {
         let data = res.data
         if (data.code === '200') {
           let list = data.data.list
@@ -45,7 +50,6 @@ export default {
     }
   },
   components: {
-    homeVideo,
     productBanner,
     productContact,
     productCategory

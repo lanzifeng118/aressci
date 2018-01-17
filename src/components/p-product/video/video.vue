@@ -1,6 +1,7 @@
 <template>
   <div class="product-video" v-if="items.length > 0">
-    <h2 class="product-video-name">产品视频</h2>
+    <h2 v-if="lang === 'cn'" class="product-video-name">产品视频</h2>
+    <h2 v-if="lang === 'en'" class="product-video-name">Product Video</h2>
     <div class="product-video-btns" v-if="items.length > 3">
       <button type="button" name="button" @mouseenter="clear">
         <span class="icon-stop"></span>
@@ -49,7 +50,7 @@
 
 <script>
 import api from 'components/tools/api'
-
+import apiEn from 'components/tools/api-en'
 import vVideo from 'components/video/video'
 
 export default {
@@ -82,6 +83,12 @@ export default {
     }
   },
   computed: {
+    lang() {
+      return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    },
     wrapHeight() {
       let length = this.items.length
       let itemHeight = this.params.height + this.params.padding
@@ -102,7 +109,7 @@ export default {
   },
   methods: {
     getItems() {
-      let productVideo = api.productVideo
+      let productVideo = this.api.productVideo
       let obj = this.classify ? productVideo.queryByClassify(this.classify) : productVideo.query()
       this.axios(obj).then((res) => {
         let data = res.data
@@ -154,9 +161,9 @@ export default {
       }
     },
     showCover(index) {
-      this.video.link = 'http://localhost:8090/static/upload/video.mp4'
+      // this.video.link = 'http://localhost:8090/static/upload/video.mp4'
       // this.video.link = 'http://localhost:8090/static/upload/upload_0d0fb6110bb83c038e656da2ec38ac92.mp4'
-      // this.video.link = this.items[index].video
+      this.video.link = this.items[index].video
       this.video.name = this.items[index].name
       this.video.show = true
     },

@@ -54,7 +54,7 @@ const store = new Vuex.Store({
     news: null, // 第一条新闻数据
     supportClassify: [],
     experienceList: [],
-    productNav: [],
+    productNav: [], // 产品导航
     productClassify: [],
     newsClassify: [],
     aboutusNav: []
