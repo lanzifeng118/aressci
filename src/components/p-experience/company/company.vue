@@ -143,10 +143,13 @@ export default {
   max-width: 100%;
 }
 .experience-item-logo li p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   margin-top: 3px;
   color: #666;
-  height: 35px;
-  overflow: hidden;
+  height: 36px;
   text-align: left;
   font-size: 12px;
   line-height: 1.5em;

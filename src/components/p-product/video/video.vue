@@ -161,8 +161,8 @@ export default {
       }
     },
     showCover(index) {
-      // this.video.link = 'http://localhost:8090/static/upload/video.mp4'
-      // this.video.link = 'http://localhost:8090/static/upload/upload_0d0fb6110bb83c038e656da2ec38ac92.mp4'
+      // this.video.link = 'http://47.100.169.145/admin/upload/upload_d5777cadaa73b4a0860e30aada0ffb85.mp4'
+      // this.video.link = 'http://47.100.169.145/admin/upload/upload_9648babd0b210057b3a2a360a4afb6af.mp4'
       this.video.link = this.items[index].video
       this.video.name = this.items[index].name
       this.video.show = true
