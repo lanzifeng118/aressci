@@ -18,16 +18,13 @@
         v-show="activeIndex === index"
       >
         <!-- all -->
-        <li v-for="(itemLogo, indexLogo) in item.list" v-if="all && indexLogo < 8">
-          <img :src="itemLogo.img">
+        <li v-for="(itemLogo, indexLogo) in item.list" :title="itemLogo.brief">
+          <div class="experience-item-logo-img">
+            <img :src="itemLogo.img">
+          </div>
           <p>{{itemLogo.brief}}</p>
         </li>
 
-        <!-- list -->
-        <li v-for="(itemLogo, indexLogo) in item.list" v-if="!all">
-          <img :src="itemLogo.img">
-          <p>{{itemLogo.brief}}</p>
-        </li>
       </ul>
     </div>
     <!-- more -->
@@ -122,7 +119,7 @@ export default {
 }
 .experience-item-logo {
   width: 940px;
-  padding: 20px 0 10px 0;
+  padding: 18px 0 10px 0;
   margin: 0 auto;
 }
 .experience-item-logo ul{
@@ -130,30 +127,41 @@ export default {
 }
 .experience-item-logo li {
   line-height: 0;
-  height: 116px;
+  height: 140px;
   width: 227px;
-  padding: 8px 0;
+  padding: 8px;
   text-align: center;
   float: left;
   margin: 0 10px 10px 0;
   border: 1px solid #f1f1f1;
 }
-.experience-item-logo li img {
-  height: 60px;
-  max-width: 100%;
+.experience-item-logo-img {
+  height: 85px;
+  overflow: hidden;
+}
+.experience-item-logo-img img {
+  width: 100%;
 }
 .experience-item-logo li p {
+  position: relative;
+  z-index: 2;;
+  background-color: #fff;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  margin-top: 3px;
+  padding-top: 3px;
   color: #666;
-  height: 36px;
+  height: 38px;
   text-align: left;
   font-size: 12px;
   line-height: 1.5em;
-  padding: 0 10px;
+  transition: all .2s;
+}
+.experience-item-logo li:hover p {
+  height: 56px;
+  -webkit-line-clamp: 3;
+  margin-top: -16px;
 }
 .experience-item-more {
   margin-bottom: 15px;

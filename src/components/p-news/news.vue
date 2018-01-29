@@ -3,7 +3,7 @@
     <banner-in page="news"></banner-in>
     <div class="news-content f-clearfix">
       <news-category class="f-left"></news-category>
-      <router-view keep-alive class="f-left""></router-view>
+      <router-view keep-alive class="f-left"></router-view>
     </div>
   </div>
 </template>

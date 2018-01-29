@@ -30,7 +30,16 @@ export default {
       return this.$store.state.lang
     },
     items() {
-      return this.$store.state.experienceList
+      let items = []
+      this.$store.state.experienceList.forEach(v => {
+        items.push(v)
+      })
+      items.forEach(v => {
+        v.logo.forEach(vL => {
+          vL.list = vL.list.slice(0, 8)
+        })
+      })
+      return items
     }
   },
   created() {
@@ -47,7 +56,7 @@ export default {
   width: 976px;
 }
 .experience-all .experience-item-logo ul{
-  height: 260px;
+  height: 310px;
   overflow: hidden;
 }
 </style>

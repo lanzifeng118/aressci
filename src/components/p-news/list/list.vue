@@ -219,6 +219,7 @@ export default {
   padding: 10px 0;
 }
 .news-list-text-summary {
+  word-break: break-all;
   font-size: 13px;
   line-height: 20px;
   color: #666;
