@@ -29,10 +29,7 @@
     <!-- news-list -->
     <div class="news-list-wrap">
       <ul class="f-clearfix">
-        <li
-          v-for="item in items"
-          class="white-box news-list-item"
-        >
+        <li v-for="item in items" class="white-box news-list-item">
           <router-link :to="item.link">
             <div class="news-list-img">
               <img v-if="item.img" :src="item.img">
@@ -45,12 +42,7 @@
           </router-link>
         </li>
       </ul>
-      <paging
-        :paging="paging"
-        @pagingNextClick="pagingNextClick"
-        @pagingPreClick="pagingPreClick"
-        @pagingChange="pagingChange"
-      >
+      <paging v-if="paging.total > 0" :paging="paging" @pagingNextClick="pagingNextClick" @pagingPreClick="pagingPreClick" @pagingChange="pagingChange">
       </paging>
     </div>
   </div>
@@ -69,9 +61,9 @@ export default {
       id: 0,
       // paging
       paging: {
-        size: 8,
+        size: 6,
         no: 0,
-        list: []
+        total: 0
       }
     }
   },
@@ -98,7 +90,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.getId()
       this.getAll()
       this.getItems()
@@ -143,25 +135,25 @@ export default {
         classify: this.classifyName
       }
       // ajax
-      this.axios(this.api.newsList.query(pageData)).then((res) => {
+      this.axios(this.api.newsList.query(pageData)).then(res => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {
-          this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
           let list = data.data.list
           list.forEach((v, i) => {
             v.link = `/news/display/p${v.id}`
           })
           this.items = data.data.list
+          this.paging.total = data.data.total
         }
       })
     },
     pagingPreClick() {
-      this.paging.no --
+      this.paging.no--
       this.getItems()
     },
     pagingNextClick() {
-      this.paging.no ++
+      this.paging.no++
       this.getItems()
     },
     pagingChange(index) {
@@ -186,7 +178,7 @@ export default {
 .news-list-wrap {
   overflow: hidden;
 }
-.news-list-wrap ul{
+.news-list-wrap ul {
   width: 988px;
 }
 .news-list-item.white-box {
@@ -212,7 +204,7 @@ export default {
 .news-list-text {
   padding: 0 15px;
 }
-.news-list-text-title{
+.news-list-text-title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

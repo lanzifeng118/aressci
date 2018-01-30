@@ -1,49 +1,41 @@
 <template>
-<div class="product-list">
-  <div class="product-position position">
-    <span class="icon-location_fill icon"></span>
-    <router-link to="/">
-      <span v-if="lang === 'cn'">首页</span>
-      <span v-if="lang === 'en'">Home</span>
-    </router-link>
-    <span class="icon-right"></span>
-    <router-link to="/product">
-      <span v-if="lang === 'cn'">所有品牌</span>
-      <span v-if="lang === 'en'">All Brands</span>
-    </router-link>
-    <span class="icon-right" v-if="classifyName"></span>
-    <span v-if="classifyName">{{classifyName}}</span>
-  </div>
-  <div class="product-list-show f-left">
-    <div class="product-list-show-classify">
-      <ul class="product-list-show-items">
-        <li
-          class="white-box"
-          v-for="item in items"
-        >
-          <router-link :to="item.link" class="f-clearfix">
-            <img :src="item.img" :alt="item.name">
-            <div class="product-list-show-item-text">
-              <h4 :title="item.name">{{item.name}}</h4>
-              <p>{{item.brief}}</p>
-            </div>
-          </router-link>
-        </li>
-      </ul>
+  <div class="product-list">
+    <div class="product-position position">
+      <span class="icon-location_fill icon"></span>
+      <router-link to="/">
+        <span v-if="lang === 'cn'">首页</span>
+        <span v-if="lang === 'en'">Home</span>
+      </router-link>
+      <span class="icon-right"></span>
+      <router-link to="/product">
+        <span v-if="lang === 'cn'">所有品牌</span>
+        <span v-if="lang === 'en'">All Brands</span>
+      </router-link>
+      <span class="icon-right" v-if="classifyName"></span>
+      <span v-if="classifyName">{{classifyName}}</span>
     </div>
-    <paging
-      :paging="paging"
-      @pagingNextClick="pagingNextClick"
-      @pagingPreClick="pagingPreClick"
-      @pagingChange="pagingChange"
-    >
-    </paging>
+    <div class="product-list-show f-left">
+      <div class="product-list-show-classify">
+        <ul class="product-list-show-items">
+          <li class="white-box" v-for="item in items">
+            <router-link :to="item.link" class="f-clearfix">
+              <img :src="item.img" :alt="item.name">
+              <div class="product-list-show-item-text">
+                <h4 :title="item.name">{{item.name}}</h4>
+                <p>{{item.brief}}</p>
+              </div>
+            </router-link>
+          </li>
+        </ul>
+      </div>
+      <paging v-if="paging.total > 0" :paging="paging" @pagingNextClick="pagingNextClick" @pagingPreClick="pagingPreClick" @pagingChange="pagingChange">
+      </paging>
+    </div>
+    <div class="f-right">
+      <product-contact></product-contact>
+      <product-video v-if="classifyName" :classify="classifyName"></product-video>
+    </div>
   </div>
-  <div class="f-right">
-    <product-contact></product-contact>
-    <product-video v-if="classifyName" :classify="classifyName"></product-video>
-  </div>
-</div>
 </template>
 
 <script>
@@ -62,7 +54,7 @@ export default {
       paging: {
         size: 4,
         no: 0,
-        list: []
+        total: 0
       }
     }
   },
@@ -91,7 +83,7 @@ export default {
     this.getId()
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.getId()
       this.getItems()
     },
@@ -109,26 +101,26 @@ export default {
         page_no: this.paging.no,
         classify: this.classifyName
       }
-      this.axios(this.api.productList.query(pageData)).then((res) => {
+      this.axios(this.api.productList.query(pageData)).then(res => {
         let data = res.data
         console.log(data)
         if (data.code === '200') {
-          this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
           data.data.list.forEach((v, i) => {
             v.link = `/product/display/c${this.id}-p${v.id}`
           })
           this.items = data.data.list
+          this.paging.total = data.data.total
         } else {
           // util.req.queryError(this.toast)
         }
       })
     },
     pagingPreClick() {
-      this.paging.no --
+      this.paging.no--
       this.getItems()
     },
     pagingNextClick() {
-      this.paging.no ++
+      this.paging.no++
       this.getItems()
     },
     pagingChange(index) {
@@ -154,14 +146,13 @@ export default {
 }
 /*classify*/
 .product-list-show-classify {
-
 }
 .product-list-show-items a {
   display: block;
   padding: 20px 16px;
   height: 100%;
 }
-.product-list-show-items li{
+.product-list-show-items li {
   margin-bottom: 15px;
   height: 205px;
   border-color: #e5e5e5;
@@ -182,7 +173,7 @@ export default {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 7;
-   -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical;
   line-height: 1.5em;
 }
 .product-list-show-items li:hover p {
