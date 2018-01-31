@@ -106,7 +106,7 @@ export default {
       }
       this.axios(this.api.productList.query(pageData)).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           if (list.length === 0) {

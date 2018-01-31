@@ -1,22 +1,18 @@
 <template>
   <div class="experience-item-box">
-    <h2 v-if="all"><router-link :to="'/experience/list/c' + experience.id">{{experience.name}} <span class="icon-more"></span></router-link></h2>
+    <h2 v-if="all">
+      <router-link :to="'/experience/list/c' + experience.id">{{experience.name}}
+        <span class="icon-more"></span>
+      </router-link>
+    </h2>
     <h2 v-if="!all">{{experience.name}}</h2>
     <ul class="experience-item-title f-clearfix">
-      <li
-        v-for="(item, index) in experience.logo"
-        @click="change(index)"
-        :class="{active: activeIndex === index}"
-      >
+      <li v-for="(item, index) in experience.logo" @click="change(index)" :class="{active: activeIndex === index}">
         {{item.classify}}
       </li>
     </ul>
     <div class="experience-item-logo">
-      <ul
-        v-for="(item, index) in experience.logo"
-        class="f-clearfix"
-        v-show="activeIndex === index"
-      >
+      <ul v-for="(item, index) in experience.logo" class="f-clearfix" v-show="activeIndex === index">
         <!-- all -->
         <li v-for="(itemLogo, indexLogo) in item.list" :title="itemLogo.brief">
           <div class="experience-item-logo-img">
@@ -29,13 +25,14 @@
     </div>
     <!-- more -->
     <div class="experience-item-more" v-if="all">
-      <router-link :to="'/experience/list/c' + experience.id">更多 <span class="icon-more"></span></router-link>
+      <router-link :to="'/experience/list/c' + experience.id">更多
+        <span class="icon-more"></span>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   props: ['experience', 'all'],
   data() {
@@ -44,12 +41,12 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.init()
     }
   },
   created() {
-    console.log(this.experience)
+    // console.log(this.experience)
     this.init()
   },
   methods: {
@@ -60,8 +57,7 @@ export default {
       this.activeIndex = num
     }
   },
-  components: {
-  }
+  components: {}
 }
 </script>
 
@@ -122,7 +118,7 @@ export default {
   padding: 18px 0 10px 0;
   margin: 0 auto;
 }
-.experience-item-logo ul{
+.experience-item-logo ul {
   width: 950px;
 }
 .experience-item-logo li {
@@ -144,23 +140,19 @@ export default {
 }
 .experience-item-logo li p {
   position: relative;
-  z-index: 2;;
+  z-index: 2;
   background-color: #fff;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   padding-top: 3px;
   color: #666;
   height: 38px;
   text-align: left;
   font-size: 12px;
   line-height: 1.5em;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 .experience-item-logo li:hover p {
   height: 56px;
-  -webkit-line-clamp: 3;
   margin-top: -16px;
 }
 .experience-item-more {

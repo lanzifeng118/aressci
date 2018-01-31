@@ -164,7 +164,7 @@ export default {
     getItem() {
       this.axios(api.productList.queryById(this.productId)).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           if (data.data) {
             this.item = data.data

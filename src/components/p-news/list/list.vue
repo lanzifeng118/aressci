@@ -137,7 +137,7 @@ export default {
       // ajax
       this.axios(this.api.newsList.query(pageData)).then(res => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           list.forEach((v, i) => {

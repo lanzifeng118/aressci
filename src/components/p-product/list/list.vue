@@ -103,7 +103,7 @@ export default {
       }
       this.axios(this.api.productList.query(pageData)).then(res => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           data.data.list.forEach((v, i) => {
             v.link = `/product/display/c${this.id}-p${v.id}`

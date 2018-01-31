@@ -3,7 +3,7 @@
     <product-banner></product-banner>
     <div class="product-content f-clearfix">
       <product-category class="f-left"></product-category>
-      <router-view keep-alive class="f-left""></router-view>
+      <router-view keep-alive class="f-left"></router-view>
     </div>
   </div>
 </template>

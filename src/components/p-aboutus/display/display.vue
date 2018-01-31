@@ -63,19 +63,20 @@ export default {
   methods: {
     getItem() {
       let id = this.$route.params.id
-      console.log(id)
+      // console.log(id)
       if (!id) {
         return
       }
       id = parseInt(id.slice(1))
       this.axios(api.aboutus.queryById(id)).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           if (data.data) {
             this.item = data.data
           } else {
-            util.toast.fade(this.toast, 'NO DATA EXIST', 'close')
+            let text = this.lang === 'cn' ? '无此文章' : 'NO DATA EXIST'
+            util.toast.fade(this.toast, text, 'close')
             this.goBack()
           }
         }

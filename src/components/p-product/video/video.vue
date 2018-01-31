@@ -113,7 +113,7 @@ export default {
       let obj = this.classify ? productVideo.queryByClassify(this.classify) : productVideo.query()
       this.axios(obj).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           if (list.length > this.liLength) {

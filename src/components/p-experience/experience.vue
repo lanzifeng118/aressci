@@ -3,7 +3,7 @@
     <banner-in page="experience"></banner-in>
     <div class="experience-content f-clearfix">
       <experience-category class="f-left"></experience-category>
-      <router-view keep-alive class="f-left""></router-view>
+      <router-view keep-alive class="f-left"></router-view>
     </div>
     <toast
       v-show="toast.show"
@@ -45,7 +45,7 @@ export default {
     getItems() {
       this.axios(this.api.experienceList.query()).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           list.forEach((v, i) => {

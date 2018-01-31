@@ -31,14 +31,14 @@ export default {
       let obj = {}
       let nav = this.$store.state.productNav
       if (nav) {
-        for (var i = 0; i < nav.length; i++) {
+        for (let i = 0; i < nav.length; i++) {
           if (nav[i].id === this.id) {
             obj = nav[i]
             break
           }
         }
       }
-      console.log(obj)
+      // console.log(obj)
       return obj
     }
   },
@@ -62,7 +62,7 @@ export default {
       }
     },
     getId() {
-      var id = this.$route.params.id
+      let id = this.$route.params.id
       if (id) {
         let arr = id.split('-')
         this.id = parseInt(arr[0].slice(1))

@@ -45,7 +45,8 @@ let queryByIdFun = (url, id) => {
     data: {
       method: 'queryById',
       data: {
-        id: id
+        id: id,
+        lang: LANG
       }
     }
   }

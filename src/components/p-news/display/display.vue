@@ -73,7 +73,7 @@ export default {
       let id = parseInt(this.$route.params.id.slice(1))
       this.axios(this.api.newsList.queryById(id)).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           data.data.modifytime = data.data.modifytime.replace(/\s.+$/g, '')
           this.item = data.data

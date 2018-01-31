@@ -3,7 +3,7 @@
     <banner-in page="aboutus"></banner-in>
     <div class="about-content f-clearfix">
       <about-category class="f-left"></about-category>
-      <router-view keep-alive class="f-left""></router-view>
+      <router-view keep-alive class="f-left"></router-view>
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
     getNav() {
       this.axios(this.api.aboutus.query()).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           if (list.length > 0) {

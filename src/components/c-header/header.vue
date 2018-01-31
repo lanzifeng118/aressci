@@ -116,7 +116,7 @@ export default {
     getNav() {
       this.axios(this.api.nav.query({prdcount: '8'})).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           if (list && list.length > 0) {

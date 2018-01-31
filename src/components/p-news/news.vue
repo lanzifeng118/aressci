@@ -31,7 +31,7 @@ export default {
     getClassify() {
       this.axios(this.api.newsClassify.query()).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           list.forEach((v, i) => {
