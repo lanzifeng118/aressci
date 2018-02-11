@@ -1,21 +1,10 @@
 <template>
 <div class="product-display">
-  <div class="product-position position">
-    <span class="icon-location_fill icon"></span>
-    <router-link to="/">
-      <span v-if="lang === 'cn'">首页</span>
-      <span v-if="lang === 'en'">Home</span>
-    </router-link>
-    <span class="icon-right"></span>
-    <router-link to="/product">
-      <span v-if="lang === 'cn'">所有品牌</span>
-      <span v-if="lang === 'en'">All Brands</span>
-    </router-link>
-    <span class="icon-right"></span>
+  <position>
     <router-link :to="'/product/list/c' + classifyId">{{classifyName}}</router-link>
     <span class="icon-right"></span>
     {{item.name}}
-  </div>
+  </position>
   <div class="product-display-wrap f-left" v-if="item.name">
     <div class="product-display-summary f-clearfix">
       <img v-if="item.img" :src="item.img" :alt="item.name" class="f-left">
@@ -103,6 +92,8 @@
 <script>
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
+import position from 'components/p-product/position/position'
+
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
@@ -191,7 +182,8 @@ export default {
   components: {
     productVideo,
     productContact,
-    toast
+    toast,
+    position
   }
 }
 </script>

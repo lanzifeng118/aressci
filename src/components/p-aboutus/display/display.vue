@@ -1,19 +1,8 @@
 <template>
   <div class="about-display">
-    <div class="position about-position">
-      <span class="icon-location_fill icon"></span>
-      <router-link to="/">
-        <span v-if="lang === 'cn'">首页</span>
-        <span v-if="lang === 'en'">Home</span>
-      </router-link>
-      <span class="icon-right"></span>
-      <router-link to="/aboutus">
-        <span v-if="lang === 'cn'">关于我们</span>
-        <span v-if="lang === 'en'">About Us</span>
-      </router-link>
-      <span class="icon-right"></span>
+    <position>
       {{item.title}}
-    </div>
+    </position>
     <div class="about-display-wrap">
       <div class="about-display-info">
         <h1>{{item.title}}</h1>
@@ -34,6 +23,7 @@
 import api from 'components/tools/api'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
+import position from 'components/p-aboutus/position/position'
 
 export default {
   data() {
@@ -89,7 +79,8 @@ export default {
     }
   },
   components: {
-    toast
+    toast,
+    position
   }
 }
 </script>

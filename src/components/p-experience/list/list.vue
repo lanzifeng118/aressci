@@ -1,19 +1,8 @@
 <template>
   <div class="experience-list">
-    <div class="experience-position position">
-      <span class="icon-location_fill icon"></span>
-      <router-link to="/">
-        <span v-if="lang === 'cn'">首页</span>
-        <span v-if="lang === 'en'">Home</span>
-      </router-link>
-      <span class="icon-right"></span>
-      <router-link to="/experience/all">
-        <span v-if="lang === 'cn'">项目经验</span>
-        <span v-if="lang === 'en'">Project Experiences</span>
-      </router-link>
-      <span class="icon-right"></span>
+    <position>
       <span>{{item.name}}</span>
-    </div>
+    </position>
     <!-- items -->
     <experience-company v-if="item.logo && item.logo.length > 0" :experience="item" :all="all"></experience-company>
     <toast
@@ -26,6 +15,7 @@
 </template>
 
 <script>
+import position from 'components/p-experience/position/position'
 import experienceCompany from 'components/p-experience/company/company'
 import toast from 'components/toast/toast'
 import util from 'components/tools/util'
@@ -81,7 +71,8 @@ export default {
   },
   components: {
     toast,
-    experienceCompany
+    experienceCompany,
+    position
   }
 }
 </script>

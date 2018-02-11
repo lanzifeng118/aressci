@@ -66,9 +66,4 @@ export default {
   padding-top: 30px;
   margin-bottom: 25px;
 }
-.product-position {
-  top: 2px;
-  left: 0;
-  position: absolute;
-}
 </style>

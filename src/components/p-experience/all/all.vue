@@ -1,15 +1,6 @@
 <template>
   <div class="experience-all">
-    <div class="experience-position position">
-      <span class="icon-location_fill icon"></span>
-      <router-link to="/">
-        <span v-if="lang === 'cn'">首页</span>
-        <span v-if="lang === 'en'">Home</span>
-      </router-link>
-      <span class="icon-right"></span>
-      <span v-if="lang === 'cn'">项目经验</span>
-      <span v-if="lang === 'en'">Project Experiences</span>
-    </div>
+    <position page="index"></position>
     <!-- items -->
     <experience-company v-if="items.length > 0" v-for="item in items" :experience="item" :all="all"></experience-company>
   </div>
@@ -18,6 +9,7 @@
 
 <script>
 import experienceCompany from 'components/p-experience/company/company'
+import position from 'components/p-experience/position/position'
 
 export default {
   data() {
@@ -45,7 +37,8 @@ export default {
   created() {
   },
   components: {
-    experienceCompany
+    experienceCompany,
+    position
   }
 }
 </script>

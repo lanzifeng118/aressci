@@ -1,15 +1,6 @@
 <template>
   <div class="product-all wrap">
-    <div class="product-position position">
-      <span class="icon-location_fill icon"></span>
-      <router-link to="/">
-        <span v-if="lang === 'cn'">首页</span>
-        <span v-if="lang === 'en'">Home</span>
-      </router-link>
-      <span class="icon-right"></span>
-      <span v-if="lang === 'cn'">所有品牌</span>
-      <span v-if="lang === 'en'">All Brands</span>
-    </div>
+    <position page="index"></position>
     <div class="product-all-items-wrap">
       <ul class="product-all-items" v-if="items.length > 0">
         <li class="white-box" v-for="item in items">
@@ -32,6 +23,7 @@
 </template>
 
 <script>
+import position from 'components/p-product/position/position'
 
 export default {
   data() {
@@ -45,6 +37,9 @@ export default {
     items() {
       return this.$store.state.productNav
     }
+  },
+  components: {
+    position
   }
 }
 </script>

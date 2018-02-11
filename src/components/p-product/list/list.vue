@@ -1,19 +1,8 @@
 <template>
   <div class="product-list">
-    <div class="product-position position">
-      <span class="icon-location_fill icon"></span>
-      <router-link to="/">
-        <span v-if="lang === 'cn'">首页</span>
-        <span v-if="lang === 'en'">Home</span>
-      </router-link>
-      <span class="icon-right"></span>
-      <router-link to="/product">
-        <span v-if="lang === 'cn'">所有品牌</span>
-        <span v-if="lang === 'en'">All Brands</span>
-      </router-link>
-      <span class="icon-right" v-if="classifyName"></span>
+    <position>
       <span v-if="classifyName">{{classifyName}}</span>
-    </div>
+    </position>
     <div class="product-list-show f-left">
       <div class="product-list-show-classify">
         <ul class="product-list-show-items">
@@ -42,6 +31,7 @@
 import paging from 'components/c-paging/paging'
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
+import position from 'components/p-product/position/position'
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
 
@@ -131,7 +121,8 @@ export default {
   components: {
     paging,
     productVideo,
-    productContact
+    productContact,
+    position
   }
 }
 </script>

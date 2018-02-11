@@ -1,31 +1,12 @@
 <template>
   <div class="news-list">
     <!-- all -->
-    <div class="position news-position" v-if="all">
-      <span class="icon-location_fill icon"></span>
-      <router-link to="/">
-        <span v-if="lang === 'cn'">首页</span>
-        <span v-if="lang === 'en'">Home</span>
-      </router-link>
-      <span class="icon-right"></span>
-      <span v-if="lang === 'cn'">所有新闻</span>
-      <span v-if="lang === 'en'">All News</span>
-    </div>
+    <position v-if="all" page="index"></position>
     <!-- list -->
-    <div class="position news-position" v-if="!all">
-      <span class="icon-location_fill icon"></span>
-      <router-link to="/">
-        <span v-if="lang === 'cn'">首页</span>
-        <span v-if="lang === 'en'">Home</span>
-      </router-link>
-      <span class="icon-right"></span>
-      <router-link to="/news">
-        <span v-if="lang === 'cn'">所有新闻</span>
-        <span v-if="lang === 'en'">All News</span>
-      </router-link>
-      <span class="icon-right"></span>
+    <position v-if="!all">
       {{classifyName}}
-    </div>
+    </position>
+    
     <!-- news-list -->
     <div class="news-list-wrap">
       <ul class="f-clearfix">
@@ -52,6 +33,7 @@
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
 import paging from 'components/c-paging/paging'
+import position from 'components/p-news/position/position'
 
 export default {
   data() {
@@ -162,7 +144,8 @@ export default {
     }
   },
   components: {
-    paging
+    paging,
+    position
   }
 }
 </script>
