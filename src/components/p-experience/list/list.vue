@@ -23,7 +23,6 @@ import util from 'components/tools/util'
 export default {
   data() {
     return {
-      id: 0,
       all: false,
       // toast
       toast: {
@@ -35,12 +34,14 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.getId()
     }
   },
   computed: {
     lang() {
       return this.$store.state.lang
+    },
+    id() {
+      return parseInt(this.$route.params.id.slice(1))
     },
     item() {
       let item = {}
@@ -64,12 +65,8 @@ export default {
     }
   },
   created() {
-    this.getId()
   },
   methods: {
-    getId() {
-      this.id = parseInt(this.$route.params.id.slice(1))
-    }
   },
   components: {
     toast,

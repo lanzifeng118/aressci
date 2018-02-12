@@ -21,6 +21,7 @@
 
 <script>
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
 import position from 'components/p-aboutus/position/position'
@@ -45,6 +46,12 @@ export default {
   computed: {
     lang() {
       return this.$store.state.lang
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
+    },
+    id() {
+      return parseInt(this.$route.params.id.slice(1))
     }
   },
   created() {
@@ -52,13 +59,10 @@ export default {
   },
   methods: {
     getItem() {
-      let id = this.$route.params.id
-      // console.log(id)
-      if (!id) {
+      if (!this.id) {
         return
       }
-      id = parseInt(id.slice(1))
-      this.axios(api.aboutus.queryById(id)).then((res) => {
+      this.axios(this.api.aboutus.queryById(this.id)).then((res) => {
         let data = res.data
         // console.log(data)
         if (data.code === '200') {
