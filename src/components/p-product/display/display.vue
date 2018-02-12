@@ -1,92 +1,79 @@
 <template>
-<div class="product-display">
-  <position>
-    <router-link :to="'/product/list/c' + classifyId">{{classifyName}}</router-link>
-    <span class="icon-right"></span>
-    {{item.name}}
-  </position>
-  <div class="product-display-wrap f-left" v-if="item.name">
-    <div class="product-display-summary f-clearfix">
-      <img v-if="item.img" :src="item.img" :alt="item.name" class="f-left">
-      <div class="product-display-summary-text">
-        <h4>{{item.name}}</h4>
-        <p>{{item.brief}}</p>
-      </div>
-    </div>
-    <div class="product-display-box">
-      <div class="product-display-tab">
-        <ul class="f-clearfix">
-          <li :class="{active: tabShow[0]}" @click="tabClick(0)">
-            <span v-if="lang === 'cn'">产品信息</span>
-            <span v-if="lang === 'en'">Product Info</span>
-          </li>
-          <li :class="{active: tabShow[1]}" @click="tabClick(1)">
-            <span v-if="lang === 'cn'">产品资源</span>
-            <span v-if="lang === 'en'">Resources</span>
-          </li>
-        </ul>
-      </div>
-      <div class="product-display-detail">
-        <!-- info -->
-        <div class="product-display-info" v-show="tabShow[0]" v-html="item.detail"></div>
-        <!-- resources -->
-        <div class="product-display-resources" v-show="tabShow[1]">
-          <h3>产品文档</h3>
-          <table class="product-display-resources-table" v-if="item.resources && item.resources.length > 0">
-            <thead>
-              <tr>
-                <th width="70">
-                  <span v-if="lang === 'cn'">类型</span>
-                  <span v-if="lang === 'en'">Type</span>
-                </th>
-                <th>
-                  <span v-if="lang === 'cn'">文件名</span>
-                  <span v-if="lang === 'en'">Name</span>
-                </th>
-                <th width="70">
-                  <span v-if="lang === 'cn'">下载</span>
-                  <span v-if="lang === 'en'">Download</span>
-                </th>
-                <th width="70">
-                  <span v-if="lang === 'cn'">大小</span>
-                  <span v-if="lang === 'en'">Size</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="itemR in item.resources">
-                <td class="center">
-                  <span v-if="itemR.type === 'pdf'" class="icon icon-pdf"></span>
-                  <span v-if="itemR.type === 'doc'" class="icon icon-word"></span>
-                  <span v-if="itemR.type === 'xlsx' || itemR.type === 'xls'" class="icon icon-excel"></span>
-                </td>
-                <td class="name">
-                  <a v-if="itemR.type === 'pdf'" :href="itemR.url" target="_blank">{{itemR.name}}
-                  </a>
-                  <a v-if="itemR.type !== 'pdf'" :href="itemR.url" :download="itemR.name">{{itemR.name}}</a>
-                </td>
-                <td class="center">
-                  <a :href="itemR.url" :download="itemR.name"><span class="icon-download"></span></a>
-                </td>
-                <td class="center">{{itemR.size}}</td>
-              </tr>
-            </tbody>
-          </table>
+  <div class="product-display">
+    <position>
+      <router-link :to="'/product/list/c' + id.classify">{{classifyName}}</router-link>
+      <span class="icon-right"></span>
+      {{item.name}}
+    </position>
+    <div class="product-display-wrap f-left">
+      <div class="product-query-text" v-show="queryText">{{queryText}}</div>
+      <div v-if="item.name">
+        <div class="product-display-summary f-clearfix">
+          <img v-if="item.img" :src="item.img" :alt="item.name" class="f-left">
+          <div class="product-display-summary-text">
+            <h4>{{item.name}}</h4>
+            <p>{{item.brief}}</p>
+          </div>
+        </div>
+        <div class="product-display-box">
+          <div class="product-display-tab">
+            <ul class="f-clearfix">
+              <li :class="{active: tabShow[0]}" @click="tabClick(0)">
+                {{text.info[lang]}}
+              </li>
+              <li :class="{active: tabShow[1]}" @click="tabClick(1)">
+                {{text.resource[lang]}}
+              </li>
+            </ul>
+          </div>
+          <div class="product-display-detail">
+            <!-- info -->
+            <div class="product-display-info" v-show="tabShow[0]" v-html="item.detail"></div>
+            <!-- resources -->
+            <div class="product-display-resources" v-show="tabShow[1]">
+              <h3>{{text.doc[lang]}}</h3>
+              <table class="product-display-resources-table" v-if="item.resources && item.resources.length > 0">
+                <thead>
+                  <tr>
+                    <th width="70">{{text.type[lang]}}</th>
+                    <th>{{text.name[lang]}}</th>
+                    <th width="70">{{text.download[lang]}}</th>
+                    <th width="70">{{text.size[lang]}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="itemR in item.resources">
+                    <td class="center">
+                      <span v-if="itemR.type === 'pdf'" class="icon icon-pdf"></span>
+                      <span v-if="itemR.type === 'doc'" class="icon icon-word"></span>
+                      <span v-if="itemR.type === 'xlsx' || itemR.type === 'xls'" class="icon icon-excel"></span>
+                    </td>
+                    <td class="name">
+                      <a v-if="itemR.type === 'pdf'" :href="itemR.url" target="_blank">{{itemR.name}}
+                      </a>
+                      <a v-if="itemR.type !== 'pdf'" :href="itemR.url" :download="itemR.name">{{itemR.name}}</a>
+                    </td>
+                    <td class="center">
+                      <a :href="itemR.url" :download="itemR.name">
+                        <span class="icon-download"></span>
+                      </a>
+                    </td>
+                    <td class="center">{{itemR.size}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <div class="f-right">
+      <product-contact></product-contact>
+      <product-video></product-video>
+    </div>
+    <toast v-show="toast.show" :text="toast.text" :icon="toast.icon">
+    </toast>
   </div>
-  <div class="f-right">
-    <product-contact></product-contact>
-    <product-video></product-video>
-  </div>
-  <toast
-    v-show="toast.show"
-    :text="toast.text"
-    :icon="toast.icon"
-  >
-  </toast>
-</div>
 </template>
 
 <script>
@@ -102,8 +89,7 @@ import toast from 'components/toast/toast'
 export default {
   data() {
     return {
-      classifyId: 0,
-      productId: 0,
+      queryText: '',
       item: {},
       tabShow: [true, false],
       // toast
@@ -111,6 +97,36 @@ export default {
         show: false,
         text: '',
         icon: ''
+      },
+      text: {
+        info: {
+          cn: '产品信息',
+          en: 'Product Info'
+        },
+        resource: {
+          cn: '产品资源',
+          en: 'Resources'
+        },
+        doc: {
+          cn: '产品文档',
+          en: 'Product Documents'
+        },
+        type: {
+          cn: '类型',
+          en: 'Type'
+        },
+        name: {
+          cn: '文件名',
+          en: 'Name'
+        },
+        download: {
+          cn: '下载',
+          en: 'Download'
+        },
+        size: {
+          cn: '大小',
+          en: 'Size'
+        }
       }
     }
   },
@@ -121,12 +137,21 @@ export default {
     api() {
       return this.$store.state.lang === 'cn' ? api : apiEn
     },
+    id() {
+      let arr = this.$route.params.id.split('-')
+      let classify = parseInt(arr[0].slice(1))
+      let product = parseInt(arr[1].slice(1))
+      return {
+        classify,
+        product
+      }
+    },
     classifyName() {
       let name = ''
       let nav = this.$store.state.productNav
       if (nav) {
         for (var i = 0; i < nav.length; i++) {
-          if (nav[i].id === this.classifyId) {
+          if (nav[i].id === this.id.classify) {
             name = nav[i].name
             break
           }
@@ -136,31 +161,30 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.tabClick(0)
-      this.getIds()
       this.getItem()
     }
   },
   created() {
-    this.getIds()
     this.getItem()
   },
   methods: {
-    getIds() {
-      let arr = this.$route.params.id.split('-')
-      this.classifyId = parseInt(arr[0].slice(1))
-      this.productId = parseInt(arr[1].slice(1))
-    },
     getItem() {
-      this.axios(api.productList.queryById(this.productId)).then((res) => {
+      this.queryText = this.lang === 'cn' ? '正在查询...' : 'Querying...'
+      this.item = {}
+      this.axios(this.api.productList.queryById(this.id.product)).then(res => {
         let data = res.data
         // console.log(data)
         if (data.code === '200') {
+          this.queryText = ''
           if (data.data) {
             this.item = data.data
           } else {
-            let text = this.lang === 'cn' ? '此产品不存在' : 'This product does not exist.'
+            let text =
+              this.lang === 'cn'
+                ? '此产品不存在'
+                : 'This product does not exist.'
             util.toast.show(this.toast, text)
             util.goBack(() => {
               this.$router.push('/product/all')
@@ -200,7 +224,7 @@ export default {
 .product-display-summary {
   margin-bottom: 20px;
 }
-.product-display-summary img{
+.product-display-summary img {
   width: 220px;
   min-height: 100px;
   max-height: 170px;
@@ -231,7 +255,7 @@ export default {
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
 }
-.product-display-tab li{
+.product-display-tab li {
   cursor: pointer;
   float: left;
   padding: 8px 12px;
@@ -251,7 +275,7 @@ export default {
   line-height: 1.5em;
   margin-top: -1px;
 }
-.product-display-detail>div {
+.product-display-detail > div {
   padding: 30px 25px;
   height: 605px;
   overflow-y: auto;
@@ -260,7 +284,7 @@ div.product-display-info {
   color: #7d6666;
   padding-top: 15px;
 }
-.product-display-info  h1 {
+.product-display-info h1 {
   color: #0d93b8;
   font-weight: bold;
   margin: 15px 0;

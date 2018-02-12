@@ -1,7 +1,7 @@
 <template>
   <div class="product-all wrap">
     <position page="index"></position>
-    <div class="product-all-items-wrap">
+    <div class="product-all-items-wrap">     
       <ul class="product-all-items" v-if="items.length > 0">
         <li class="white-box" v-for="item in items">
           <router-link :to="item.link" class="f-clearfix">

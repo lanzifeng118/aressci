@@ -55,7 +55,9 @@ export default {
         if (!item.logo) {
           let text = this.lang === 'cn' ? '数据不存在' : 'NO DATA EXIST'
           util.toast.show(this.toast, text, 'close')
-          util.goBack(this.$router.push('/experience/all'))
+          util.goBack(() => {
+            this.$router.push('/experience/all')
+          })
         }
       }
       return item

@@ -10,9 +10,6 @@ var path = require('path')
 var express = require('express')
 // 自定义模拟数据
 var apiRoutes = express.Router(); //创建一个路由实例
-var appData = require('../data.json')
-var infoList = appData.infoList;
-var infoDisplay = appData.infoDisplay;
 
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
@@ -89,8 +86,8 @@ devMiddleware.waitUntilValid(() => {
 
 var server = app.listen(port)
 
-var appHypo = require('../../backend/app.js');
-app.use('/', appHypo);
+// var appHypo = require('../../backend/app.js');
+// app.use('/', appHypo);
 
 module.exports = {
   ready: readyPromise,

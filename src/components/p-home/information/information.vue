@@ -4,9 +4,9 @@
       <ul>
         <!-- us -->
         <li class="home-information-item home-us white-box">
-          <h3 class="home-information-item-title"><span v-if="lang === 'cn'">关于我们</span><span v-if="lang === 'en'">About Us</span></h3>
+          <h3 class="home-information-item-title">{{text.aboutusTitle[lang]}}</h3>
           <router-link v-if="aboutusId" :to="'/aboutus/display/c' + aboutusId" class="home-information-item-more">
-            <span v-if="lang === 'cn'">更多</span><span v-if="lang === 'en'">MORE</span><span class="icon-more"></span>
+            {{text.more[lang]}}<span class="icon-more"></span>
           </router-link>
           <h4 class="home-information-item-h4">
             <router-link to="/aboutus/display">{{basicInfo.name}}</router-link>
@@ -21,9 +21,9 @@
 
         <!-- product -->
         <li class="home-information-item home-product white-box">
-          <h3 class="home-information-item-title"><span v-if="lang === 'cn'">我们的产品</span><span v-if="lang === 'en'">Our Products</span></h3>
+          <h3 class="home-information-item-title">{{text.productTitle[lang]}}</h3>
           <router-link to="/product" class="home-information-item-more">
-            <span v-if="lang === 'cn'">更多</span><span v-if="lang === 'en'">MORE</span><span class="icon-more"></span>
+            {{text.more[lang]}}<span class="icon-more"></span>
           </router-link>
           <ul class="home-information-product-ul">
             <li v-for="item in product.slice">
@@ -69,6 +69,20 @@ export default {
         num: 4,
         total: 0,
         page: null
+      },
+      text: {
+        aboutusTitle: {
+          cn: '关于我们',
+          en: 'About us'
+        },
+        productTitle: {
+          cn: '我们的产品',
+          en: 'Our Products'
+        },
+        more: {
+          cn: '更多',
+          en: 'MORE'
+        }
       }
     }
   },
@@ -171,6 +185,7 @@ export default {
   border-spacing: 14px;
 }
 .home-information-item.white-box {
+  border-top-color: #cff5ff;
   margin-right: 14px;
   display: table-cell;
   position: relative;
@@ -179,10 +194,9 @@ export default {
   height: 293px;
 }
 .home-information-item-title {
+  color: #0d93b8;
   text-align: center;
   margin-bottom: 25px;
-}
-.home-information-item-title > span {
   font-weight: bold;
 }
 .home-information-item-h4 {
@@ -207,27 +221,7 @@ export default {
   font-size: 12px;
 
 }
-/*us*/
-.home-us.white-box {
-  border-top-color: #cff5ff;
-}
-.home-us.white-box .home-information-item-title {
-  color: #0d93b8;
-}
-/*news*/
-.home-news.white-box {
-  border-top-color: #cff5ff;
-}
-.home-news.white-box .home-information-item-title {
-  color: #0d93b8;
-}
-/*product*/
-.home-product.white-box {
-  border-top-color: #cff5ff;
-}
-.home-product.white-box .home-information-item-title {
-  color: #0d93b8;
-}
+
 .home-information-product-img img {
   width: 100%;
 }
@@ -317,13 +311,6 @@ export default {
 }
 .home-information-product-btn:hover {
   background: rgba(0, 0, 0, 0.2);
-}
-/*service*/
-.home-service.white-box {
-  border-top-color: #cff5ff;
-}
-.home-service.white-box .home-information-item-title {
-  color: #0d93b8;
 }
 
 .home-information-item-more {

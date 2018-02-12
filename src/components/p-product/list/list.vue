@@ -4,18 +4,9 @@
       <span v-if="classifyName">{{classifyName}}</span>
     </position>
     <div class="product-list-show f-left">
+      <div class="product-query-text" v-show="queryText">{{queryText}}</div>
       <div class="product-list-show-classify">
-        <ul class="product-list-show-items">
-          <li class="white-box" v-for="item in items">
-            <router-link :to="item.link" class="f-clearfix">
-              <img :src="item.img" :alt="item.name">
-              <div class="product-list-show-item-text">
-                <h4 :title="item.name">{{item.name}}</h4>
-                <p>{{item.brief}}</p>
-              </div>
-            </router-link>
-          </li>
-        </ul>
+        <box v-if="items.length > 0" :items="items"></box>
       </div>
       <paging v-if="paging.total > 0" :paging="paging" @pagingNextClick="pagingNextClick" @pagingPreClick="pagingPreClick" @pagingChange="pagingChange">
       </paging>
@@ -31,7 +22,9 @@
 import paging from 'components/c-paging/paging'
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
+import box from 'components/p-product/box/box'
 import position from 'components/p-product/position/position'
+import util from 'components/tools/util'
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
 
@@ -39,7 +32,7 @@ export default {
   data() {
     return {
       items: [],
-      id: '',
+      queryText: '',
       // paging
       paging: {
         size: 4,
@@ -55,11 +48,15 @@ export default {
     api() {
       return this.$store.state.lang === 'cn' ? api : apiEn
     },
+    id() {
+      return parseInt(this.$route.params.id.slice(1))
+    },
     classifyName() {
-      let name = ''
+      let name
       let nav = this.$store.state.productNav
-      if (nav) {
+      if (nav.length) {
         for (var i = 0; i < nav.length; i++) {
+          name = ''
           if (nav[i].id === this.id) {
             name = nav[i].name
             break
@@ -70,22 +67,28 @@ export default {
     }
   },
   created() {
-    this.getId()
+    this.getItems()
   },
   watch: {
-    $route(to, from) {
-      this.getId()
-      this.getItems()
-    },
     classifyName() {
       this.getItems()
     }
   },
   methods: {
-    getId() {
-      this.id = parseInt(this.$route.params.id.slice(1))
-    },
     getItems() {
+      if (this.classifyName === void 0) {
+        return
+      }
+      this.items = []
+      this.queryText = this.lang === 'cn' ? '正在查询...' : 'Querying...'
+      this.paging.total = 0
+      if (this.classifyName === '') {
+        this.queryText = this.lang === 'cn' ? '无该品牌数据' : 'There is no data about this brand.'
+        util.goBack(() => {
+          this.$router.push('/product/all')
+        })
+        return
+      }
       let pageData = {
         page_size: this.paging.size,
         page_no: this.paging.no,
@@ -95,13 +98,20 @@ export default {
         let data = res.data
         // console.log(data)
         if (data.code === '200') {
-          data.data.list.forEach((v, i) => {
-            v.link = `/product/display/c${this.id}-p${v.id}`
-          })
-          this.items = data.data.list
-          this.paging.total = data.data.total
-        } else {
-          // util.req.queryError(this.toast)
+          let list = data.data.list
+          if (list.length === 0) {
+            this.queryText =
+              this.lang === 'cn'
+                ? `无${this.classifyName}产品`
+                : `There are no products of ${this.classifyName}`
+          } else {
+            data.data.list.forEach((v, i) => {
+              v.link = `/product/display/c${this.id}-p${v.id}`
+            })
+            this.queryText = ''
+            this.items = data.data.list
+            this.paging.total = data.data.total
+          }
         }
       })
     },
@@ -122,7 +132,8 @@ export default {
     paging,
     productVideo,
     productContact,
-    position
+    position,
+    box
   }
 }
 </script>
@@ -137,37 +148,5 @@ export default {
 }
 /*classify*/
 .product-list-show-classify {
-}
-.product-list-show-items a {
-  display: block;
-  padding: 20px 16px;
-  height: 100%;
-}
-.product-list-show-items li {
-  margin-bottom: 15px;
-  height: 205px;
-  border-color: #e5e5e5;
-}
-.product-list-show-items li img {
-  float: left;
-  width: 220px;
-}
-.product-list-show-item-text {
-  width: 430px;
-  float: right;
-}
-.product-list-show-item-text h4 {
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-.product-list-show-item-text p {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 7;
-  -webkit-box-orient: vertical;
-  line-height: 1.5em;
-}
-.product-list-show-items li:hover p {
-  color: #333;
 }
 </style>

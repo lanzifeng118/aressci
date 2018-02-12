@@ -66,4 +66,10 @@ export default {
   padding-top: 30px;
   margin-bottom: 25px;
 }
+.product-query-text {
+  color: #ccc;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 30px;
+}
 </style>

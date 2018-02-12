@@ -1,33 +1,16 @@
 <template>
 <div class="product-list">
   <position>
-    <span v-if="lang === 'cn' && searchText">查询-{{searchText}}</span>
-    <span v-if="lang === 'cn' && !searchText">查询所有</span>
-    <span v-if="lang === 'en' && searchText">SEARCH-{{searchText}}</span>
-    <span v-if="lang === 'en' && !searchText">SEARCH ALL</span>
+    <span v-if="searchText">{{text.search[lang]}}-{{searchText}}</span>
+    <span v-if="!searchText">{{text.searchAll[lang]}}</span>
   </position>
   <div class="product-list-show f-left">
     <div class="product-list-show-classify">
-      <div class="product-list-show-none" v-if="items.length === 0">
-        {{noneText}}
-      </div>
-      <ul class="product-list-show-items" v-if="items.length > 0">
-        <li
-          class="white-box"
-          v-for="item in items"
-        >
-          <router-link :to="item.link" class="f-clearfix">
-            <img :src="item.img" :alt="item.name">
-            <div class="product-list-show-item-text">
-              <h4 :title="item.name">{{item.name}}</h4>
-              <p>{{item.brief}}</p>
-            </div>
-          </router-link>
-        </li>
-      </ul>
+      <div class="product-query-text" v-if="queryText">{{queryText}}</div>
+      <box v-if="items.length > 0" :items="items" search="Y"></box> 
     </div>
     <paging
-      v-if="items.length > 0"
+      v-if="paging.total > 0"
       :paging="paging"
       @pagingNextClick="pagingNextClick"
       @pagingPreClick="pagingPreClick"
@@ -45,6 +28,7 @@
 <script>
 import paging from 'components/c-paging/paging'
 import productVideo from 'components/p-product/video/video'
+import box from 'components/p-product/box/box'
 import productContact from 'components/p-product/contact/contact'
 import position from 'components/p-product/position/position'
 import api from 'components/tools/api'
@@ -55,13 +39,22 @@ export default {
     return {
       items: [],
       id: 0,
-      searchText: '',
-      noneText: '',
+      queryText: '',
+      text: {
+        search: {
+          cn: '查询',
+          en: 'SEARCH'
+        },
+        searchAll: {
+          cn: '查询所有',
+          en: 'SEARCH ALL'
+        }
+      },
       // paging
       paging: {
         size: 4,
         no: 0,
-        list: []
+        total: 0
       }
     }
   },
@@ -74,6 +67,9 @@ export default {
     },
     api() {
       return this.$store.state.lang === 'cn' ? api : apiEn
+    },
+    searchText() {
+      return this.$route.params.id
     }
   },
   watch: {
@@ -82,12 +78,10 @@ export default {
     }
   },
   methods: {
-    getSearch() {
-      this.searchText = this.$route.params.id
-    },
     getItems() {
-      this.getSearch()
-      this.noneText = ''
+      this.queryText = this.lang === 'cn' ? '正在查询...' : 'Querying...'
+      this.items = []
+      this.paging.total = 0
 
       let pageData = {
         page_size: this.paging.size,
@@ -100,10 +94,8 @@ export default {
         if (data.code === '200') {
           let list = data.data.list
           if (list.length === 0) {
-            this.items = list
-            this.noneText = this.lang === 'cn' ? '无相关产品' : 'None'
+            this.queryText = this.lang === 'cn' ? '无相关产品' : 'There is no related products'
           } else {
-            this.paging.list = new Array(Math.ceil(data.data.total / this.paging.size))
             // 查询分类
             this.axios(this.api.productClassify.query()).then((resC) => {
               let dataC = resC.data
@@ -117,6 +109,8 @@ export default {
                 list.forEach((v, i) => {
                   v.link = `/product/display/c${obj[v.classify]}-p${v.id}`
                 })
+                this.queryText = ''
+                this.paging.total = data.data.total
                 this.items = list
               }
             })
@@ -141,7 +135,8 @@ export default {
     paging,
     productVideo,
     productContact,
-    position
+    position,
+    box
   }
 }
 </script>
@@ -157,43 +152,5 @@ export default {
 /*classify*/
 .product-list-show-classify {
 
-}
-.product-list-show-none {
-  color: #ccc;
-  text-align: center;
-  font-size: 20px;
-  padding-top: 30px;
-}
-.product-list-show-items a {
-  display: block;
-  padding: 20px 16px;
-  height: 100%;
-}
-.product-list-show-items li{
-  margin-bottom: 15px;
-  height: 205px;
-  border-color: #e5e5e5;
-}
-.product-list-show-items li img {
-  float: left;
-  width: 220px;
-}
-.product-list-show-item-text {
-  width: 430px;
-  float: right;
-}
-.product-list-show-item-text h4 {
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-.product-list-show-item-text p {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 7;
-   -webkit-box-orient: vertical;
-  line-height: 1.5em;
-}
-.product-list-show-items li:hover p {
-  color: #333;
 }
 </style>

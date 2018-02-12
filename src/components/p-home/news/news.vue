@@ -1,8 +1,8 @@
 <template>
   <div class="home-information-news" v-if="item">
-    <h3 class="home-information-item-title"><span v-if="lang === 'cn'">新闻</span><span v-if="lang === 'en'">News</span></h3>
+    <h3 class="home-information-item-title">{{text.title[lang]}}</h3>
     <router-link to="news" class="home-information-item-more">
-      <span v-if="lang === 'cn'">更多</span><span v-if="lang === 'en'">MORE</span><span class="icon-more"></span>
+      {{text.more[lang]}}<span class="icon-more"></span>
     </router-link>
     <h4 class="home-information-item-h4">
       <router-link :to="'/news/display/p' + item.id">{{item.name}}</router-link>
@@ -16,6 +16,16 @@
 export default {
   data() {
     return {
+      text: {
+        title: {
+          cn: '新闻',
+          en: 'News'
+        },
+        more: {
+          cn: '更多',
+          en: 'MORE'
+        }
+      }
     }
   },
   computed: {
