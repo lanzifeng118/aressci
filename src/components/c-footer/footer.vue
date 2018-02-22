@@ -4,17 +4,17 @@
     <ul class="f-clearfix">
       <li>
         <a :href="'mailto:' + basicInfo.email + '?subject=&body='">
-          <span class="icon icon-mail"></span><span v-if="lang === 'cn'">邮件</span><span v-if="lang === 'en'">Email Page</span>
+          <span class="icon icon-mail"></span>{{text.email[lang]}}</span>
         </a>
       </li>
       <li>
         <a href="javascrip: void(0);" @click="print">
-          <span class="icon icon-Print"></span><span v-if="lang === 'cn'">打印页面</span><span v-if="lang === 'en'">Print Page</span>
+          <span class="icon icon-Print"></span>{{text.print[lang]}}
         </a>
       </li>
       <li class="footer-link">
         <a href="javascrip: void(0);">
-          <span class="icon icon-share"></span><span v-if="lang === 'cn'">友情链接</span><span v-if="lang === 'en'">Friend Links</span>
+          <span class="icon icon-share"></span>{{text.link[lang]}}
         </a>
         <ul class="footer-link-ul">
           <li v-for="itemF in friendLinkItems"><a :href="itemF.link" target="_blank"><span class="icon icon-dot"></span>{{itemF.name}}</a></li>
@@ -32,8 +32,7 @@
     </div>
     <div class="wrap">
       <ul class="footer-info">
-        <li v-if="lang === 'cn'"><span class="icon icon-people_fill"></span>联系人: {{basicInfo.linkman}}</li>
-        <li v-if="lang === 'en'"><span class="icon icon-people_fill"></span>Linkman: {{basicInfo.linkman}}</li>
+        <li><span class="icon icon-people_fill"></span>{{text.linkman[lang]}}: {{basicInfo.linkman}}</li>
         <li><span class="icon icon-phone"></span>{{basicInfo.telephone}}</li>
         <li><span class="icon icon-mail"></span>{{basicInfo.email}}</li>
       </ul>
@@ -50,7 +49,25 @@ import apiEn from 'components/tools/api-en'
 export default {
   data() {
     return {
-      friendLinkItems: []
+      friendLinkItems: [],
+      text: {
+        email: {
+          cn: '邮件',
+          en: 'Email Page'
+        },
+        print: {
+          cn: '打印页面',
+          en: 'Print Page'
+        },
+        link: {
+          cn: '友情链接',
+          en: 'Friend Links'
+        },
+        linkman: {
+          cn: '联系人',
+          en: 'Linkman'
+        }
+      }
     }
   },
   computed: {

@@ -2,27 +2,11 @@
   <div class="service wrap">
     <banner-in page="support"></banner-in>
     <div class="service-content">
-      <div class="position">
-        <span class="icon-location_fill icon"></span>
-        <router-link to="/">
-          <span v-if="lang === 'cn'">首页</span>
-          <span v-if="lang === 'en'">Home</span>
-        </router-link>
-        <span class="icon-right"></span>
-        <span v-if="lang === 'cn'">服务与支持</span>
-        <span v-if="lang === 'en'">Servive & Support</span>
-      </div>
+      <position page="index"></position>
       <div class="service-text">
-        <div v-if="lang === 'cn'" class="">
-          <h2>技术服务</h2>
-          <h4>感谢您对我们关注，我们希望为您提供优秀的服务!</h4>
-          <h4>请填写下面的表格，带有*是必填项，我们将尽快回复您。</h4>
-        </div>
-        <div v-if="lang === 'en'" class="">
-          <h2>Technical Services</h2>
-          <h4>We appreciate your business and want to provide outstanding and excellent customer service!</h4>
-          <h4>Please complete the form below. The boxes marked with * are required. We will respond as soon as possible.</h4>
-        </div>
+        <h2>{{text.title.head[lang]}}</h2>
+        <h4>{{text.title.p1[lang]}}</h4>
+        <h4>{{text.title.p2[lang]}}</h4>
         <div class="form-table-wrap service-table-wrap">
           <table>
             <tbody>
@@ -30,107 +14,80 @@
               <tr>
                 <td v-if="lang === 'cn'" width="70" class="vertical-top">留言</td>
                 <td v-if="lang === 'en'" width="150" class="vertical-top">Your message to us</td>
-                <td><textarea name="name" rows="4" v-model="item.message"></textarea></td>
+                <td><textarea name="name" rows="4" v-model.trim="item.message"></textarea></td>
               </tr>
               <!-- classify -->
               <tr>
-                <td v-if="lang === 'cn'">主题</td>
-                <td v-if="lang === 'en'">Topic</td>
+                <td>{{text.topic[lang]}}</td>
                 <td>
-                  <select v-model="item.classify">
-                    <option v-if="lang === 'cn'" disabled value="">请选择</option>
-                    <option v-if="lang === 'en'" disabled value="">Please select</option>
+                  <select v-model.trim="item.classify">
+                    <option disabled value="">{{text.select[lang]}}</option>
                     <option v-for="item in classifyOption">{{item.name}}</option>
                   </select>
                 </td>
               </tr>
               <!-- Salutation -->
-              <tr v-if="lang === 'cn'">
-                <td>称呼</td>
+              <tr>
+                <td>{{text.salutation[lang]}}</td>
                 <td>
                   <input
                     v-for="(itemS, index) in salutation"
                     type="radio"
                     :id="'salutation' + index"
                     :value="itemS.value"
-                    v-model="item.salutation"
+                    v-model.trim="item.salutation"
                   >
                   <label v-for="(itemS, index) in salutation" :for="'salutation' + index">
                     <span class="icon" :class="[item.salutation == itemS.value ? 'icon-square_check_fill' : 'icon-square']"></span>{{itemS.value}}
                   </label>
-
-                </td>
-              </tr>
-              <!-- Salutation -->
-              <tr v-if="lang === 'en'">
-                <td>Salutation</td>
-                <td>
-                  <input
-                    v-for="(itemS, index) in salutation"
-                    type="radio"
-                    :id="'salutation' + index"
-                    :value="itemS.value"
-                    v-model="item.salutation"
-                  >
-                  <label v-for="(itemS, index) in salutation" :for="'salutation' + index">
-                    <span class="icon" :class="[item.salutation == itemS.value ? 'icon-square_check_fill' : 'icon-square']"></span>{{itemS.value}}
-                  </label>
-
                 </td>
               </tr>
               <!-- first name -->
               <tr>
-                <td v-if="lang === 'cn'"><span class="icon-nessisary"></span>姓名</td>
-                <td v-if="lang === 'en'"><span class="icon-nessisary"></span>First name</td>
-                <td><input type="text" v-model="item.firstName"></td>
+                <td><span class="icon-nessisary"></span>{{text.name[lang]}}</td>
+                <td><input type="text" v-model.trim="item.firstName"></td>
               </tr>
               <!-- Last name -->
               <tr v-if="lang === 'en'">
                 <td><span class="icon-nessisary"></span>Last name</td>
-                <td><input type="text" v-model="item.lastName"></td>
+                <td><input type="text" v-model.trim="item.lastName"></td>
               </tr>
               <!-- Email -->
               <tr>
-                <td v-if="lang === 'cn'"><span class="icon-nessisary"></span>邮箱</td>
-                <td v-if="lang === 'en'"><span class="icon-nessisary"></span>Email</td>
-                <td><input type="text" v-model="item.email"></td>
+                <td><span class="icon-nessisary"></span>{{text.email[lang]}}</td>
+                <td><input type="text" v-model.trim="item.email"></td>
               </tr>
               <!-- tel -->
               <tr>
-                <td v-if="lang === 'cn'">电话</td>
-                <td v-if="lang === 'en'">Tel/Phone</td>
-                <td><input type="text" v-model="item.tel"></td>
+                <td>{{text.tel[lang]}}</td>
+                <td><input type="text" v-model.trim="item.tel"></td>
               </tr>
               <!-- Company -->
               <tr>
-                <td v-if="lang === 'cn'">公司</td>
-                <td v-if="lang === 'en'">Company</td>
-                <td><input type="text" v-model="item.company"></td>
+                <td>{{text.company[lang]}}</td>
+                <td><input type="text" v-model.trim="item.company"></td>
               </tr>
               <!-- Country -->
               <tr>
-                <td v-if="lang === 'cn'">国家</td>
-                <td v-if="lang === 'en'">Country</td>
+                <td>{{text.country[lang]}}</td>
                 <td>
-                  <select v-model="item.country">
-                    <option disabled value="">Please select</option>
+                  <select v-model.trim="item.country">
+                    <option disabled value="">{{text.select[lang]}}</option>
                     <option v-for="item in country">{{item[1]}}</option>
                   </select>
                 </td>
               </tr>
               <!-- Address -->
               <tr>
-                <td v-if="lang === 'cn'" class="vertical-top">地址</td>
-                <td v-if="lang === 'en'" class="vertical-top">Address</td>
-                <td><textarea name="name" rows="3" v-model="item.address"></textarea></td>
+                <td class="vertical-top">{{text.address[lang]}}</td>
+                <td><textarea name="name" rows="3" v-model.trim="item.address"></textarea></td>
               </tr>
               <!-- submit -->
               <tr>
                 <td></td>
                 <td>
                   <p class="service-warn">{{warnText}}</p>
-                  <button v-if="lang === 'cn'" type="button" class="button" @click="submit">提交</button>
-                  <button v-if="lang === 'en'" type="button" class="button" @click="submit">SUBMIT</button>
+                  <button type="button" class="button" @click="submit">{{text.submit[lang]}}</button>
                 </td>
               </tr>
             </tbody>
@@ -154,6 +111,7 @@ import util from 'components/tools/util'
 import toast from 'components/toast/toast'
 import global from 'components/tools/global'
 import bannerIn from 'components/c-banner-in/banner-in'
+import position from 'components/p-support/position/position'
 
 export default {
   data() {
@@ -177,6 +135,62 @@ export default {
         show: false,
         text: '',
         icon: ''
+      },
+      text: {
+        title: {
+          head: {
+            cn: '技术服务',
+            en: 'Technical Services'
+          },
+          p1: {
+            cn: '感谢您对我们关注，我们希望为您提供优秀的服务!',
+            en: 'We appreciate your business and want to provide outstanding and excellent customer service!'
+          },
+          p2: {
+            cn: '请填写下面的表格，带有*是必填项，我们将尽快回复您。',
+            en: 'Please complete the form below. The boxes marked with * are required. We will respond as soon as possible.'
+          }
+        },
+        topic: {
+          cn: '主题',
+          en: 'Topic'
+        },
+        select: {
+          cn: '请选择',
+          en: 'Please select'
+        },
+        salutation: {
+          cn: '称呼',
+          en: 'Salutation'
+        },
+        name: {
+          cn: '姓名',
+          en: 'First Name'
+        },
+        email: {
+          cn: '邮箱',
+          en: 'Email'
+        },
+        tel: {
+          cn: '电话',
+          en: 'Tel/Phone'
+        },
+        company: {
+          cn: '公司',
+          en: 'Company'
+        },
+        country: {
+          cn: '国家',
+          en: 'Country'
+        },
+        address: {
+          cn: '地址',
+          en: 'Address'
+        },
+        submit: {
+          cn: '提交',
+          en: 'Submit'
+        }
       }
     }
   },
@@ -246,7 +260,7 @@ export default {
     },
     verify() {
       let item = this.item
-      if (!item.firstName.trim()) {
+      if (!item.firstName) {
         this.warnText = this.lang === 'cn' ? '姓名不能为空' : 'First name can\'t be empty.'
         return false
       }
@@ -254,7 +268,7 @@ export default {
         this.warnText = `Last name can't be empty.`
         return false
       }
-      if (!item.email.trim()) {
+      if (!item.email) {
         this.warnText = this.lang === 'cn' ? '邮箱不能为空' : 'Email can\'t be empty.'
         return false
       }
@@ -264,7 +278,8 @@ export default {
   },
   components: {
     bannerIn,
-    toast
+    toast,
+    position
   }
 }
 </script>
@@ -277,10 +292,10 @@ export default {
   margin-bottom: 12px;
 }
 .service-content {
+  position: relative;
   margin-bottom: 20px;
 }
 .service-text {
-  border-top: 1px solid #efefef;
   padding: 20px;
   margin: 15px 0;
 }

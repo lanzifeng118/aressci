@@ -254,41 +254,79 @@ table {
 }
 
 /*editor*/
-.editor h1 {
-  font-size: 14px;
+.editor{
+  line-height: 1.5em;
+}
+.editor  h1 {
+  font-size: 16px;
+  line-height: 1.5em;
   color: #0d93b8;
   font-weight: bold;
   margin: 15px 0;
 }
-.editor img {
-  max-width: 100%;
-}
-.editor h2 {
-  font-size: 15px;
+.editor h2, 
+.editor h3,
+.editor h4 {
+  font-size: 14px;
+  line-height: 1.5em;    
   padding-left: 10px;
   border-left: 2px solid #0d93b8;
   margin: 15px 0;
 }
+.editor h3 {
+  border-color: #ffc107;
+}
+.editor h4 {
+  border-color: #ff5722;
+}
+.editor h5 {
+  padding: 5px 10px;
+  line-height: 1.5em;
+  color: #999;
+  border-left: 2px solid #ebebeb;
+  background-color: #f9f9f9;
+  margin: 10px 0;
+  font-size: 12px;
+}
 .editor p {
+  line-height: 1.5rem;
   margin-bottom: 10px;
 }
-.editor ul {
+.editor img {
+  max-width: 100%;
+}
+.editor ul,
+.editor ol {
   margin: 10px 0 10px 15px;
 }
 .editor li {
   position: relative;
   display: block;
-  padding: 0 0 5px 12px;
-  line-height: 1.5em;
+  padding: 0 0 5px 15px;
 }
 .editor li::before {
   content: '';
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background: #86b513;
   top: 7px;
   left: 0px;
+}
+.editor ol > li::before {
+  border-radius: 3px;
+}
+.editor .ql-size-small {
+  font-size: 0.75em;
+}
+.editor .ql-size-large {
+  font-size: 1.2em;
+}
+.editor .ql-size-huge {
+  font-size: 1.5em;
+}
+.editor a {
+  text-decoration: underline;
 }
 
 /*baseColor  black: 363f46 green:0d93b8 light-green: cff5ff blue: 2965a0  light-blue 2d74b9*/

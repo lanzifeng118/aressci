@@ -19,7 +19,7 @@
         <!-- header-search -->
         <div class="header-search">
           <div class="header-search-box f-clearfix">
-            <input class="header-search-input f-left" v-model="searchText">
+            <input ref="searchInput" class="header-search-input f-left" v-model.trim="searchText">
             <div class="header-search-submit f-right" @click="searchSubmit">
               <span class="icon-search"></span>
               <span v-if="lang === 'cn'">搜索</span>
@@ -112,6 +112,12 @@ export default {
   created() {
     this.getNav()
   },
+  mounted() {
+    window.addEventListener('keyup', this.enterSubmit)
+  },
+  destroyed() {
+    window.removeEventListener('keyup', this.enterSubmit)
+  },
   methods: {
     getNav() {
       this.axios(this.api.nav.query({prdcount: '8'})).then((res) => {
@@ -138,8 +144,14 @@ export default {
         console.log(err)
       })
     },
+    enterSubmit(e) {
+      if (e.keyCode === 13 && this.$refs.searchInput === document.activeElement) {
+        this.searchSubmit()
+      }
+    },
     searchSubmit() {
       this.$router.push(`/product/search/${this.searchText}`)
+      this.searchText = ''
     },
     hoverInList(index) {
       if (index === 1) {
