@@ -49,17 +49,20 @@ export default {
       return this.$store.state.lang === 'cn' ? api : apiEn
     },
     id() {
-      return parseInt(this.$route.params.id.slice(1))
+      let id = this.$route.params.id
+      return id && parseInt(id.slice(1))
     },
     classifyName() {
-      let name
+      let name = void 0
       let nav = this.$store.state.productNav
       if (nav.length) {
-        for (var i = 0; i < nav.length; i++) {
-          name = ''
-          if (nav[i].id === this.id) {
-            name = nav[i].name
-            break
+        name = ''
+        if (this.id !== void 0) {
+          for (var i = 0; i < nav.length; i++) {
+            if (nav[i].id === this.id) {
+              name = nav[i].name
+              break
+            }
           }
         }
       }
@@ -83,7 +86,10 @@ export default {
       this.queryText = this.lang === 'cn' ? '正在查询...' : 'Querying...'
       this.paging.total = 0
       if (this.classifyName === '') {
-        this.queryText = this.lang === 'cn' ? '无该品牌数据' : 'There is no data about this brand.'
+        this.queryText =
+          this.lang === 'cn'
+            ? '无该品牌数据，正在跳转...'
+            : 'There is no data about this brand. Jumping...'
         util.goBack(() => {
           this.$router.push('/product/all')
         })

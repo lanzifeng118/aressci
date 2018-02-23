@@ -1,8 +1,10 @@
 <template>
-<div class="product-banner">
-  <a v-if="item.link" :href="item.link" target="_blank"><img v-if="item.img" :src="item.img"></a>
-  <img v-if="!item.link && item.img" :src="item.img">
-</div>
+  <div class="product-banner">
+    <a v-if="item.link" :href="item.link" target="_blank">
+      <img v-if="item.img" :src="item.img">
+    </a>
+    <img v-if="!item.link && item.img" :src="item.img">
+  </div>
 </template>
 
 <script>
@@ -11,7 +13,10 @@ import api from 'components/tools/api'
 export default {
   data() {
     return {
-      id: 0,
+      all: {
+        img: '',
+        link: ''
+      },
       item: {
         img: '',
         link: ''
@@ -19,27 +24,18 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.getItem()
     },
-    itemC() {
-      this.getItem()
+    nav() {
+      if (this.isInPath()) {
+        this.getIn()
+      }
     }
   },
   computed: {
-    itemC() {
-      let obj = {}
-      let nav = this.$store.state.productNav
-      if (nav) {
-        for (let i = 0; i < nav.length; i++) {
-          if (nav[i].id === this.id) {
-            obj = nav[i]
-            break
-          }
-        }
-      }
-      // console.log(obj)
-      return obj
+    nav() {
+      return this.$store.state.productNav
     }
   },
   created() {
@@ -47,28 +43,58 @@ export default {
   },
   methods: {
     getItem() {
-      let path = this.$route.path
-      if (path === '/product/all' || path.indexOf('/product/search') >= 0) {
-        this.axios(api.productBanner.query()).then((res) => {
+      // console.log('getItem')
+      if (this.isInPath()) {
+        this.getIn()
+      } else {
+        this.getAll()
+      }
+    },
+    getAll() {
+      // console.log('getAll')
+      if (!this.all.img) {
+        this.axios(api.productBanner.query()).then(res => {
           let data = res.data
           if (data.code === '200') {
-            this.item = data.data
-          } else {
-            // util.req.queryError(this.toast)
+            this.all.img = data.data.img
+            this.all.link = data.data.link
+            this.item.img = this.all.img
+            this.item.link = this.all.link
           }
         })
       } else {
-        this.getId()
+        this.item.img = this.all.img
+        this.item.link = this.all.link
       }
     },
-    getId() {
+    getIn() {
+      // console.log('getIn')
       let id = this.$route.params.id
       if (id) {
-        let arr = id.split('-')
-        this.id = parseInt(arr[0].slice(1))
-        this.item.img = this.itemC.banner_img
-        this.item.link = this.itemC.banner_link
+        id = parseInt(id.split('-')[0].slice(1))
+        let nav = this.nav
+        let obj = null
+        if (nav.length > 0) {
+          for (let i = 0; i < nav.length; i++) {
+            if (nav[i].id === id) {
+              obj = nav[i]
+              break
+            }
+          }
+          if (obj && obj.banner_img) {
+            this.item.img = obj.banner_img
+            this.item.link = obj.banner_link
+          } else {
+            this.getAll()
+          }
+        }
+      } else {
+        this.getAll()
       }
+    },
+    isInPath() {
+      let path = this.$route.path
+      return path !== '/product/all' && path.indexOf('/product/search') < 0
     }
   }
 }
