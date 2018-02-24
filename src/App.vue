@@ -58,14 +58,16 @@ export default {
       this.axios(this.api.basicInfo.query()).then((res) => {
         let data = res.data
         if (data.code === '200') {
-          data.data.banner.forEach((v, i) => {
+          let dataD = data.data
+          dataD.banner.forEach((v, i) => {
             if (i === 0) {
               v.active = true
             } else {
               v.active = false
             }
           })
-          this.$store.state.basicInfo = data.data
+          document.title = dataD.full_name
+          this.$store.state.basicInfo = dataD
         }
       })
     }

@@ -6,8 +6,8 @@
         <router-link to="/home"><img v-if="basicInfo.logo" :src="basicInfo.logo"></router-link>
       </div>
       <h1 class="header-company f-left"><router-link to="/home" :style="'font-size:' + companySize">{{basicInfo.full_name}}</router-link></h1>
-      <!--header-version-->
       <div class="f-right">
+        <!--header-version-->
         <div v-if="lang === 'cn'" class="header-version">
           <p><img src="static/images/icon-Chinese.png" alt=""></p>
           <p><a href="/en" target="_blank"><img src="static/images/icon-English.png" alt=""></a></p>
@@ -29,64 +29,12 @@
         </div>
       </div>
     </div>
-    <!-- header-nav -->
-    <div class="header-nav">
-      <ul class="header-nav-ul wrap f-clearfix">
-        <li
-          class="header-nav-li"
-          v-for="(item, index) in navItems"
-          @mouseenter="hoverInList(index)"
-          @mouseleave="hoverOutList(index)"
-        >
-          <div
-            @click="showListProduct"
-            class="header-nav-li-div"
-          >
-            <router-link :to="item.link">{{item.name}}</router-link>
-          </div>
-          <!-- classify -->
-          <div
-            class="header-nav-li-list"
-            v-if="item.list && item.list.length > 0"
-            :style="'height:' +  listHeight + 'px'"
-          >
-            <div class="wrap">
-              <ul class="header-nav-li-level level01">
-                <li v-for="listValue in item.list">
-                  <div @click="showListProduct" class="header-nav-li-level-classify">
-                    <router-link :to="listValue.link" @click="showListProduct">
-                      <img v-if="listValue.logo" :src="listValue.logo" :alt="listValue.name">
-                    </router-link>
-                  </div>
-                  <!-- product -->
-                  <ul
-                    v-if="listValue.product"
-                    class="header-nav-li-level level02"
-                  >
-                    <li v-for="itemLevel1 in listValue.product">
-                      <div @click="showListProduct">
-                        <router-link :to="itemLevel1.link">
-                          {{itemLevel1.name}}
-                        </router-link>
-                      </div>
-                      <div class="header-nav-li-product-img">
-                        <img :src="itemLevel1.img" alt="">
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <v-nav></v-nav>
   </div>
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
+import vNav from 'components/c-nav/nav'
 
 export default {
   data() {
@@ -102,18 +50,11 @@ export default {
     lang() {
       return this.$store.state.lang
     },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     companySize() {
       return this.$store.state.lang === 'cn' ? '26px' : '28px'
-    },
-    navItems() {
-      return this.$store.state.navItems
     }
   },
   created() {
-    this.getNav()
   },
   mounted() {
     window.addEventListener('keyup', this.enterSubmit)
@@ -122,31 +63,6 @@ export default {
     window.removeEventListener('keyup', this.enterSubmit)
   },
   methods: {
-    getNav() {
-      this.axios(this.api.nav.query({prdcount: '8'})).then((res) => {
-        let data = res.data
-        // console.log(data)
-        if (data.code === '200') {
-          let list = data.data.list
-          if (list && list.length > 0) {
-            list.forEach((v, i) => {
-              v.link = `/product/list/c${v.id}`
-              v.product.forEach((vP, iP) => {
-                vP.link = `/product/display/c${v.id}-p${vP.id}`
-              })
-            })
-            this.navItems[1].list = list
-          }
-          let aboutusId = data.data.aboutusId
-          if (aboutusId) {
-            this.$store.state.aboutusId = aboutusId
-            this.navItems[5].link = `/aboutus/display/c${aboutusId}`
-          }
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
-    },
     enterSubmit(e) {
       if (e.keyCode === 13 && this.$refs.searchInput === document.activeElement) {
         this.searchSubmit()
@@ -154,20 +70,10 @@ export default {
     },
     searchSubmit() {
       this.$router.push(`/product/search/${this.searchText}`)
-    },
-    hoverInList(index) {
-      if (index === 1) {
-        this.listHeight = 280
-      }
-    },
-    hoverOutList(index) {
-      if (index === 1) {
-        this.listHeight = 0
-      }
-    },
-    showListProduct() {
-      this.listHeight = 0
     }
+  },
+  components: {
+    vNav
   }
 }
 </script>
@@ -238,135 +144,5 @@ export default {
   background-color: #0d93b8;
   border-color: #0d93b8 !important;
   color: #fff;
-}
-/*header-nav*/
-.header-nav {
-  position: relative;
-  background-color: #0d93b8;
-}
-.header-nav-ul {
-  z-index: 9;
-}
-.header-nav-li {
-  display: inline-block;
-  float: left;
-}
-.header-nav-li:nth-child(1) {
-  width: 160px;
-}
-.header-nav-li:nth-child(2) {
-  width: 185px;
-}
-.header-nav-li:nth-child(3) {
-  width: 270px;
-}
-.header-nav-li:nth-child(4) {
-  width: 256px;
-}
-.header-nav-li:nth-child(5) {
-  width: 160px;
-}
-.header-nav-li:nth-child(6) {
-  width: 195px;
-}
-
-.header-nav-li-div>a {
-  padding: 0 15px;
-  background-color: #0d93b8;
-  display: block;
-  text-align: center;
-  line-height: 40px;
-  color: #fff;
-  text-align: center;
-  transition: all 0.2s;
-}
-.header-nav-li:hover>div>a {
-  background-color: #008cb3;
-}
-.header-nav-li-div>a.active {
-  background-color: #007c9e !important;
-}
-/*header-nav-li-list */
-.header-nav-li-list {
-  z-index: 2;
-  position: absolute;
-  background: rgba(255,255,255,0.7);
-  top: 40px;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  transition: all 0.2s;
-}
-.header-nav-li:hover {
-  background-color: #222;
-}
-.header-nav-li:hover .header-nav-li-list {
-  -webkit-box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-}
-.header-nav-li-list-wrap {
-  width: 1000px;
-  margin:  0 auto;
-}
-.header-nav-li-level {
-  height: 280px;
-  padding: 10px 0;
-  background:  rgba(255,255,255,0.5);
-}
-.header-nav-li-level li a {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 8px 25px;
-}
-.header-nav-li-level li:hover>div>a {
-  background-color: #fff;
-}
-.header-nav-li-level-classify img {
-  height: 30px;
-}
-/*level01*/
-.header-nav-li-level.level01>li>div>a {
-  text-align: right;
-  border-color: #fff;
-}
-.header-nav-li-level.level01>li:hover>div>a {
-  padding-right: 20px;
-}
-.header-nav-li-level.level01 {
-  position: relative;
-  width: 280px;
-}
-/*level02*/
-.header-nav-li-level.level02 {
-  background: rgba(220,220,220,0.8);
-  position: absolute;
-  top: 0;
-  left: 280px;
-}
-.header-nav-li-level.level02 li{
-  width: 0;
-  overflow: hidden;
-}
-.header-nav-li-level.level01>li:hover .header-nav-li-level.level02>li{
-  width: 280px;
-}
-.header-nav-li-product-img {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 280px;
-  height: 100%;
-  width: 280px;
-  text-align: center;
-  padding-top: 50px;
-  background-color: rgba(205,205,205,0.8);
-}
-.header-nav-li-product-img img{
-  height: 180px;
-}
-.header-nav-li-level.level02>li:hover .header-nav-li-product-img{
-  display: block;
 }
 </style>

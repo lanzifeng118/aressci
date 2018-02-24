@@ -6,8 +6,8 @@
         v-for="item in items"
         :class="{active: item.active}"
       >
-        <a v-if="item.link" :href="item.link" target="_blank" :data-link="item.link"><img :src="item.img"></a>
-        <a v-if="!item.link" href="javascript: void(0);" target="_blank" :data-link="item.link"><img :src="item.img"></a>
+        <a v-if="item.link" :href="item.link" target="_blank"><img :src="item.img"></a>
+        <img v-if="!item.link" :src="item.img">
       </li>
     </ul>
     <!-- dot -->
@@ -119,9 +119,11 @@ export default {
   transition: all 0.8s;
 }
 .banner-item.active {
+  z-index: 1;
   opacity: 1
 }
 .banner-dot {
+  z-index: 2;
   position: absolute;
   width: 100%;
   text-align: center;
