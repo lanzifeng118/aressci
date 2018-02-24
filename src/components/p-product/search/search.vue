@@ -1,28 +1,22 @@
 <template>
-<div class="product-list">
-  <position>
-    <span v-if="searchText">{{text.search[lang]}}-{{searchText}}</span>
-    <span v-if="!searchText">{{text.searchAll[lang]}}</span>
-  </position>
-  <div class="product-list-show f-left">
-    <div class="product-list-show-classify">
-      <div class="product-query-text" v-if="queryText">{{queryText}}</div>
-      <box v-if="items.length > 0" :items="items" search="Y"></box> 
+  <div class="product-search">
+    <position>
+      <span v-if="searchText">{{text.search[lang]}}-{{searchText}}</span>
+      <span v-if="!searchText">{{text.searchAll[lang]}}</span>
+    </position>
+    <div class="product-search-show f-left">
+      <div class="product-search-show-classify">
+        <div class="product-query-text" v-if="queryText">{{queryText}}</div>
+        <box v-if="items.length > 0" :items="items" search="Y"></box>
+      </div>
+      <paging v-if="paging.total > 0" :paging="paging" @pagingNextClick="pagingNextClick" @pagingPreClick="pagingPreClick" @pagingChange="pagingChange">
+      </paging>
     </div>
-    <paging
-      v-if="paging.total > 0"
-      :paging="paging"
-      @pagingNextClick="pagingNextClick"
-      @pagingPreClick="pagingPreClick"
-      @pagingChange="pagingChange"
-    >
-    </paging>
+    <div class="f-right">
+      <product-contact></product-contact>
+      <product-video></product-video>
+    </div>
   </div>
-  <div class="f-right">
-    <product-contact></product-contact>
-    <product-video></product-video>
-  </div>
-</div>
 </template>
 
 <script>
@@ -73,7 +67,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.getItems()
     }
   },
@@ -88,16 +82,17 @@ export default {
         page_no: this.paging.no,
         name: this.searchText
       }
-      this.axios(this.api.productList.query(pageData)).then((res) => {
+      this.axios(this.api.productList.query(pageData)).then(res => {
         let data = res.data
         // console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           if (list.length === 0) {
-            this.queryText = this.lang === 'cn' ? '无相关产品' : 'There is no related products'
+            this.queryText =
+              this.lang === 'cn' ? '无相关产品' : 'There is no related products'
           } else {
             // 查询分类
-            this.axios(this.api.productClassify.query()).then((resC) => {
+            this.axios(this.api.productClassify.query()).then(resC => {
               let dataC = resC.data
               if (dataC.code === '200') {
                 let obj = {}
@@ -107,6 +102,9 @@ export default {
                   }
                 })
                 list.forEach((v, i) => {
+                  v.name = this.mark(v.name)
+                  v.classify = this.mark(v.classify)
+                  v.brief = this.mark(v.brief)
                   v.link = `/product/display/c${obj[v.classify]}-p${v.id}`
                 })
                 this.queryText = ''
@@ -118,12 +116,16 @@ export default {
         }
       })
     },
+    mark(str) {
+      let re = new RegExp(this.searchText, 'ig')
+      return str.replace(re, '<span class="product-search-red">$&</span>')
+    },
     pagingPreClick() {
-      this.paging.no --
+      this.paging.no--
       this.getItems()
     },
     pagingNextClick() {
-      this.paging.no ++
+      this.paging.no++
       this.getItems()
     },
     pagingChange(index) {
@@ -142,15 +144,17 @@ export default {
 </script>
 
 <style>
-.product-list {
+.product-search {
   margin-left: 30px;
   width: 976px;
 }
-.product-list-show {
+.product-search-red {
+  color: #ff1a1a;
+}
+.product-search-show {
   width: 700px;
 }
 /*classify*/
-.product-list-show-classify {
-
+.product-search-show-classify {
 }
 </style>

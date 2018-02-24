@@ -1,16 +1,15 @@
 <template>
   <ul class="product-list-items-box">
-    <li
-      class="white-box"
-      v-for="item in items"
-    >
+    <li class="white-box" v-for="item in items">
       <router-link :to="item.link" class="f-clearfix">
-        <img :src="item.img" :alt="item.name">
+        <img :src="item.img">
         <div class="product-list-items-box-text">
           <h4 :title="item.name">
-            {{item.name}}<span v-if="search === 'Y'">{{item.classify}}</span>
+            <b v-html="item.name"></b>
+            <span v-if="search === 'Y'" v-html="item.classify"></span>
           </h4>
-          <p>{{item.brief}}</p>
+          <h5 v-if="search === 'Y' && item.type === '4'">搜索内容详见本产品信息详情</h5>
+          <p v-html="item.brief"></p>
         </div>
       </router-link>
     </li>
@@ -18,7 +17,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     items: {
@@ -30,25 +28,22 @@ export default {
     }
   },
   data() {
-    return {
-    }
+    return {}
   },
-  created() {
-  },
-  methods: {
-  },
-  components: {
-  }
+  created() {},
+  methods: {},
+  components: {}
 }
 </script>
 
 <style>
 .product-list-items-box a {
+  position: relative;
   display: block;
   padding: 20px 16px;
   height: 100%;
 }
-.product-list-items-box li{
+.product-list-items-box li {
   margin-bottom: 15px;
   height: 205px;
   border-color: #e5e5e5;
@@ -65,6 +60,13 @@ export default {
   margin-bottom: 8px;
   font-weight: bold;
 }
+.product-list-items-box-text h5 {
+  font-size: 12px;
+  color: #ff1a1a;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
 .product-list-items-box-text h4 > span {
   font-size: 12px;
   display: inline-block;
@@ -75,7 +77,7 @@ export default {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 7;
-   -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical;
   line-height: 1.5em;
 }
 .product-list-items-box li:hover p {

@@ -53,5 +53,6 @@ export default {
 <style>
 .banner-in {
   margin-bottom: 12px;
+  font-size: 0;
 }
 </style>

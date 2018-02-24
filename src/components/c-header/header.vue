@@ -5,7 +5,7 @@
       <div class="header-logo f-left">
         <router-link to="/home"><img v-if="basicInfo.logo" :src="basicInfo.logo"></router-link>
       </div>
-      <h1 class="header-company f-left"><router-link to="/home">{{basicInfo.full_name}}</router-link></h1>
+      <h1 class="header-company f-left"><router-link to="/home" :style="'font-size:' + companySize">{{basicInfo.full_name}}</router-link></h1>
       <!--header-version-->
       <div class="f-right">
         <div v-if="lang === 'cn'" class="header-version">
@@ -105,6 +105,9 @@ export default {
     api() {
       return this.$store.state.lang === 'cn' ? api : apiEn
     },
+    companySize() {
+      return this.$store.state.lang === 'cn' ? '26px' : '28px'
+    },
     navItems() {
       return this.$store.state.navItems
     }
@@ -151,7 +154,6 @@ export default {
     },
     searchSubmit() {
       this.$router.push(`/product/search/${this.searchText}`)
-      this.searchText = ''
     },
     hoverInList(index) {
       if (index === 1) {

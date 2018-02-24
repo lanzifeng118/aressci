@@ -9,6 +9,7 @@
 
 <script>
 import api from 'components/tools/api'
+import apiEn from 'components/tools/api-en'
 
 export default {
   data() {
@@ -36,6 +37,9 @@ export default {
   computed: {
     nav() {
       return this.$store.state.productNav
+    },
+    api() {
+      return this.$store.state.lang === 'cn' ? api : apiEn
     }
   },
   created() {
@@ -53,7 +57,7 @@ export default {
     getAll() {
       // console.log('getAll')
       if (!this.all.img) {
-        this.axios(api.productBanner.query()).then(res => {
+        this.axios(this.api.productBanner.query()).then(res => {
           let data = res.data
           if (data.code === '200') {
             this.all.img = data.data.img
@@ -103,5 +107,6 @@ export default {
 <style>
 .product-banner {
   margin-bottom: 12px;
+  font-size: 0;
 }
 </style>
