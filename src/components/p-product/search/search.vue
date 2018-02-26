@@ -103,7 +103,7 @@ export default {
                 })
                 list.forEach((v, i) => {
                   v.name = this.mark(v.name)
-                  v.classify = this.mark(v.classify)
+                  // v.classify = this.mark(v.classify)
                   v.brief = this.mark(v.brief)
                   v.link = `/product/display/c${obj[v.classify]}-p${v.id}`
                 })

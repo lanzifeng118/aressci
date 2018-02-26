@@ -8,7 +8,7 @@
             <b v-html="item.name"></b>
             <span v-if="search === 'Y'" v-html="item.classify"></span>
           </h4>
-          <h5 v-if="search === 'Y' && item.type === '4'">搜索内容详见本产品信息详情</h5>
+          <h5 v-if="search === 'Y' && item.type === '4'">{{detail}}</h5>
           <p v-html="item.brief"></p>
         </div>
       </router-link>
@@ -29,6 +29,11 @@ export default {
   },
   data() {
     return {}
+  },
+  computed: {
+    detail() {
+      return this.$store.state.lang === 'cn' ? '见信息详情' : 'See the info detail'
+    }
   },
   created() {},
   methods: {},
