@@ -91,11 +91,13 @@ export default {
   padding: 5px 0;
 }
 .header-logo {
-  font-size: 0
+  font-size: 0;
+  height: 80px;
+  overflow: hidden;
 }
 .header-logo img {
-  max-width: 300px;
-  max-height: 80px;
+  width: auto;
+  height: 80px;
 }
 .header-version {
   margin-right: 1px;

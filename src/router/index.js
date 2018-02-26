@@ -62,10 +62,7 @@ let obj = {
           component: ProductDisplay,
           children: [
             {
-              path: ':id',
-              children: [
-                {path: ':id'}
-              ]
+              path: ':id'
             }
           ]
         }

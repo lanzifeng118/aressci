@@ -2,7 +2,7 @@
   <ul class="product-list-items-box">
     <li class="white-box" v-for="item in items">
       <router-link :to="item.link" class="f-clearfix">
-        <img :src="item.img">
+        <img v-if="item.img" :src="item.img">
         <div class="product-list-items-box-text">
           <h4 :title="item.name">
             <b v-html="item.name"></b>
@@ -80,6 +80,7 @@ export default {
 }
 .product-list-items-box-text p {
   overflow: hidden;
+  height: 147px;
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;

@@ -53,9 +53,9 @@
         return false;
       }
       // Mozilla / 4.0(compatible; MSIE 8.0; Windows NT 6.0
-      let ie = IETester();
+      var ie = IETester();
       if (ie && parseFloat(ie) < 9) {
-        return
+        return;
       }
 
       var timer = setInterval(function () {

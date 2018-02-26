@@ -82,7 +82,7 @@ export default {
         page_no: this.paging.no,
         name: this.searchText
       }
-      this.axios(this.api.productList.query(pageData)).then(res => {
+      this.axios(this.api.productList.search(pageData)).then(res => {
         let data = res.data
         // console.log(data)
         if (data.code === '200') {
