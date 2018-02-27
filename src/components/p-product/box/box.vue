@@ -44,6 +44,7 @@ export default {
 <style>
 .product-list-items-box a {
   position: relative;
+  overflow: hidden;
   display: block;
   padding: 20px 16px;
   height: 100%;
@@ -63,7 +64,6 @@ export default {
 }
 .product-list-items-box-text h4 {
   margin-bottom: 8px;
-  font-weight: bold;
 }
 .product-list-items-box-text h5 {
   font-size: 12px;

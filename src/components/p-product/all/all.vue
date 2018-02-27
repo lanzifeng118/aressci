@@ -71,12 +71,12 @@ export default {
 }
 .product-all-item-logo {
   text-align: center;
-  height: 51px;
   padding: 8px 0;
 }
 .product-all-item-logo img{
   max-width: 100%;
-  max-height: 35px;
+  width: auto;
+  height: 35px;
 }
 .product-all-item-right p {
   color: #333;
