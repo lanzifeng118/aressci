@@ -13,7 +13,7 @@
               <!-- message -->
               <tr>
                 <td v-if="lang === 'cn'" width="70" class="vertical-top">留言</td>
-                <td v-if="lang === 'en'" width="150" class="vertical-top">Your message to us</td>
+                <td v-else width="150" class="vertical-top">Your message to us</td>
                 <td><textarea name="name" rows="4" v-model.trim="item.message"></textarea></td>
               </tr>
               <!-- classify -->
@@ -60,7 +60,7 @@
               <!-- tel -->
               <tr>
                 <td>{{text.tel[lang]}}</td>
-                <td><input type="text" v-model.trim="item.tel"></td>
+                <td><input type="text" v-model.trim.number="item.tel">{{item.tel}}</td>
               </tr>
               <!-- Company -->
               <tr>

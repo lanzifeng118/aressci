@@ -22,8 +22,7 @@
             <input ref="searchInput" class="header-search-input f-left" v-model.trim="searchText">
             <div class="header-search-submit f-right" @click="searchSubmit">
               <span class="icon-search"></span>
-              <span v-if="lang === 'cn'">搜索</span>
-              <span v-if="lang === 'en'">SEARCH</span>
+              <span>{{text.search[lang]}}</span>
             </div>
           </div>
         </div>
@@ -40,7 +39,13 @@ export default {
   data() {
     return {
       searchText: '',
-      listHeight: 0
+      listHeight: 0,
+      text: {
+        search: {
+          cn: '搜索',
+          en: 'SEARCH'
+        }
+      }
     }
   },
   computed: {
