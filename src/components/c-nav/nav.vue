@@ -17,7 +17,7 @@
                   </router-link>
                 </div>
                 <!-- product -->
-                <ul v-if="listValue.product" class="nav-li-level level02">
+                <ul v-if="listValue.product" class="nav-li-level level02" :style="'height:' +  listHeight + 'px'">
                   <li v-for="itemLevel1 in listValue.product">
                     <div @click="hideList(index)">
                       <router-link :to="itemLevel1.link">
@@ -61,10 +61,11 @@ export default {
   },
   methods: {
     getNav() {
-      this.axios(this.api.nav.query({ prdcount: '8' }))
+      // { prdcount: '8' }
+      this.axios(this.api.nav.query({ prdcount: '1' }))
         .then(res => {
           let data = res.data
-          // console.log(data)
+          console.log(data)
           if (data.code === '200') {
             let list = data.data.list
             if (list && list.length > 0) {
@@ -89,7 +90,8 @@ export default {
     },
     showList(index) {
       if (index === 1) {
-        this.listHeight = 280
+        let height = 34 * this.navItems[1].list.length + 20
+        this.listHeight = height > 280 ? height : 280
       }
     },
     hideList(index) {
@@ -171,7 +173,6 @@ export default {
   margin: 0 auto;
 }
 .nav-li-level {
-  height: 280px;
   padding: 10px 0;
   background: rgba(255, 255, 255, 0.5);
 }
@@ -186,10 +187,11 @@ export default {
   background-color: #fff;
 }
 .nav-li-level-classify img {
-  height: 30px;
+  height: 28px;
 }
 /*level01*/
 .nav-li-level.level01 > li > div > a {
+  padding: 2px 25px;
   text-align: right;
   border-color: #fff;
 }
