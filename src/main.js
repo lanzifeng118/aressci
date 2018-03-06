@@ -15,40 +15,37 @@ Vue.config.productionTip = false
 let lang = 'cn'
 
 let navItems = [
-  {name: '首页', link: '/home'},
   {
-    name: '产品',
+    name: lang === 'cn' ? '首页' : 'HOME',
+    link: '/home'
+  },
+  {
+    name: lang === 'cn' ? '产品' : 'PRODUCT',
     link: '/product',
     list: []
   },
   {
-    name: '项目经验',
+    name: lang === 'cn' ? '项目经验' : 'PROJECT EXPERIENCE',
     link: '/experience'
   },
-  {name: '服务与支持', link: '/support'},
-  {name: '新闻', link: '/news'},
-  {name: '关于我们', link: '/aboutus'}
-]
-let navItemsEn = [
-  {name: 'HOME', link: '/home'},
   {
-    name: 'PRODUCT',
-    link: '/product',
-    list: []
+    name: lang === 'cn' ? '服务与支持' : 'SERVICE & SUPPORT',
+    link: '/support'
   },
   {
-    name: 'PROJECT EXPERIENCE',
-    link: '/experience'
+    name: lang === 'cn' ? '新闻' : 'NEWS',
+    link: '/news'
   },
-  {name: 'SERVICE & SUPPORT', link: '/support'},
-  {name: 'NEWS', link: '/news'},
-  {name: 'ABOUT US', link: '/aboutus'}
+  {
+    name: lang === 'cn' ? '关于我们' : 'ABOUT US',
+    link: '/aboutus'
+  }
 ]
 
 const store = new Vuex.Store({
   state: {
-    lang: lang,
-    navItems: lang === 'cn' ? navItems : navItemsEn,
+    lang,
+    navItems,
     basicInfo: {}, // 基础信息
     aboutusId: null, // 第一条关于我们id
     news: null, // 第一条新闻数据
@@ -63,7 +60,7 @@ const store = new Vuex.Store({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.length === 0) {
-    from.name ? next({name: from.name}) : next('/home')
+    from.name ? next({ name: from.name }) : next('/home')
   } else {
     next()
   }

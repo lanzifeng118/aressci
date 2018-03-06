@@ -19,7 +19,7 @@
         <!-- header-search -->
         <div class="header-search">
           <div class="header-search-box f-clearfix">
-            <input ref="searchInput" class="header-search-input f-left" v-model.trim="searchText">
+            <input ref="searchInput" @keyup.13="searchSubmit" class="header-search-input f-left" v-model.trim="searchText">
             <div class="header-search-submit f-right" @click="searchSubmit">
               <span class="icon-search"></span>
               <span>{{text.search[lang]}}</span>
@@ -61,18 +61,7 @@ export default {
   },
   created() {
   },
-  mounted() {
-    window.addEventListener('keyup', this.enterSubmit)
-  },
-  destroyed() {
-    window.removeEventListener('keyup', this.enterSubmit)
-  },
   methods: {
-    enterSubmit(e) {
-      if (e.keyCode === 13 && this.$refs.searchInput === document.activeElement) {
-        this.searchSubmit()
-      }
-    },
     searchSubmit() {
       this.$router.push(`/product/search/${this.searchText}`)
     }

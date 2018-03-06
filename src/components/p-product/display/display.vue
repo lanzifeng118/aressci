@@ -69,7 +69,7 @@
     </div>
     <div class="f-right">
       <product-contact></product-contact>
-      <product-video></product-video>
+      <product-video v-if="classifyName" :classify="classifyName"></product-video>
     </div>
     <toast v-show="toast.show" :text="toast.text" :icon="toast.icon">
     </toast>

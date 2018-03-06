@@ -7,7 +7,7 @@
           <router-link :to="item.link">{{item.name}}</router-link>
         </div>
         <!-- classify -->
-        <div class="nav-li-list" v-if="item.list && item.list.length > 0" :style="'height:' +  listHeight + 'px'">
+        <div class="nav-li-list" v-if="item.list && item.list.length > 0" :style="{height: listHeight + 'px'}">
           <div class="wrap">
             <ul class="nav-li-level level01">
               <li v-for="listValue in item.list">
@@ -17,7 +17,7 @@
                   </router-link>
                 </div>
                 <!-- product -->
-                <ul v-if="listValue.product" class="nav-li-level level02" :style="'height:' +  listHeight + 'px'">
+                <ul v-if="listValue.product" class="nav-li-level level02" :style="{height: listHeight + 'px'}">
                   <li v-for="itemLevel1 in listValue.product">
                     <div @click="hideList(index)">
                       <router-link :to="itemLevel1.link">
@@ -62,10 +62,10 @@ export default {
   methods: {
     getNav() {
       // { prdcount: '8' }
-      this.axios(this.api.nav.query({ prdcount: '1' }))
+      this.axios(this.api.nav.query())
         .then(res => {
           let data = res.data
-          console.log(data)
+          // console.log(data)
           if (data.code === '200') {
             let list = data.data.list
             if (list && list.length > 0) {
@@ -90,7 +90,7 @@ export default {
     },
     showList(index) {
       if (index === 1) {
-        let height = 34 * this.navItems[1].list.length + 20
+        let height = 36 * this.navItems[1].list.length + 20
         this.listHeight = height > 280 ? height : 280
       }
     },
@@ -168,11 +168,11 @@ export default {
   -webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
-.nav-li-list-wrap {
-  width: 1000px;
-  margin: 0 auto;
+.nav-li-list > .wrap {
+  height: 100%;
 }
 .nav-li-level {
+  height: 100%;
   padding: 10px 0;
   background: rgba(255, 255, 255, 0.5);
 }
@@ -191,7 +191,7 @@ export default {
 }
 /*level01*/
 .nav-li-level.level01 > li > div > a {
-  padding: 2px 25px;
+  padding: 3px 25px;
   text-align: right;
   border-color: #fff;
 }
@@ -204,6 +204,7 @@ export default {
 }
 /*level02*/
 .nav-li-level.level02 {
+  /* overflow-y: hidden; */
   background: rgba(220, 220, 220, 0.8);
   position: absolute;
   top: 0;
