@@ -303,7 +303,7 @@ table {
   font-size: 14px;
   line-height: 1.5em;
 }
-.editor p {
+.editor h6 {
   text-indent: 2rem;
 }
 /* img */
@@ -327,28 +327,52 @@ table {
   margin-left: 0;
   margin-right: 0;
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   background: #86b513;
-  top: 7px;
+  top: 8px;
   left: 0px;
 }
 .editor ol > li::before {
-  border-radius: 3px;
+  border-radius: 2px;
 }
 /* size */
-.editor .ql-editor .ql-size-large {
+.editor .ql-size-large {
   font-size: 1.2em;
 }
-.editor .ql-editor .ql-size-huge {
+.editor .ql-size-huge {
   font-size: 1.5em;
 }
 /* a */
-.editor .ql-editor a {
+.editor a {
   color: #333;
   text-decoration: underline;
 }
-
+/* ql-indent */
+.editor .ql-indent-1 {
+  padding-left: 1rem;
+}
+.editor .ql-indent-2 {
+  padding-left: 2rem;
+}
+.editor .ql-indent-3 {
+  padding-left: 3rem;
+}
+.editor .ql-indent-4 {
+  padding-left: 4rem;
+}
+.editor .ql-indent-5 {
+  padding-left: 5rem;
+}
+.editor .ql-indent-6 {
+  padding-left: 6rem;
+}
+.editor .ql-indent-7 {
+  padding-left: 7rem;
+}
+.editor .ql-indent-8 {
+  padding-left: 8rem;
+}
 /*baseColor  black: 363f46 green:0d93b8 light-green: cff5ff blue: 2965a0  light-blue 2d74b9*/
 /* red ff1a1a */
 /*waring e29800  error d24900*/
