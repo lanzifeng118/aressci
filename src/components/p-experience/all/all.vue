@@ -49,7 +49,7 @@ export default {
   width: 976px;
 }
 .experience-all .experience-item-logo ul{
-  height: 310px;
+  height: 380px;
   overflow: hidden;
 }
 </style>

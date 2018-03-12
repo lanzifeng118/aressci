@@ -14,21 +14,20 @@
     <div class="experience-item-logo">
       <ul v-for="(item, index) in experience.logo" class="f-clearfix" v-show="activeIndex === index">
         <!-- all -->
-        <li v-for="(itemLogo, indexLogo) in item.list" :title="itemLogo.brief">
+        <li v-for="(itemLogo, indexLogo) in item.list">
           <div class="experience-item-logo-img">
             <img :src="itemLogo.img">
           </div>
           <div class="experience-item-logo-text">
-            <h5>{{itemLogo.name}}更多</h5>
+            <h5>{{itemLogo.name}}</h5>
             <p>{{itemLogo.brief}}</p>
           </div>
         </li>
-
       </ul>
     </div>
     <!-- more -->
     <div class="experience-item-more" v-if="all">
-      <router-link :to="'/experience/list/c' + experience.id">更多
+      <router-link :to="'/experience/list/c' + experience.id">{{lang === 'cn' ?'更多' : 'MORE'}}
         <span class="icon-more"></span>
       </router-link>
     </div>
@@ -46,6 +45,11 @@ export default {
   watch: {
     $route(to, from) {
       this.init()
+    }
+  },
+  computed: {
+    lang() {
+      return this.$store.state.lang
     }
   },
   created() {
@@ -126,7 +130,7 @@ export default {
 }
 .experience-item-logo li {
   line-height: 0;
-  height: 140px;
+  height: 176px;
   width: 227px;
   padding: 8px;
   text-align: center;
@@ -147,7 +151,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.9);
   overflow: hidden;
   padding-top: 3px;
-  height: 38px;
+  height: 76px;
   text-align: left;
   line-height: 1.5em;
   transition: all 0.2s;
@@ -163,7 +167,7 @@ export default {
   color: #666;
 }
 .experience-item-logo li:hover .experience-item-logo-text {
-  height: 96px;
+  height: 132px;
   margin-top: -58px;
 }
 .experience-item-more {
