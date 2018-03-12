@@ -28,7 +28,7 @@
           </div>
           <div class="product-display-detail">
             <!-- info -->
-            <div class="product-display-info" v-show="tabShow[0]" v-html="item.detail"></div>
+            <div class="product-display-info editor" v-show="tabShow[0]" v-html="item.detail"></div>
             <!-- resources -->
             <div class="product-display-resources" v-show="tabShow[1]">
               <h3>{{text.doc[lang]}}</h3>
@@ -280,37 +280,7 @@ export default {
   height: 605px;
   overflow-y: auto;
 }
-div.product-display-info {
-  color: #7d6666;
-  padding-top: 15px;
-}
-.product-display-info h1 {
-  color: #0d93b8;
-  font-weight: bold;
-  margin: 15px 0;
-}
-.product-display-info p {
-  margin: 10px 0;
-}
-.product-display-info ul,
-.product-display-how ul {
-  margin: 10px 0 10px 15px;
-}
-.product-display-info li {
-  position: relative;
-  display: block;
-  padding: 0 0 5px 12px;
-  line-height: 1.5em;
-}
-.product-display-info li::before {
-  content: '';
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: #86b513;
-  top: 7px;
-  left: 0px;
-}
+
 .product-display-resources h3 {
   color: #0d93b8;
   font-weight: bold;
