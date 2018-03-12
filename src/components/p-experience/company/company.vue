@@ -19,7 +19,7 @@
             <img :src="itemLogo.img">
           </div>
           <div class="experience-item-logo-text">
-            <h5>{{itemLogo.name}}</h5>
+            <h5>{{itemLogo.name}}更多</h5>
             <p>{{itemLogo.brief}}</p>
           </div>
         </li>
@@ -163,8 +163,8 @@ export default {
   color: #666;
 }
 .experience-item-logo li:hover .experience-item-logo-text {
-  height: 92px;
-  margin-top: -55px;
+  height: 96px;
+  margin-top: -58px;
 }
 .experience-item-more {
   margin-bottom: 15px;
