@@ -18,7 +18,10 @@
           <div class="experience-item-logo-img">
             <img :src="itemLogo.img">
           </div>
-          <p>{{itemLogo.brief}}</p>
+          <div class="experience-item-logo-text">
+            <h5>{{itemLogo.name}}</h5>
+            <p>{{itemLogo.brief}}</p>
+          </div>
         </li>
 
       </ul>
@@ -67,22 +70,22 @@ export default {
   position: relative;
   margin-bottom: 40px;
 }
-.experience-item-box h2 {
+.experience-item-box > h2 {
   position: absolute;
   font-size: 14px;
   line-height: 40px;
   padding: 0 15px;
 }
-.experience-item-box h2 a {
+.experience-item-box > h2 a {
   font-weight: bold;
   color: #0d93b8;
   display: block;
   color: #0d93b8;
 }
-.experience-item-box h2 a:hover {
+.experience-item-box > h2 a:hover {
   color: #007c9e;
 }
-.experience-item-box h2 span {
+.experience-item-box > h2 span {
   font-size: 12px;
 }
 /*title*/
@@ -138,22 +141,30 @@ export default {
 .experience-item-logo-img img {
   width: 100%;
 }
-.experience-item-logo li p {
+.experience-item-logo-text {
   position: relative;
   z-index: 2;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.9);
   overflow: hidden;
   padding-top: 3px;
-  color: #666;
   height: 38px;
   text-align: left;
-  font-size: 12px;
   line-height: 1.5em;
   transition: all 0.2s;
 }
-.experience-item-logo li:hover p {
-  height: 56px;
-  margin-top: -16px;
+.experience-item-logo-text h5 {
+  text-align: center;
+  font-weight: bold;
+}
+.experience-item-logo-text p {
+  font-size: 12px;
+  line-height: 1.5em;
+  word-break: break-all;
+  color: #666;
+}
+.experience-item-logo li:hover .experience-item-logo-text {
+  height: 92px;
+  margin-top: -55px;
 }
 .experience-item-more {
   margin-bottom: 15px;
