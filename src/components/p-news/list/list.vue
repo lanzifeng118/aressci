@@ -196,6 +196,8 @@ export default {
 .news-list-text-summary {
   word-break: break-all;
   font-size: 13px;
+  height: 82px;
+  overflow: hidden;
   line-height: 20px;
   color: #666;
 }
