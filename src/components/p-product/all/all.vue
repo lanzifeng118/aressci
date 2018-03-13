@@ -9,7 +9,9 @@
               <div class="product-all-item-logo">
                 <img :src="item.logo" :alt="item.name">
               </div>
-              <img v-if="item.product && item.product.length > 0" :src="item.product[0].img" :alt="item.product[0].name">
+              <div class="product-all-item-img">
+                <img v-if="item.product && item.product.length > 0" :src="item.product[0].img" :alt="item.product[0].name">
+              </div>
             </div>
             <div class="f-right product-all-item-right">
               <p v-if="item.product && item.product.length > 0">{{item.product[0].brief}}</p>
@@ -62,19 +64,21 @@ export default {
 }
 .product-all-item-left {
   overflow: hidden;
-  width: 240px;
+  width: 220px;
   line-height: 0;
 }
 .product-all-item-left a {
   display: block;
   padding-top: 10px;
 }
+.product-all-item-img > img {
+  width: 100%;
+}
 .product-all-item-logo {
   text-align: center;
   padding: 8px 0;
 }
 .product-all-item-logo img{
-  max-width: 100%;
   width: auto;
   height: 35px;
 }
@@ -84,7 +88,7 @@ export default {
 }
 .product-all-item-right {
   padding: 55px 20px 15px 20px;
-  width: 730px;
+  width: 750px;
 }
 .product-all-item-more {
   position: absolute;
