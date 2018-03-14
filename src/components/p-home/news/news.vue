@@ -7,8 +7,8 @@
     <h4 class="home-information-item-h4">
       <router-link :to="'/news/display/p' + item.id">{{item.name}}</router-link>
     </h4>
-    <h5 class="home-information-item-time">{{item.modifytime}}</h5>
     <p class="home-information-item-p">{{item.brief}}</p>
+    <h5 class="home-information-news-time">{{item.modifytime}}</h5>
   </div>
 </template>
 
@@ -40,5 +40,11 @@ export default {
 </script>
 
 <style>
-
+.home-information-news-time {
+  position: absolute;
+  bottom: 15px;
+  left: 25px;
+  color: #bbb;
+  font-size: 12px;
+}
 </style>

@@ -163,7 +163,6 @@ export default {
 .experience-item-logo-text p {
   font-size: 12px;
   line-height: 1.5em;
-  word-break: break-all;
   color: #666;
 }
 .experience-item-logo li:hover .experience-item-logo-text {

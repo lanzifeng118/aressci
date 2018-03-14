@@ -204,24 +204,19 @@ export default {
   text-align: center;
   margin-bottom: 20px;
 }
+.home-information-item-h4 > a {
+  text-overflow: ellipsis;
+  width: 244px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
 .home-information-item-p {
-  word-break: break-all;
   line-height: 1.5em;
   max-height: 146px;
   overflow: hidden;
   color: #555;
 }
-.home-information-item-p * {
-  word-break: break-all;
-}
-.home-information-item-time {
-  text-align: right;
-  margin-bottom: 15px;
-  color: #ccc;
-  font-size: 12px;
-
-}
-
 .home-information-product-img img {
   width: 100%;
 }
