@@ -123,6 +123,7 @@ export default {
         if (data.code === '200') {
           let list = data.data.list
           list.forEach((v, i) => {
+            v.modifytime = v.modifytime.replace(/\s.+$/g, '')
             v.link = `/news/display/p${v.id}`
           })
           this.items = data.data.list
@@ -201,6 +202,7 @@ export default {
   color: #666;
 }
 .news-list-text-time {
+  width: 66px;
   font-size: 12px;
   color: #ccc;
   position: absolute;

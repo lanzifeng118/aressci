@@ -202,7 +202,7 @@ export default {
 .home-information-item-h4 {
   text-transform: uppercase;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .home-information-item-h4 > a {
   text-overflow: ellipsis;

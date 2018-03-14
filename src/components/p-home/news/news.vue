@@ -46,5 +46,8 @@ export default {
   left: 25px;
   color: #bbb;
   font-size: 12px;
+  width: 65px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>
