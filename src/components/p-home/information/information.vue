@@ -26,8 +26,11 @@
             {{text.more[lang]}}<span class="icon-more"></span>
           </router-link>
           <ul class="home-information-product-ul">
-            <li v-for="item in product.slice">
-              <router-link :to="item.link">{{item.full_name}}</router-link>
+            <li v-for="item in product.slice" :title="item.full_name">
+              <router-link :to="item.link">
+                <h5>{{item.name}}</h5>                
+                <p>{{item.full_name}}</p>
+              </router-link>
             </li>
           </ul>
           <ul class="home-information-product-dot" v-show="product.page">
@@ -35,7 +38,7 @@
               v-for="(item, index) in product.page"
               :class="{active: item.active}"
               @click="chagePage(index)"
-            >
+            > 
             </li>
           </ul>
           <div v-show="product.page" class="home-information-product-btn f-left" @click="productPre">
@@ -59,6 +62,7 @@
 import slider from 'components/slider/slider'
 import news from 'components/p-home/news/news'
 import support from 'components/p-home/support/support'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -86,26 +90,14 @@ export default {
       }
     }
   },
-  computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    basicInfo() {
-      return this.$store.state.basicInfo
-    },
-    aboutusId() {
-      return this.$store.state.aboutusId
-    },
-    productClassify() {
-      return this.$store.state.productClassify
-    }
-  },
+  computed: mapState(['lang', 'productClassify', 'basicInfo', 'aboutusId']),
   watch: {
     productClassify() {
       this.getProductSlice()
     }
   },
   created() {
+    console.log(this.a)
     this.getProductSlice()
   },
   methods: {
@@ -227,6 +219,7 @@ export default {
   position: relative;
   color: #555;
   display: block;
+  width: 244px;
   padding-bottom: 5px;
   line-height: 1.5em;
   padding-left: 12px;
@@ -248,11 +241,18 @@ export default {
 .home-information-product-ul li:hover {
   color: #0d93b8;
 }
+.home-information-product-ul li p {
+  color: #777;
+  line-height: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .home-information-product-dot {
   position: absolute;
   text-align: center;
   width: 100%;
-  bottom: 32px;
+  bottom: 15px;
   left: 0px;
 }
 .home-information-product-dot li {

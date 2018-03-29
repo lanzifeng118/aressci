@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -28,14 +30,10 @@ export default {
       }
     }
   },
-  computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    items() {
-      return this.$store.state.supportClassify
-    }
-  }
+  computed: mapState({
+    lang: 'lang',
+    items: 'supportClassify'
+  })
 }
 </script>
 

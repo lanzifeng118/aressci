@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -28,14 +29,10 @@ export default {
       }
     }
   },
-  computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    item() {
-      return this.$store.state.news
-    }
-  }
+  computed: mapState({
+    lang: 'lang',
+    item: 'news'
+  })
 }
 </script>
 
