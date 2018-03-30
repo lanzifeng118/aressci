@@ -310,6 +310,7 @@ export default {
 
 .home-information-item-more {
   position: absolute;
+  z-index: 3;
   opacity: 0.3;
   bottom: 15px;
   right: 20px;
