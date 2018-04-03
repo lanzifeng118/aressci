@@ -56,7 +56,7 @@ export default {
       return this.$store.state.lang
     },
     companySize() {
-      return this.$store.state.lang === 'cn' ? '26px' : '28px'
+      return this.$store.state.lang === 'cn' ? '22px' : '20px'
     }
   },
   created() {

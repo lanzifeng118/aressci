@@ -10,7 +10,7 @@
     </ul>
     <ul v-if="lang === 'en'">
       <li>
-        Our emai is <b>{{item.email}}</b>. You can <a :href="'mailto:' + item.email + '?subject=&body='">Click Here</a> to send an emai to us handily!
+        Our emai is <b>{{item.email}}</b>. You can <a :href="'mailto:' + item.email + '?subject=&body='">Click Here</a> to send an emai to us directly!
       </li>
       <li><h4>Our phone number is <b>{{item.telephone}}</b>. You can call us during work time ({{item.worktime}}).</h4></li>
     </ul>

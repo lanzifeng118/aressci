@@ -60,7 +60,7 @@
               <!-- tel -->
               <tr>
                 <td>{{text.tel[lang]}}</td>
-                <td><input type="text" v-model.trim.number="item.tel">{{item.tel}}</td>
+                <td><input type="text" v-model.trim.number="item.tel"></td>
               </tr>
               <!-- Company -->
               <tr>
