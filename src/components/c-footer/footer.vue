@@ -43,8 +43,7 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -70,20 +69,12 @@ export default {
       }
     }
   },
-  computed: {
-    basicInfo() {
-      return this.$store.state.basicInfo
-    },
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
-    navItems() {
-      return this.$store.state.navItems
-    }
-  },
+  computed: mapGetters({
+    basicInfo: 'basicInfo',
+    lang: 'lang',
+    api: 'api',
+    navItems: 'navItems'
+  }),
   created() {
     this.getFriendLink()
   },

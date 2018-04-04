@@ -39,23 +39,17 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
-
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
       listHeight: 0
     }
   },
-  computed: {
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
-    navItems() {
-      return this.$store.state.navItems
-    }
-  },
+  computed: mapGetters({
+    navItems: 'navItems',
+    api: 'api'
+  }),
   created() {
     this.getNav()
   },
@@ -65,6 +59,7 @@ export default {
       this.axios(this.api.nav.query())
         .then(res => {
           let data = res.data
+          // console.log('nav')
           // console.log(data)
           if (data.code === '200') {
             let list = data.data.list
@@ -75,12 +70,7 @@ export default {
                   vP.link = `/product/display/c${v.id}-p${vP.id}`
                 })
               })
-              this.navItems[1].list = list
-            }
-            let aboutusId = data.data.aboutusId
-            if (aboutusId) {
-              this.$store.state.aboutusId = aboutusId
-              this.navItems[5].link = `/aboutus/display/c${aboutusId}`
+              this.$store.commit('setNavProductList', list)
             }
           }
         })

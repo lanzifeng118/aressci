@@ -1,53 +1,39 @@
 <template>
-<div class="product-list-category">
-  <ul class="product-list-category-ul level01">
-    <li v-for="(item, index) in items">
-      <span
-        class="icon"
-        @click="toggle(index)"
-        :class="[item.open ? 'icon-minus': 'icon-add']">
-      </span>
-      <router-link :to="item.link">
-        {{item.name}}
-      </router-link>
-      <ul
-        class="product-list-category-ul level02"
-        v-if="item.product"
-        v-show="item.open"
-      >
-        <li v-for="itemLevel2 in item.product">
-          <router-link
-            :to="itemLevel2.link"
-            :src="itemLevel2.name"
-          >
-            {{itemLevel2.name}}
-          </router-link>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
+  <div class="product-list-category">
+    <ul class="product-list-category-ul level01">
+      <li v-for="(item, index) in items">
+        <span class="icon" @click="toggle(index)" :class="[item.open ? 'icon-minus': 'icon-add']">
+        </span>
+        <router-link :to="item.link">
+          {{item.name}}
+        </router-link>
+        <ul class="product-list-category-ul level02" v-if="item.product" v-show="item.open">
+          <li v-for="itemLevel2 in item.product">
+            <router-link :to="itemLevel2.link">{{itemLevel2.name}}</router-link>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
-    return {
-    }
+    return {}
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.openItem()
     },
     items() {
       this.openItem()
     }
   },
-  computed: {
-    items() {
-      return this.$store.state.productNav || []
-    }
-  },
+  computed: mapState({
+    items: 'productNav'
+  }),
   methods: {
     openItem() {
       let path = this.$route.path.toLowerCase()
@@ -107,26 +93,25 @@ export default {
 .product-list-category-ul .icon {
   font-size: 14px;
 }
-.product-list-category-ul.level01>li {
+.product-list-category-ul.level01 > li {
   padding-bottom: 8px;
 }
-.product-list-category-ul.level01>li>span {
+.product-list-category-ul.level01 > li > span {
   float: left;
   cursor: pointer;
 }
-.product-list-category-ul.level01>li>span:hover {
+.product-list-category-ul.level01 > li > span:hover {
   color: #0d93b8;
 }
-.product-list-category-ul.level01>li>a {
+.product-list-category-ul.level01 > li > a {
   padding-bottom: 8px;
   padding-top: 0px;
   font-weight: bold;
 }
-.product-list-category-ul.level02>li>a {
+.product-list-category-ul.level02 > li > a {
   font-size: 13px;
 }
 .product-list-category-ul.level02 {
   padding-left: 20px;
 }
-
 </style>

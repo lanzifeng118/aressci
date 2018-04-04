@@ -34,6 +34,7 @@
 
 <script>
 import vNav from 'components/c-nav/nav'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -49,15 +50,13 @@ export default {
     }
   },
   computed: {
-    basicInfo() {
-      return this.$store.state.basicInfo
-    },
-    lang() {
-      return this.$store.state.lang
-    },
     companySize() {
-      return this.$store.state.lang === 'cn' ? '22px' : '20px'
-    }
+      return this.lang === 'cn' ? '22px' : '20px'
+    },
+    ...mapGetters({
+      basicInfo: 'basicInfo',
+      lang: 'lang'
+    })
   },
   created() {
   },

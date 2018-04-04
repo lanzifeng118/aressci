@@ -27,6 +27,7 @@ import position from 'components/p-product/position/position'
 import util from 'components/tools/util'
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -42,32 +43,32 @@ export default {
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     id() {
       let id = this.$route.params.id
       return id && parseInt(id.slice(1))
     },
-    classifyName() {
-      let name = void 0
-      let nav = this.$store.state.productNav
-      if (nav.length) {
-        name = ''
-        if (this.id !== void 0) {
-          for (var i = 0; i < nav.length; i++) {
-            if (nav[i].id === this.id) {
-              name = nav[i].name
-              break
+    ...mapState({
+      lang: 'lang',
+      api(state) {
+        return state.lang === 'cn' ? api : apiEn
+      },
+      classifyName(state) {
+        let name
+        let nav = state.productNav
+        if (nav.length) {
+          name = ''
+          if (this.id !== void 0) {
+            for (var i = 0; i < nav.length; i++) {
+              if (nav[i].id === this.id) {
+                name = nav[i].name
+                break
+              }
             }
           }
         }
+        return name
       }
-      return name
-    }
+    })
   },
   created() {
     this.getItems()

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -17,11 +18,12 @@ export default {
   computed: {
     items() {
       let items = [{name: '所有品牌', link: '/experience/all'}]
-      if (this.$store.state.lang === 'en') {
+      if (this.lang === 'en') {
         items[0].name = 'All Brands'
       }
-      return items.concat(this.$store.state.experienceList)
-    }
+      return items.concat(this.experienceList)
+    },
+    ...mapGetters(['lang', 'experienceList'])
   },
   created() {
   },

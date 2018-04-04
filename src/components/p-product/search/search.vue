@@ -1,8 +1,8 @@
 <template>
   <div class="product-search">
     <position>
-      <span v-if="searchText">{{text.search[lang]}}-{{searchText}}</span>
-      <span v-if="!searchText">{{text.searchAll[lang]}}</span>
+      <span v-if="searchText">{{lang === 'cn' ? '查询' : 'SEARCH'}}-{{searchText}}</span>
+      <span v-if="!searchText">{{lang === 'cn' ? '查询所有' : 'SEARCH ALL'}}</span>
     </position>
     <div class="product-search-show f-left">
       <div class="product-search-show-classify">
@@ -27,6 +27,7 @@ import productContact from 'components/p-product/contact/contact'
 import position from 'components/p-product/position/position'
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -34,16 +35,6 @@ export default {
       items: [],
       id: 0,
       queryText: '',
-      text: {
-        search: {
-          cn: '查询',
-          en: 'SEARCH'
-        },
-        searchAll: {
-          cn: '查询所有',
-          en: 'SEARCH ALL'
-        }
-      },
       // paging
       paging: {
         size: 4,
@@ -56,15 +47,15 @@ export default {
     this.getItems()
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     searchText() {
       return this.$route.params.id
-    }
+    },
+    ...mapState({
+      lang: 'lang',
+      api(state) {
+        return state.lang === 'cn' ? api : apiEn
+      }
+    })
   },
   watch: {
     $route(to, from) {

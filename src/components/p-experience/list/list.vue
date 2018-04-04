@@ -19,6 +19,7 @@ import position from 'components/p-experience/position/position'
 import experienceCompany from 'components/p-experience/company/company'
 import toast from 'components/toast/toast'
 import util from 'components/tools/util'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -37,15 +38,12 @@ export default {
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
     id() {
       return parseInt(this.$route.params.id.slice(1))
     },
     item() {
       let item = {}
-      let list = this.$store.state.experienceList
+      let list = this.experienceList
       if (list.length > 0) {
         for (var i = 0; i < list.length; i++) {
           if (list[i].id === this.id) {
@@ -62,7 +60,8 @@ export default {
         }
       }
       return item
-    }
+    },
+    ...mapGetters(['lang', 'experienceList'])
   },
   created() {
   },

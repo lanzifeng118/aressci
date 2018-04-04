@@ -43,7 +43,7 @@ export default {
                 vP.link = `/product/display/c${v.id}-p${vP.id}`
               })
             })
-            this.$store.state.productNav = list
+            this.$store.commit('setProductNav', list)
           }
         }
       })

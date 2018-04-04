@@ -1,6 +1,6 @@
 <template>
   <div class="product-video" v-if="items.length > 0">
-    <h2 class="product-video-name">{{text.title[lang]}}</h2>
+    <h2 class="product-video-name">{{lang === 'cn' ? '产品视频' : 'Product Video'}}</h2>
     <div class="product-video-btns" v-if="items.length > 3">
       <button type="button" name="button" @mouseenter="clear">
         <span class="icon-stop"></span>
@@ -51,6 +51,7 @@
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
 import vVideo from 'components/video/video'
+import { mapState } from 'vuex'
 
 export default {
   props: ['classify'],
@@ -73,12 +74,6 @@ export default {
         play: false,
         link: '',
         name: ''
-      },
-      text: {
-        title: {
-          cn: '产品视频',
-          en: 'Product Video'
-        }
       }
     }
   },
@@ -88,12 +83,6 @@ export default {
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     wrapHeight() {
       let length = this.items.length
       let itemHeight = this.params.height + this.params.padding
@@ -104,7 +93,13 @@ export default {
     },
     criticalTop() {
       return (this.params.height + this.params.padding) * (this.items.length - this.liLength) - this.params.padding
-    }
+    },
+    ...mapState({
+      lang: 'lang',
+      api(state) {
+        return state.lang === 'cn' ? api : apiEn
+      }
+    })
   },
   created() {
     this.getItems()

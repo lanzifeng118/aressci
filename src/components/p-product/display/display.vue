@@ -19,10 +19,10 @@
           <div class="product-display-tab">
             <ul class="f-clearfix">
               <li :class="{active: tabShow[0]}" @click="tabClick(0)">
-                {{text.info[lang]}}
+                {{lang === 'cn' ? '产品信息' : 'Product Info'}}
               </li>
               <li :class="{active: tabShow[1]}" @click="tabClick(1)">
-                {{text.resource[lang]}}
+                {{lang === 'cn' ? '产品资源' : 'Resources'}}
               </li>
             </ul>
           </div>
@@ -31,14 +31,14 @@
             <div class="product-display-info editor" v-show="tabShow[0]" v-html="item.detail"></div>
             <!-- resources -->
             <div class="product-display-resources" v-show="tabShow[1]">
-              <h3>{{text.doc[lang]}}</h3>
+              <h3>{{lang === 'cn' ? '产品文档' : 'Product Documents'}}</h3>
               <table class="product-display-resources-table" v-if="item.resources && item.resources.length > 0">
                 <thead>
                   <tr>
-                    <th width="70">{{text.type[lang]}}</th>
-                    <th>{{text.name[lang]}}</th>
-                    <th width="70">{{text.download[lang]}}</th>
-                    <th width="70">{{text.size[lang]}}</th>
+                    <th width="70">{{lang === 'cn' ? '类型' : 'Type'}}</th>
+                    <th>{{lang === 'cn' ? '文件名' : 'Name'}}</th>
+                    <th width="70">{{lang === 'cn' ? '下载' : 'Download'}}</th>
+                    <th width="70">{{lang === 'cn' ? '大小' : 'Size'}}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -85,6 +85,7 @@ import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -97,46 +98,10 @@ export default {
         show: false,
         text: '',
         icon: ''
-      },
-      text: {
-        info: {
-          cn: '产品信息',
-          en: 'Product Info'
-        },
-        resource: {
-          cn: '产品资源',
-          en: 'Resources'
-        },
-        doc: {
-          cn: '产品文档',
-          en: 'Product Documents'
-        },
-        type: {
-          cn: '类型',
-          en: 'Type'
-        },
-        name: {
-          cn: '文件名',
-          en: 'Name'
-        },
-        download: {
-          cn: '下载',
-          en: 'Download'
-        },
-        size: {
-          cn: '大小',
-          en: 'Size'
-        }
       }
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     id() {
       let arr = this.$route.params.id.split('-')
       let classify = parseInt(arr[0].slice(1))
@@ -146,19 +111,25 @@ export default {
         product
       }
     },
-    classifyName() {
-      let name = ''
-      let nav = this.$store.state.productNav
-      if (nav) {
-        for (var i = 0; i < nav.length; i++) {
-          if (nav[i].id === this.id.classify) {
-            name = nav[i].name
-            break
+    ...mapState({
+      lang: 'lang',
+      api(state) {
+        return state.lang === 'cn' ? api : apiEn
+      },
+      classifyName(state) {
+        let name = ''
+        let nav = state.productNav
+        if (nav) {
+          for (var i = 0; i < nav.length; i++) {
+            if (nav[i].id === this.id.classify) {
+              name = nav[i].name
+              break
+            }
           }
         }
+        return name
       }
-      return name
-    }
+    })
   },
   watch: {
     $route(to, from) {

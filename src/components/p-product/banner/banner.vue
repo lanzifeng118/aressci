@@ -10,6 +10,7 @@
 <script>
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -34,14 +35,12 @@ export default {
       }
     }
   },
-  computed: {
-    nav() {
-      return this.$store.state.productNav
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
+  computed: mapState({
+    nav: 'productNav',
+    api(state) {
+      return state.lang === 'cn' ? api : apiEn
     }
-  },
+  }),
   created() {
     this.getItem()
   },

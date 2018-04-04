@@ -8,7 +8,7 @@
             <b v-html="item.name"></b>
             <span v-if="search === 'Y'" v-html="item.classify"></span>
           </h4>
-          <h5 v-if="search === 'Y' && item.type === '4'">{{detail}}</h5>
+          <h5 v-if="search === 'Y' && item.type === '4'">{{lang === 'cn' ? '见信息详情' : 'See the info detail'}}</h5>
           <p v-html="item.brief"></p>
         </div>
       </router-link>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     items: {
@@ -30,11 +31,7 @@ export default {
   data() {
     return {}
   },
-  computed: {
-    detail() {
-      return this.$store.state.lang === 'cn' ? '见信息详情' : 'See the info detail'
-    }
-  },
+  computed: mapState(['lang']),
   created() {},
   methods: {},
   components: {}

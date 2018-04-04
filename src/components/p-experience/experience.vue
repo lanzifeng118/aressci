@@ -18,9 +18,6 @@
 import experienceCategory from 'components/p-experience/category/category'
 import bannerIn from 'components/c-banner-in/banner-in'
 import toast from 'components/toast/toast'
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
-import util from 'components/tools/util'
 
 export default {
   data() {
@@ -33,29 +30,12 @@ export default {
       }
     }
   },
-  computed: {
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    }
-  },
   created() {
     this.getItems()
   },
   methods: {
     getItems() {
-      this.axios(this.api.experienceList.query()).then((res) => {
-        let data = res.data
-        // console.log(data)
-        if (data.code === '200') {
-          let list = data.data.list
-          list.forEach((v, i) => {
-            v.link = `/experience/list/c${v.id}`
-          })
-          this.$store.state.experienceList = list
-        } else {
-          util.req.queryError(this.toast)
-        }
-      })
+      this.$store.dispatch('setExperienceList', this.toast)
     }
   },
   components: {

@@ -6,8 +6,7 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -24,11 +23,7 @@ export default {
       }
     }
   },
-  computed: {
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    }
-  },
+  computed: mapGetters(['api']),
   created() {
     this.getItem()
   },

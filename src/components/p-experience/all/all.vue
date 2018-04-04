@@ -10,6 +10,7 @@
 <script>
 import experienceCompany from 'components/p-experience/company/company'
 import position from 'components/p-experience/position/position'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -18,12 +19,9 @@ export default {
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
     items() {
       let items = []
-      this.$store.state.experienceList.forEach(v => {
+      this.experienceList.forEach(v => {
         items.push(v)
       })
       items.forEach(v => {
@@ -32,7 +30,8 @@ export default {
         })
       })
       return items
-    }
+    },
+    ...mapGetters(['lang', 'experienceList'])
   },
   created() {
   },

@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -38,11 +39,9 @@ export default {
       index: 0
     }
   },
-  computed: {
-    items() {
-      return this.$store.state.basicInfo.banner || []
-    }
-  },
+  computed: mapGetters({
+    items: 'banner'
+  }),
   created() {
     this.set()
   },

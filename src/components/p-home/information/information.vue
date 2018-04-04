@@ -4,9 +4,9 @@
       <ul>
         <!-- us -->
         <li class="home-information-item home-us white-box">
-          <h3 class="home-information-item-title">{{text.aboutusTitle[lang]}}</h3>
+          <h3 class="home-information-item-title">{{lang === 'cn' ? '关于我们' : 'About us'}}</h3>
           <router-link v-if="aboutusId" :to="'/aboutus/display/c' + aboutusId" class="home-information-item-more">
-            {{text.more[lang]}}<span class="icon-more"></span>
+            {{lang === 'cn' ? '更多' : 'MORE'}}<span class="icon-more"></span>
           </router-link>
           <h4 class="home-information-item-h4">
             <router-link to="/aboutus/display">{{basicInfo.name}}</router-link>
@@ -21,9 +21,9 @@
 
         <!-- product -->
         <li class="home-information-item home-product white-box">
-          <h3 class="home-information-item-title">{{text.productTitle[lang]}}</h3>
+          <h3 class="home-information-item-title">{{lang === 'cn' ? '我们的产品' : 'Our Products'}}</h3>
           <router-link to="/product" class="home-information-item-more">
-            {{text.more[lang]}}<span class="icon-more"></span>
+            {{lang === 'cn' ? '更多' : 'MORE'}}<span class="icon-more"></span>
           </router-link>
           <ul class="home-information-product-ul">
             <li v-for="item in product.slice" :title="item.full_name">
@@ -62,7 +62,7 @@
 import slider from 'components/slider/slider'
 import news from 'components/p-home/news/news'
 import support from 'components/p-home/support/support'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -73,24 +73,10 @@ export default {
         num: 4,
         total: 0,
         page: null
-      },
-      text: {
-        aboutusTitle: {
-          cn: '关于我们',
-          en: 'About us'
-        },
-        productTitle: {
-          cn: '我们的产品',
-          en: 'Our Products'
-        },
-        more: {
-          cn: '更多',
-          en: 'MORE'
-        }
       }
     }
   },
-  computed: mapState(['lang', 'productClassify', 'basicInfo', 'aboutusId']),
+  computed: mapGetters(['lang', 'productClassify', 'basicInfo', 'aboutusId']),
   watch: {
     productClassify() {
       this.getProductSlice()

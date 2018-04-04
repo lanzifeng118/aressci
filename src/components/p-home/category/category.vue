@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -26,17 +26,20 @@ export default {
       smooth: true
     }
   },
-  computed: mapState({
-    items(state) {
-      let items = state.productClassify
+  computed: {
+    items() {
+      let items = this.productClassify
       if (items.length > 3) {
         items = items.slice(-1).concat(items).concat(items.slice(0, 2))
       } else {
         this.top = 0
       }
       return items
-    }
-  }),
+    },
+    ...mapGetters({
+      productClassify: 'productClassify'
+    })
+  },
   created() {
     this.set()
   },

@@ -9,8 +9,7 @@
 <script>
 import vHeader from 'components/c-header/header'
 import vFooter from 'components/c-footer/footer'
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -21,36 +20,30 @@ export default {
     this.getBisicInfo()
     this.getHome()
   },
-  computed: {
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    }
-  },
+  computed: mapGetters({
+    api: 'api'
+  }),
   methods: {
     getHome() {
       this.axios(this.api.home.query()).then((res) => {
         let data = res.data
+        console.log(data)
         if (data.code === '200') {
-          let state = this.$store.state
+          let store = this.$store
 
           let aboutus = data.data.aboutUs
-          if (aboutus) {
-            state.aboutusId = aboutus.id
-          }
+          aboutus && store.commit('afterGetAboutusId', aboutus.id)
 
           let news = data.data.news
-          if (news) {
-            news.detail = ''
-            state.news = news
-          }
+          news && store.commit('setNews', news)
 
-          state.supportClassify = data.data.supportClassify
+          store.commit('setSupportClassify', data.data.supportClassify)
 
           let productClassify = data.data.productClassify
           productClassify.forEach((v, i) => {
             v.link = `product/list/c${v.id}`
           })
-          state.productClassify = productClassify
+          store.commit('setProductClassify', productClassify)
         }
       })
     },
@@ -67,7 +60,7 @@ export default {
             }
           })
           document.title = dataD.full_name
-          this.$store.state.basicInfo = dataD
+          this.$store.commit('setBasicInfo', dataD)
         }
       })
     }

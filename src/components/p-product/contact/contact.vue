@@ -1,6 +1,6 @@
 <template>
   <div class="product-contact">
-    <h3>{{text.title[lang]}}</h3>
+    <h3>{{lang === 'cn' ? '联系我们' : 'Contact Us'}}</h3>
     <ul v-if="lang === 'cn'">
       <li>
         我们的邮箱是<b>{{item.email}}</b>， 你可以<a :href="'mailto:' + item.email + '?subject=&body='">点击这里</a>很方便地发邮件给我们!
@@ -18,25 +18,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
-    return {
-      text: {
-        title: {
-          cn: '联系我们',
-          en: 'Contact Us'
-        }
-      }
-    }
+    return {}
   },
-  computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    item() {
-      return this.$store.state.basicInfo
-    }
-  }
+  computed: mapState({
+    lang: 'lang',
+    item: 'basicInfo'
+  })
 }
 </script>
 

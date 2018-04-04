@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: ['experience', 'all'],
   data() {
@@ -47,11 +48,7 @@ export default {
       this.init()
     }
   },
-  computed: {
-    lang() {
-      return this.$store.state.lang
-    }
-  },
+  computed: mapGetters(['lang']),
   created() {
     // console.log(this.experience)
     this.init()
