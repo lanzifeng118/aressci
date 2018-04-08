@@ -20,11 +20,10 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
 import position from 'components/p-aboutus/position/position'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -44,15 +43,10 @@ export default {
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     id() {
       return parseInt(this.$route.params.id.slice(1))
-    }
+    },
+    ...mapGetters(['api', 'lang'])
   },
   created() {
     this.getItem()

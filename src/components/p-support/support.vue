@@ -4,9 +4,9 @@
     <div class="service-content">
       <position page="index"></position>
       <div class="service-text">
-        <h2>{{text.title.head[lang]}}</h2>
-        <h4>{{text.title.p1[lang]}}</h4>
-        <h4>{{text.title.p2[lang]}}</h4>
+        <h2>{{lang === 'cn' ? '技术服务' : 'Technical Services'}}</h2>
+        <h4>{{lang === 'cn' ? '感谢您对我们关注，我们希望为您提供优秀的服务!' : 'We appreciate your business and want to provide outstanding and excellent customer service!'}}</h4>
+        <h4>{{lang === 'cn' ? '请填写下面的表格，带有*是必填项，我们将尽快回复您。' : 'Please complete the form below. The boxes marked with * are required. We will respond as soon as possible.'}}</h4>
         <div class="form-table-wrap service-table-wrap">
           <table>
             <tbody>
@@ -18,17 +18,17 @@
               </tr>
               <!-- classify -->
               <tr>
-                <td>{{text.topic[lang]}}</td>
+                <td>{{lang === 'cn' ? '主题' : 'Topic'}}</td>
                 <td>
                   <select v-model.trim="item.classify">
-                    <option disabled value="">{{text.select[lang]}}</option>
+                    <option disabled value="">{{lang === 'cn' ? '请选择' : 'Please select'}}</option>
                     <option v-for="item in classifyOption">{{item.name}}</option>
                   </select>
                 </td>
               </tr>
               <!-- Salutation -->
               <tr>
-                <td>{{text.salutation[lang]}}</td>
+                <td>{{lang === 'cn' ? '称呼' : 'Salutation'}}</td>
                 <td>
                   <input
                     v-for="(itemS, index) in salutation"
@@ -44,7 +44,7 @@
               </tr>
               <!-- first name -->
               <tr>
-                <td><span class="icon-nessisary"></span>{{text.name[lang]}}</td>
+                <td><span class="icon-nessisary"></span>{{lang === 'cn' ? '姓名' : 'First Name'}}</td>
                 <td><input type="text" v-model.trim="item.firstName"></td>
               </tr>
               <!-- Last name -->
@@ -54,32 +54,32 @@
               </tr>
               <!-- Email -->
               <tr>
-                <td><span class="icon-nessisary"></span>{{text.email[lang]}}</td>
+                <td><span class="icon-nessisary"></span>{{lang === 'cn' ? '邮箱' : 'Email'}}</td>
                 <td><input type="text" v-model.trim="item.email"></td>
               </tr>
               <!-- tel -->
               <tr>
-                <td>{{text.tel[lang]}}</td>
+                <td>{{lang === 'cn' ? '电话' : 'Tel/Phone'}}</td>
                 <td><input type="text" v-model.trim.number="item.tel"></td>
               </tr>
               <!-- Company -->
               <tr>
-                <td>{{text.company[lang]}}</td>
+                <td>{{lang === 'cn' ? '公司' : 'Company'}}</td>
                 <td><input type="text" v-model.trim="item.company"></td>
               </tr>
               <!-- Country -->
               <tr>
-                <td>{{text.country[lang]}}</td>
+                <td>{{lang === 'cn' ? '国家' : 'Country'}}</td>
                 <td>
                   <select v-model.trim="item.country">
-                    <option disabled value="">{{text.select[lang]}}</option>
+                    <option disabled value="">{{lang === 'cn' ? '请选择' : 'Please select'}}</option>
                     <option v-for="item in country">{{item[1]}}</option>
                   </select>
                 </td>
               </tr>
               <!-- Address -->
               <tr>
-                <td class="vertical-top">{{text.address[lang]}}</td>
+                <td class="vertical-top">{{lang === 'cn' ? '地址' : 'Address'}}</td>
                 <td><textarea name="name" rows="3" v-model.trim="item.address"></textarea></td>
               </tr>
               <!-- submit -->
@@ -87,7 +87,7 @@
                 <td></td>
                 <td>
                   <p class="service-warn">{{warnText}}</p>
-                  <button type="button" class="button" @click="submit">{{text.submit[lang]}}</button>
+                  <button type="button" class="button" @click="submit">{{lang === 'cn' ? '提交' : 'Submit'}}</button>
                 </td>
               </tr>
             </tbody>
@@ -105,13 +105,12 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
 import global from 'components/tools/global'
 import bannerIn from 'components/c-banner-in/banner-in'
 import position from 'components/p-support/position/position'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -135,74 +134,12 @@ export default {
         show: false,
         text: '',
         icon: ''
-      },
-      text: {
-        title: {
-          head: {
-            cn: '技术服务',
-            en: 'Technical Services'
-          },
-          p1: {
-            cn: '感谢您对我们关注，我们希望为您提供优秀的服务!',
-            en: 'We appreciate your business and want to provide outstanding and excellent customer service!'
-          },
-          p2: {
-            cn: '请填写下面的表格，带有*是必填项，我们将尽快回复您。',
-            en: 'Please complete the form below. The boxes marked with * are required. We will respond as soon as possible.'
-          }
-        },
-        topic: {
-          cn: '主题',
-          en: 'Topic'
-        },
-        select: {
-          cn: '请选择',
-          en: 'Please select'
-        },
-        salutation: {
-          cn: '称呼',
-          en: 'Salutation'
-        },
-        name: {
-          cn: '姓名',
-          en: 'First Name'
-        },
-        email: {
-          cn: '邮箱',
-          en: 'Email'
-        },
-        tel: {
-          cn: '电话',
-          en: 'Tel/Phone'
-        },
-        company: {
-          cn: '公司',
-          en: 'Company'
-        },
-        country: {
-          cn: '国家',
-          en: 'Country'
-        },
-        address: {
-          cn: '地址',
-          en: 'Address'
-        },
-        submit: {
-          cn: '提交',
-          en: 'Submit'
-        }
       }
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     country() {
-      return this.$store.state.lang === 'cn' ? global.country : global.countryEn
+      return this.lang === 'cn' ? global.country : global.countryEn
     },
     salutation() {
       let salutation = [
@@ -215,8 +152,9 @@ export default {
         {value: 'MRS'},
         {value: 'MS'}
       ]
-      return this.$store.state.lang === 'cn' ? salutation : salutationEn
-    }
+      return this.lang === 'cn' ? salutation : salutationEn
+    },
+    ...mapGetters(['lang', 'api'])
   },
   created() {
     this.item.country = this.lang === 'cn' ? '中国' : 'China'

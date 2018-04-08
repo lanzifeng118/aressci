@@ -8,9 +8,7 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -35,11 +33,9 @@ export default {
       }
     }
   },
-  computed: mapState({
+  computed: mapGetters({
     nav: 'productNav',
-    api(state) {
-      return state.lang === 'cn' ? api : apiEn
-    }
+    api: 'api'
   }),
   created() {
     this.getItem()

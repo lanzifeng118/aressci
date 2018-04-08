@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   props: {
     items: {
@@ -31,7 +31,7 @@ export default {
   data() {
     return {}
   },
-  computed: mapState(['lang']),
+  computed: mapGetters(['lang']),
   created() {},
   methods: {},
   components: {}

@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {}
   },
-  computed: mapState({
+  computed: mapGetters({
     lang: 'lang',
     item: 'basicInfo'
   })

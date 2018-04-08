@@ -9,10 +9,9 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
 import aboutCategory from 'components/p-aboutus/category/category'
 import bannerIn from 'components/c-banner-in/banner-in'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -25,11 +24,7 @@ export default {
       this.redirect()
     }
   },
-  computed: {
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    }
-  },
+  computed: mapGetters(['api', 'aboutusNav']),
   created() {
     this.getNav()
   },
@@ -44,7 +39,7 @@ export default {
             list.forEach((v, i) => {
               v.link = `/aboutus/display/c${v.id}`
             })
-            this.$store.state.aboutusNav = data.data.list
+            this.$store.commit('setAboutusNav', list)
             this.redirect()
           }
         }
@@ -52,7 +47,7 @@ export default {
     },
     redirect() {
       if (/^\/aboutus\/display\/{0,1}$/.test(this.$route.path)) {
-        this.$router.push(this.$store.state.aboutusNav[0].link)
+        this.$router.push(this.aboutusNav[0].link)
       }
     }
   },

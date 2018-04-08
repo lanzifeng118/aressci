@@ -25,9 +25,7 @@ import productContact from 'components/p-product/contact/contact'
 import box from 'components/p-product/box/box'
 import position from 'components/p-product/position/position'
 import util from 'components/tools/util'
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -47,27 +45,26 @@ export default {
       let id = this.$route.params.id
       return id && parseInt(id.slice(1))
     },
-    ...mapState({
-      lang: 'lang',
-      api(state) {
-        return state.lang === 'cn' ? api : apiEn
-      },
-      classifyName(state) {
-        let name
-        let nav = state.productNav
-        if (nav.length) {
-          name = ''
-          if (this.id !== void 0) {
-            for (var i = 0; i < nav.length; i++) {
-              if (nav[i].id === this.id) {
-                name = nav[i].name
-                break
-              }
+    classifyName() {
+      let name
+      let nav = this.nav
+      if (nav.length) {
+        name = ''
+        if (this.id !== void 0) {
+          for (var i = 0; i < nav.length; i++) {
+            if (nav[i].id === this.id) {
+              name = nav[i].name
+              break
             }
           }
         }
-        return name
       }
+      return name
+    },
+    ...mapGetters({
+      lang: 'lang',
+      api: 'api',
+      nav: 'productNav'
     })
   },
   created() {

@@ -1,7 +1,6 @@
+import lang from '../../config/lang'
 import api from 'components/tools/api'
 import apiEn from 'components/tools/api-en'
-
-const lang = 'cn'
 
 const state = {
   lang,

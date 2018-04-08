@@ -25,9 +25,8 @@
 <script>
 import position from 'components/p-news/position/position'
 import toast from 'components/toast/toast'
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -42,14 +41,8 @@ export default {
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     classifyId() {
-      let newsClassify = this.$store.state.newsClassify
+      let newsClassify = this.newsClassify
       let id = ''
       newsClassify.forEach((v, i) => {
         v.border = false
@@ -62,7 +55,8 @@ export default {
         newsClassify[0].border = true
       }
       return id
-    }
+    },
+    ...mapGetters(['api', 'lang', 'newsClassify'])
   },
   watch: {
     '$route' (to, from) {

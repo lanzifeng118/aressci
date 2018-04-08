@@ -80,12 +80,9 @@
 import productVideo from 'components/p-product/video/video'
 import productContact from 'components/p-product/contact/contact'
 import position from 'components/p-product/position/position'
-
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
 import util from 'components/tools/util'
 import toast from 'components/toast/toast'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -111,24 +108,23 @@ export default {
         product
       }
     },
-    ...mapState({
-      lang: 'lang',
-      api(state) {
-        return state.lang === 'cn' ? api : apiEn
-      },
-      classifyName(state) {
-        let name = ''
-        let nav = state.productNav
-        if (nav) {
-          for (var i = 0; i < nav.length; i++) {
-            if (nav[i].id === this.id.classify) {
-              name = nav[i].name
-              break
-            }
+    classifyName() {
+      let name = ''
+      let nav = this.nav
+      if (nav) {
+        for (var i = 0; i < nav.length; i++) {
+          if (nav[i].id === this.id.classify) {
+            name = nav[i].name
+            break
           }
         }
-        return name
       }
+      return name
+    },
+    ...mapGetters({
+      lang: 'lang',
+      api: 'api',
+      nav: 'productNav'
     })
   },
   watch: {

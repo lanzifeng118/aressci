@@ -26,13 +26,13 @@
 
 <script>
 import position from 'components/p-product/position/position'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
     }
   },
-  computed: mapState({
+  computed: mapGetters({
     lang: 'lang',
     items: 'productNav'
   }),

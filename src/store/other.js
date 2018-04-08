@@ -1,35 +1,35 @@
-function nav(lang) {
-  return [
-    {
-      name: lang === 'cn' ? '首页' : 'HOME',
-      link: '/home'
-    },
-    {
-      name: lang === 'cn' ? '产品' : 'PRODUCT',
-      link: '/product',
-      list: []
-    },
-    {
-      name: lang === 'cn' ? '项目经验' : 'PROJECT EXPERIENCE',
-      link: '/experience'
-    },
-    {
-      name: lang === 'cn' ? '服务与支持' : 'SERVICE & SUPPORT',
-      link: '/support'
-    },
-    {
-      name: lang === 'cn' ? '新闻' : 'NEWS',
-      link: '/news'
-    },
-    {
-      name: lang === 'cn' ? '关于我们' : 'ABOUT US',
-      link: '/aboutus'
-    }
-  ]
-}
+import lang from '../../config/lang'
+
+let navItems = [
+  {
+    name: lang === 'cn' ? '首页' : 'HOME',
+    link: '/home'
+  },
+  {
+    name: lang === 'cn' ? '产品' : 'PRODUCT',
+    link: '/product',
+    list: []
+  },
+  {
+    name: lang === 'cn' ? '项目经验' : 'PROJECT EXPERIENCE',
+    link: '/experience'
+  },
+  {
+    name: lang === 'cn' ? '服务与支持' : 'SERVICE & SUPPORT',
+    link: '/support'
+  },
+  {
+    name: lang === 'cn' ? '新闻' : 'NEWS',
+    link: '/news'
+  },
+  {
+    name: lang === 'cn' ? '关于我们' : 'ABOUT US',
+    link: '/aboutus'
+  }
+]
 
 const state = {
-  navItems: [],
+  navItems: navItems,
   basicInfo: {}, // 基础信息
   aboutusId: null, // 第一条关于我们id
   news: null, // 第一条新闻数据
@@ -41,12 +41,7 @@ const state = {
 }
 
 const getters = {
-  navItems(state, getters, rootState) {
-    console.log('1111111')
-    console.log(rootState)
-    console.log(nav(rootState.common.lang))
-    return nav(rootState.common.lang)
-  },
+  navItems: state => state.navItems,
   basicInfo: state => state.basicInfo,
   banner: state => state.basicInfo.banner,
   aboutusId: state => state.aboutusId,
@@ -73,6 +68,9 @@ const mutations = {
   setProductClassify(state, data) {
     state.productClassify = data
   },
+  setNewsClassify(state, data) {
+    state.newsClassify = data
+  },
   afterGetAboutusId(state, id) {
     state.aboutusId = id
     state.navItems[5].link = `/aboutus/display/c${id}`
@@ -82,6 +80,9 @@ const mutations = {
   },
   setNavProductList(state, list) {
     state.navItems[1].list = list
+  },
+  setAboutusNav(state, data) {
+    state.aboutusNav = data
   }
 }
 

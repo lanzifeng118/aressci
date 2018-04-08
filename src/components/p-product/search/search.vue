@@ -25,9 +25,7 @@ import productVideo from 'components/p-product/video/video'
 import box from 'components/p-product/box/box'
 import productContact from 'components/p-product/contact/contact'
 import position from 'components/p-product/position/position'
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -50,11 +48,9 @@ export default {
     searchText() {
       return this.$route.params.id
     },
-    ...mapState({
+    ...mapGetters({
       lang: 'lang',
-      api(state) {
-        return state.lang === 'cn' ? api : apiEn
-      }
+      api: 'api'
     })
   },
   watch: {

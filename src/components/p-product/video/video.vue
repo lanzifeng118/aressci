@@ -48,10 +48,8 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
 import vVideo from 'components/video/video'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['classify'],
@@ -94,11 +92,9 @@ export default {
     criticalTop() {
       return (this.params.height + this.params.padding) * (this.items.length - this.liLength) - this.params.padding
     },
-    ...mapState({
+    ...mapGetters({
       lang: 'lang',
-      api(state) {
-        return state.lang === 'cn' ? api : apiEn
-      }
+      api: 'api'
     })
   },
   created() {

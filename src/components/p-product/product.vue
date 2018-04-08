@@ -12,20 +12,15 @@
 import productBanner from 'components/p-product/banner/banner'
 import productContact from 'components/p-product/contact/contact'
 import productCategory from 'components/p-product/category/category'
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
-    return {
-      bannerSrc: '/static/images/product-banner-all.jpg'
-    }
+    return {}
   },
-  computed: {
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    }
-  },
+  computed: mapGetters({
+    api: 'api'
+  }),
   created() {
     this.getNav()
   },

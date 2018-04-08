@@ -30,10 +30,9 @@
 </template>
 
 <script>
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
 import paging from 'components/c-paging/paging'
 import position from 'components/p-news/position/position'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -50,17 +49,11 @@ export default {
     }
   },
   computed: {
-    lang() {
-      return this.$store.state.lang
-    },
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    },
     classifyName() {
       let name = ''
       let id = this.id
       if (id) {
-        let classify = this.$store.state.newsClassify
+        let classify = this.newsClassify
         for (var i = 0; i < classify.length; i++) {
           if (id === classify[i].id) {
             name = classify[i].name
@@ -69,7 +62,8 @@ export default {
         }
       }
       return name
-    }
+    },
+    ...mapGetters(['api', 'lang', 'newsClassify'])
   },
   watch: {
     $route(to, from) {
@@ -99,7 +93,7 @@ export default {
       } else {
         this.id = 0
       }
-      this.$store.state.newsClassify.forEach((v, i) => {
+      this.newsClassify.forEach((v, i) => {
         v.border = false
       })
     },

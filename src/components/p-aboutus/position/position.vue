@@ -6,6 +6,8 @@
 
 <script>
 import position from 'components/c-position/position'
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     page: {
@@ -19,8 +21,9 @@ export default {
   },
   computed: {
     text() {
-      return this.$store.state.lang === 'cn' ? '关于我们' : 'About Us'
-    }
+      return this.lang === 'cn' ? '关于我们' : 'About Us'
+    },
+    ...mapGetters(['lang'])
   },
   components: {
     position

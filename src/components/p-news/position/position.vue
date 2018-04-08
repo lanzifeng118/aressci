@@ -5,7 +5,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import position from 'components/c-position/position'
+
 export default {
   props: {
     page: {
@@ -19,8 +21,9 @@ export default {
   },
   computed: {
     text() {
-      return this.$store.state.lang === 'cn' ? '所有新闻' : 'All News'
-    }
+      return this.lang === 'cn' ? '所有新闻' : 'All News'
+    },
+    ...mapGetters(['lang'])
   },
   components: {
     position

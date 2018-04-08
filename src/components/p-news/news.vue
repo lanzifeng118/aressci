@@ -11,19 +11,14 @@
 <script>
 import newsCategory from 'components/p-news/category/category'
 import bannerIn from 'components/c-banner-in/banner-in'
-import api from 'components/tools/api'
-import apiEn from 'components/tools/api-en'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
     }
   },
-  computed: {
-    api() {
-      return this.$store.state.lang === 'cn' ? api : apiEn
-    }
-  },
+  computed: mapGetters(['api', 'lang']),
   created() {
     this.getClassify()
   },
@@ -31,7 +26,7 @@ export default {
     getClassify() {
       this.axios(this.api.newsClassify.query()).then((res) => {
         let data = res.data
-        // console.log(data)
+        console.log(data)
         if (data.code === '200') {
           let list = data.data.list
           list.forEach((v, i) => {
@@ -39,11 +34,11 @@ export default {
             v.link = `/news/list/c${v.id}`
           })
           let allObj = {
-            name: this.$store.state.lang === 'cn' ? '所有新闻' : 'All News',
+            name: this.lang === 'cn' ? '所有新闻' : 'All News',
             link: '/news/all',
             border: false
           }
-          this.$store.state.newsClassify = [allObj].concat(list)
+          this.$store.commit('setNewsClassify', [allObj].concat(list))
         }
       })
     }

@@ -9,16 +9,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
     }
   },
-  computed: {
-    items() {
-      return this.$store.state.aboutusNav
-    }
-  },
+  computed: mapGetters({
+    items: 'aboutusNav'
+  }),
   methods: {
 
   },

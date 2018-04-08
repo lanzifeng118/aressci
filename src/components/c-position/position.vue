@@ -17,7 +17,7 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   props: {
     page: {
@@ -35,8 +35,9 @@ export default {
   },
   computed: {
     textHome() {
-      return this.$store.state.lang === 'cn' ? '首页' : 'Home'
-    }
+      return this.lang === 'cn' ? '首页' : 'Home'
+    },
+    ...mapGetters(['lang'])
   },
   components: {
   }
