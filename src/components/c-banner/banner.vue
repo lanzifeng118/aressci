@@ -90,6 +90,10 @@ export default {
       clearInterval(this.timer)
     },
     set() {
+      // console.log(this.items)
+      if (!this.items || this.items.length <= 0) {
+        return
+      }
       this.timer = setInterval(this.bannerAuto, 2500)
     }
   }

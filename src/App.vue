@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" :class="{cn: lang === 'cn'}">
   <v-header></v-header>
   <router-view keep-alive></router-view>
   <v-footer></v-footer>
@@ -20,14 +20,12 @@ export default {
     this.getBisicInfo()
     this.getHome()
   },
-  computed: mapGetters({
-    api: 'api'
-  }),
+  computed: mapGetters(['api', 'lang']),
   methods: {
     getHome() {
       this.axios(this.api.home.query()).then((res) => {
         let data = res.data
-        console.log(data)
+        // console.log(data)
         if (data.code === '200') {
           let store = this.$store
 

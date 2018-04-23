@@ -5,7 +5,7 @@
       <div class="header-logo f-left">
         <router-link to="/home"><img v-if="basicInfo.logo" :src="basicInfo.logo"></router-link>
       </div>
-      <h1 class="header-company f-left"><router-link to="/home" :style="'font-size:' + companySize">{{basicInfo.full_name}}</router-link></h1>
+      <h1 class="header-company f-left"><router-link to="/home">{{basicInfo.full_name}}</router-link></h1>
       <div class="f-right">
         <!--header-version-->
         <div v-if="lang === 'cn'" class="header-version">
@@ -49,15 +49,10 @@ export default {
       }
     }
   },
-  computed: {
-    companySize() {
-      return this.lang === 'cn' ? '22px' : '20px'
-    },
-    ...mapGetters({
-      basicInfo: 'basicInfo',
-      lang: 'lang'
-    })
-  },
+  computed: mapGetters({
+    basicInfo: 'basicInfo',
+    lang: 'lang'
+  }),
   created() {
   },
   methods: {
@@ -105,11 +100,14 @@ export default {
   display: inline-block;
   margin-left: 5px;
 }
+.cn .header-company a {
+  font-size: 22px;
+}
 .header-company a{
   margin-left: 20px;
   line-height: 80px;
   color: #0d93b8;
-  font-size: 28px;
+  font-size: 20px;
 }
 /*header-search-box*/
 .header-search-box {

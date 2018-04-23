@@ -17,9 +17,10 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+  window.scrollTo(0, 0)
 })
 
-console.log(store)
+// console.log(store)
 
 /* eslint-disable no-new */
 new Vue({

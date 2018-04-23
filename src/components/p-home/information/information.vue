@@ -4,7 +4,7 @@
       <ul>
         <!-- us -->
         <li class="home-information-item home-us white-box">
-          <h3 class="home-information-item-title">{{lang === 'cn' ? '关于我们' : 'About us'}}</h3>
+          <h3 class="home-information-item-title">{{lang === 'cn' ? '关于我们' : 'About Us'}}</h3>
           <router-link v-if="aboutusId" :to="'/aboutus/display/c' + aboutusId" class="home-information-item-more">
             {{lang === 'cn' ? '更多' : 'MORE'}}<span class="icon-more"></span>
           </router-link>
@@ -83,7 +83,6 @@ export default {
     }
   },
   created() {
-    console.log(this.a)
     this.getProductSlice()
   },
   methods: {
@@ -191,9 +190,12 @@ export default {
 }
 .home-information-item-p {
   line-height: 1.5em;
-  max-height: 146px;
+  max-height: 144px;
   overflow: hidden;
   color: #555;
+}
+.cn .home-information-item-p {
+  height: 143px;
 }
 .home-information-product-img img {
   width: 100%;

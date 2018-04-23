@@ -32,7 +32,10 @@ export default {
 .news-category-item a{
   position: relative;
   display: block;
-  padding: 10px 10px;
+  padding: 10px 25px 10px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin-bottom: 5px;
   border: 1px solid #efefef;
 }
