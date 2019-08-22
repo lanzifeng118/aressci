@@ -37,6 +37,7 @@
         <li><span class="icon icon-mail"></span>{{basicInfo.email}}</li>
       </ul>
       <p class="footer-copyright">Copyright © 2018 {{basicInfo.full_name}} All rights reserved.</p>
+      <p class="footer-icp"><a href="http://www.beian.miit.gov.cn/" target="_blank">沪ICP备13040151号</a></p>
     </div>
   </div>
 </div>
@@ -178,7 +179,18 @@ export default {
 .footer-copyright {
   color: #aaa;
   text-align: center;
+  margin-bottom: 10px;
   font-size: 12px;
+}
+.footer-icp {
+  text-align: center;
+  font-size: 12px;
+}
+.footer-icp a {
+  color: #aaa;
+}
+.footer-icp a:hover {
+  color: #0d93b8;
 }
 .footer-info {
   margin-bottom: 10px;
